@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Recipe for Intelligence &middot; coding, machine learning and other stuff
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <div class="posts">
+  
+  <article class="post">
+    <h1 class="post-title">
+      <a href="/2015/10/13/an-overview-of-logistic-regression/">
+        An Overview of Logistic Regression
+      </a>
+    </h1>
+
+    <time datetime="2015-10-13T00:00:00-05:00" class="post-date">13 Oct 2015</time>
+
+    <h4 id="why-the-sigmoid"><em>Why the sigmoid?</em></h4>
+
+<p>When I first started to learn logistic regression, I realized there was something missing when the 
+professor explained why we would want a sigmoid function instead of a 
+hard-thresholding 0/1 loss. It was said it’s because sometimes we want the output to be a probability
+instead of a yes/no decision for practical purposes, and the logistic sigmoid function maps all real 
+numbers to the interval (0, 1). On the other hand, optimizing the log loss is much easier than the 
+0/1 loss since the former cost function is convex. I thought, isn’t it strange to have the 
+model first, and then justify its legitimacy by the result? Why did people come 
+up with the sigmoid function in the first place? Why not use other odd (centered on 0.5) functions 
+that map all real numbers to (0, 1), what’s so special about the sigmoid function?</p>
+
+<p>Up till now I have taken quite some machine learning courses, including the ones from Prof. A. Ihler,
+Prof. P. Smyth at UC Irvine, and the famous Andrew Ng course, Learning from Data by Caltech, Data Science 
+Specialization courses by JHU, and the BerkeleyX Data Science on Apache Spark series. They all have 
+different emphases and are excellent in their own way. However, most of them ignored the simple and 
+fundamental question that how sigmoid function is connected with probability and went on explaining 
+the optimization. According to the wording by Prof. Y. Abu-Mostafa at Caltech, logistic regression 
+gives “genuine probability”, not just any number between 0 and 1. But why the sigmoid form? I found 
+the answer in the Bishop book. As I expected, the reason is simple and elegant.</p>
+
+<p>For two-class problems, we adopt a generative approach in which we model the class-conditional 
+densities (likelihood) \( P(x|C_k) \), as well as the class prior \( P(C_k) \), and then use these to 
+compute posterior probabilities \( P(C_k|x) \) through Bayes Theorem. The posterior for class \( C_1 \) 
+can be written as</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_001.png" alt="Drawing" style="width: 400px;" /></center>
+<p><br /></p>
+
+<p>This logistic sigmoid function plays an important role in many classification algorithms. It satisfies 
+the symmetry property \( σ(-a) = 1 - σ(a) \). The inverse of the logistic sigmoid is given by</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_002.png" alt="Drawing" style="width: 400px;" /></center>
+<p><br /></p>
+
+<p>and is known as the <strong>logit</strong> function. It represents the log of the ratio of probabilities 
+\( ln[P(C_1|x)/P(C_2|x)] \) for the two classes, also known as the <strong>log odds</strong>. In logistic regression, there 
+are two layers for the feature vector x to come to the result probability. The second layer is what 
+we have shown - the logistic function - the nonlinear layer. The first layer is linear, which is the 
+signal \( a(x) \).</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_003.png" alt="Drawing" style="width: 450px;" /></center>
+<p><br /></p>
+
+<p>That’s it. This is the relationship between the sigmoid form and probability and the reason why the 
+output of logistic regression should be in this form. Many generative models can give rise to this 
+logistic posterior, e.g., the class-conditional density (likelihood) is Gaussian or Poisson. In fact, 
+logistic regression has much weaker assumptions than the assumptions made by Gaussian Discriminant 
+Analysis (GDA) (MLAPP section 8.6 Generative vs Discriminative classifiers).</p>
+
+<p>For the case of more than two classes, we have the <strong>normalized exponential</strong> as shown below, and can be 
+regarded as a multiclass generalization of the logistic sigmoid.</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_005.png" alt="Drawing" style="width: 250px;" /></center>
+<p><br /></p>
+
+<p>The normalized exponential is also known as the <strong>softmax</strong> function (of a’s), and has the same form 
+as the <strong>Boltzmann distribution</strong> in statistical physics (aha!).</p>
+
+<p><br />
+#### An Overview of the Theory</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/caltech1.png" alt="Drawing" style="width: 600px;" /></center>
+<p><br /></p>
+
+<p><strong>Data</strong> vectors: \( (x_n, y_n) \)</p>
+
+<p>\( x_n \) is the feature vector, \( y_n \) is the label.</p>
+
+<p><strong>Hypothesis</strong>: \( h(x) = σ[a(x)] \), interpreted as a probability</p>
+
+<p>a(x) is a linear function of the feature vector x (some higher order polynomial of the original 
+features if higher complexity is needed), and σ(a) is the logistic sigmoid function that maps the 
+output of the linear layer to (0, 1) as a probability of that data point being in the class 1.</p>
+
+<p><strong>Goal</strong>: to compute the probability of each data point being in each class by optimizing the logistic 
+cost function. Potentially classify the data points by thresholding on the probability.</p>
+
+<p>Quoting Prof. Y. Abu-Mostafa, “The output of logistic regression is treated <em>genuinely as probability 
+even during learning</em>. ” The data that is given to us does not tell us the probability, only the labels. 
+These labels affect the model we fit and the probability we get from it.</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_101.png" alt="Drawing" style="width: 300px;" /></center>
+<p><br /></p>
+
+<p>+1 and -1 represent the class labels. We are trying to learn f from the data, notwithstanding the 
+fact that examples are giving us only values of y, that happen to be generated by f. We want to take 
+the examples, and then generate h that approximates the hidden target function, f.</p>
+
+<p>Learn:</p>
+
+<script type="math/tex; mode=display">h(x) = σ(w^T x) \approx f(x)</script>
+
+<p>Since we have already shown the legitimacy of using the logistic sigmoid σ here, we are going to make 
+the approximation as good as possible according to some error measure. How do we choose the error 
+measure? It must have two properties,</p>
+
+<ol>
+  <li>Something that if we minimize it, we are going to do well. Plausible.</li>
+  <li>Something that will be friendly to the optimizer.</li>
+</ol>
+
+<p>Likelihood is a plausible error measure with the two properties. Now we ask, if h = f, how likely 
+will we get a certain y from <strong>x</strong>? Note that \( σ(-a) = 1 - σ(a) \), we can write</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_103.png" alt="Drawing" style="width: 300px;" /></center>
+<p><br /></p>
+
+<p>Hence, with the assumption of independence, the likelihood of the data 
+\( D = (\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), …, (\mathbf{x}_N, y_N) \) is</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_104.png" alt="Drawing" style="width: 250px;" /></center>
+<p><br /></p>
+
+<p>Then we show that maximizing the likelihood is equivalent to minimizing error. (The error is always 
+of a certain form, namely the mean of the sum of some deviance between the label and the prediction 
+given by the hypothesis.)</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_105.png" alt="Drawing" style="width: 300px;" /></center>
+<p><br /></p>
+
+<p>Don’t forget it’s a function of the parameter, the weight vector w, with given yn and xn. The summand 
+is the in-sample error \( E_{in} \), and it is of the cross-entropy error form. It’s a convex function but 
+has no closed-form solution. How to minimize it? Use gradient descent.</p>
+
+<p>We will update the weight vector with step size η and step unit vector v such that</p>
+
+<script type="math/tex; mode=display">w(1) = w(0) + ηv</script>
+
+<p>Therefore the change of the in-sample error is</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_106.png" alt="Drawing" style="width: 500px;" /></center>
+<p><br /></p>
+
+<p>We want the change of \( E_{in} \) to be as negative as possible, hence</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_107.png" alt="Drawing" style="width: 200px;" /></center>
+<p><br /></p>
+
+<p>Instead of having a fixed step size, sometimes leads to slow convergence, a better alternative is to 
+have a fixed <strong>learning rate</strong>. It basically means that we incorporate the magnitude of the vector 
+\( E_{in}[w(0)] \)
+into η, so that the step size is proportional to the magnitude of the gradient.</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/caltech2.png" alt="Drawing" style="width: 600px;" /></center>
+<p><br /></p>
+
+<p>This makes sense, since the steeper the surface is, we are more confident to take a large step, and 
+vice versa. Therefore the expression for the weight vector update is</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/daum_equation_108.png" alt="Drawing" style="width: 150px;" /></center>
+<p><br /></p>
+
+<p>Finally, the logistic regression algorithm is shown below.</p>
+
+<p><br /></p>
+<center><img src="/assets/images/logreg/caltech3.png" alt="Drawing" style="width: 600px;" /></center>
+<p><br /></p>
+
+<h5 id="some-notes-on-running-the-algorithm">Some notes on running the algorithm</h5>
+
+<ul>
+  <li>
+    <p>Initialization. For logistic regression, <strong>w</strong>(0) can be 0, while starting at σ(0) = 0.5 
+makes sense because it’s the most uncertain state.</p>
+  </li>
+  <li>
+    <p>Termination. Again, not so much a problem for logistic regression as for other models like neural 
+networks, since the logistic optimization problem is nicely convex. Generally we use a combination 
+of criteria to serve as a stop condition. For example, 
+let Δ<strong>w</strong> &lt; threshold. Pathological behaviors arise when the function looks like</p>
+  </li>
+</ul>
+
+<center><img src="/assets/images/logreg/caltech4.png" alt="Drawing" style="width: 500px;" /></center>
+
+<ul>
+  <li>
+    <p>Sometimes a better approach is the <em>Stochastic Gradient Descent</em>. It’s remarkably efficient and 
+often yields good results.</p>
+  </li>
+  <li>
+    <p>The king of all derivative-based methods: 
+<a href="https://en.wikipedia.org/wiki/Conjugate_gradient_method">conjugate gradient</a>. The idea is doing 2nd order 
+optimization without actually compute the Hessian.</p>
+  </li>
+</ul>
+
+  </article>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page4">Older</a>
+  
+  
+    <a class="pagination-item newer" href="/page2">Newer</a>
+  
+</div>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

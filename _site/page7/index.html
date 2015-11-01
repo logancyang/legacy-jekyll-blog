@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Recipe for Intelligence &middot; coding, machine learning and other stuff
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <div class="posts">
+  
+  <article class="post">
+    <h1 class="post-title">
+      <a href="/2015/10/07/machine-learning-foundations-the-learning-problem/">
+        Machine Learning Foundations: The Learning Problem
+      </a>
+    </h1>
+
+    <time datetime="2015-10-07T00:00:00-05:00" class="post-date">07 Oct 2015</time>
+
+    <h3 id="the-essence-of-machine-learning">The Essence of Machine Learning</h3>
+
+<p>Improving some performance measure with experience computed from data.</p>
+
+<p><strong>Data –&gt; ML –&gt; Improved performance measure</strong></p>
+
+<h3 id="when-to-use-machine-learning">When to Use Machine Learning?</h3>
+
+<ol>
+  <li>Exists some ‘underlying pattern’ to be learned - so the ‘performance measure’ can be improved.</li>
+  <li>But NO programmable (easy) definition - so ML is needed.</li>
+  <li>Somehow there’s <strong>data</strong> about the pattern - so ML has input to learn from.</li>
+</ol>
+
+<h3 id="some-interesting-examples">Some Interesting Examples</h3>
+
+<ul>
+  <li>Food:
+    <ul>
+      <li>data: tweets (words + location)</li>
+      <li>skill: tell food poisoning likeliness of restaurants</li>
+    </ul>
+  </li>
+  <li>Clothing:
+    <ul>
+      <li>data: sales figures + client surveys</li>
+      <li>skill: give fashion recommendation to clients</li>
+    </ul>
+  </li>
+  <li>Housing:
+    <ul>
+      <li>data: characteristics of buildings and energy loads</li>
+      <li>skill: predict energy loads</li>
+    </ul>
+  </li>
+  <li>Transportation:
+    <ul>
+      <li>data: traffic sign images and meanings</li>
+      <li>skill: recognize traffic signs</li>
+    </ul>
+  </li>
+  <li>Education:
+    <ul>
+      <li>data: students’ records of quizzes</li>
+      <li>skill: predict whether a student can answer another quiz question correctly</li>
+    </ul>
+  </li>
+  <li>Entertainment:
+    <ul>
+      <li>data: how many users have rated some movies</li>
+      <li>skill: predict how a user would rate an unrated movie</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="components-of-ml">Components of ML</h3>
+
+<ul>
+  <li>Input feature vector <strong>x</strong></li>
+  <li>Output label y</li>
+  <li>Target function f: <strong>x</strong> -&gt; y</li>
+  <li>Data: training set</li>
+</ul>
+
+<script type="math/tex; mode=display">D=\\{ (\mathbf{x}\_1, y\_1),(\mathbf{x}\_2, y\_2), ... (\mathbf{x}\_N, y\_N) \\}</script>
+
+<ul>
+  <li>Hypothesis &lt;=&gt; skill
+    <ul>
+      <li>g: <strong>x</strong> -&gt; y</li>
+      <li>‘learned’ formula to be used</li>
+    </ul>
+  </li>
+</ul>
+
+<p>f: ideal formula</p>
+
+<p>g: hypothesis, approximates f</p>
+
+<ul>
+  <li>Purpose of ML: unknown f, find g that approximates f</li>
+  <li>Hypothesis set <strong>H</strong>, includes many g’s</li>
+</ul>
+
+<script type="math/tex; mode=display">g\in \mathbf{H}= \\{ h_{ k } \\}</script>
+
+<p><br />
+<br />
+### Machine Learning’s Relationship with Data Mining, Artificial Intelligence and Statistics</p>
+
+<h4 id="ml-vs-dm">ML vs. DM</h4>
+
+<ul>
+  <li>Definition
+    <ul>
+      <li>ML: find hypothesis g ~ f.</li>
+      <li>DM: use (huge) data to find ‘interesting’ properties.</li>
+    </ul>
+  </li>
+  <li>For KDD Cup, ML = DM</li>
+  <li>If ‘interesting property’ is g ~ f, ML and DM can help each other.</li>
+  <li>Traditional DM also focuses on efficient computing in large databases.</li>
+</ul>
+
+<h4 id="ml-vs-ai">ML vs. AI</h4>
+
+<ul>
+  <li>g ~ f is intelligent: ML can realize AI, among other routes.</li>
+  <li>e.g. chess playing
+    <ul>
+      <li>traditional AI: game tree</li>
+      <li>ML for AI: learn from board data</li>
+    </ul>
+  </li>
+</ul>
+
+<p><em>“ML is a possible route to realize AI”</em></p>
+
+<h4 id="ml-vs-statistics">ML vs. Statistics</h4>
+
+<ul>
+  <li>Statistics: use data to make inference about an unknown process</li>
+  <li>g is an inference outcome, f is unknown
+    <ul>
+      <li>statistics can be used to achieve ML</li>
+    </ul>
+  </li>
+  <li>Traditional statistics also focuses on provable results with math assumptions, and care less about
+computation.</li>
+</ul>
+
+<p><em>“Statistics is a useful tool for ML”</em></p>
+
+<p><br />
+<br />
+<br />
+#### Side note for redcarpet with MathJax:</p>
+
+<ul>
+  <li>doesn’t respect $ or $$ (will parse characters within these, such as _), but has workarounds:</li>
+  <li>has a useful option, no_intra_emphasis, so underscores between ascii characters are not converted to <code>&lt;em&gt;</code> tags, so <code>$x_1$</code> is fine</li>
+  <li><strong>need to escape underscores</strong> after non-ascii characters, for example <code>$\mathbf{x}\_1$</code></li>
+  <li>need to double escape curly bracket: <code>\\{</code></li>
+  <li>need three backslash for new line <code>\\\</code></li>
+  <li><code>=</code> cannot be on its own line</li>
+</ul>
+
+
+  </article>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page8">Older</a>
+  
+  
+    <a class="pagination-item newer" href="/page6">Newer</a>
+  
+</div>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

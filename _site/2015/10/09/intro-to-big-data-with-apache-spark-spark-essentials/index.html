@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Big Data with Apache Spark: Spark Essentials &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Big Data with Apache Spark: Spark Essentials</h1>
+  <time datetime="2015-10-09T00:00:00-05:00" class="post-date">09 Oct 2015</time>
+  <h4 id="pyspark-python-programming-interface-to-spark">PySpark: Python Programming Interface to Spark</h4>
+
+<p>A Spark program first creates a SparkContext object</p>
+
+<ul>
+  <li>Tells Spark how and where to access a cluster</li>
+  <li>pySpark shell and Databricks Cloud automatically create the <strong>sc</strong> variable</li>
+  <li>iPython and programs must use a constructor to create a new SparkContext</li>
+</ul>
+
+<p>Use <strong>SparkContext</strong> to create RDDs</p>
+
+<p>The master parameter for <strong>sc</strong> determines which type and size of cluster to use</p>
+
+<ul>
+  <li>local clusters. can use 1 or K (#cores) worker threads</li>
+  <li>remote clusters. can connect to a Spark cluster or an Apache Mesos cluster</li>
+  <li>In the lab, the master param is set</li>
+</ul>
+
+<p>Resilient Distributed Datasets</p>
+
+<ul>
+  <li>The primary abstraction in Spark</li>
+  <li><strong>Immutable</strong> once constructed</li>
+  <li>Track lineage info to efficiently recompute lost data</li>
+  <li>Enable operations on collection of elements in parallel</li>
+</ul>
+
+<p>You construct RDDs</p>
+
+<ul>
+  <li>by <strong>parallelizing</strong> existing Python collections (lists)</li>
+  <li>by <strong>transforming</strong> an existing RDD</li>
+  <li>from <strong>files</strong> in HDFS or any other storage system</li>
+</ul>
+
+<p><img src="/assets/images/RDD1.png" alt="Drawing" style="width: 400px;" />
+<img src="/assets/images/RDD2.png" alt="Drawing" style="width: 400px;" />
+<img src="/assets/images/RDD3.png" alt="Drawing" style="width: 400px;" />
+<img src="/assets/images/RDD4.png" alt="Drawing" style="width: 400px;" />
+<img src="/assets/images/RDD5.png" alt="Drawing" style="width: 600px;" /></p>
+
+<p>Transformations are not calculated right away, they are like a recipe</p>
+
+<p>Review: Python lambda functions
+- small anonymous functions (not bound to a name)
+- <code>lambda a, b: a + b</code>
+- Can use lambda functions when function objects are required
+- Restricted to a single expression</p>
+
+<p>Transformations: (<code>map</code>, <code>filter</code> run in drivers, <code>lambda</code>s run in workers)</p>
+
+<p>```
+»&gt; rdd = sc.parallelize([1, 2, 3, 4])
+»&gt; rdd.map(lambda x: x*2)
+RDD: [1, 2, 3, 4] -&gt; [2, 4, 6, 8]</p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd.filter(lambda x: x%2 == 0)
+RDD: [1, 2, 3, 4] -&gt; [2, 4]</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd2 = sc.parallelize([1, 4, 2, 2, 3])
+rdd2.distinct()
+RDD: [1, 4, 2, 2, 3] -&gt; [1, 4, 2, 3]</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd = sc.parallelize([1, 2, 3])
+rdd.Map(lambda x: [x, x+5])
+RDD: [1, 2, 3] -&gt; [[1, 6], [2, 7], [3, 8]]</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p>// flatMap: flattens the list of lists -&gt; list</p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd.flatMap(lambda x: [x, x+5])
+RDD: [1, 2, 3] -&gt; [1, 6, 2, 7, 3, 8]</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p>// Function literals are closures automatically passed to workers
+```</p>
+
+<p>Transformation is not executed right away: <strong>lazy evaluation</strong>. 
+Spark remembers the recipe, and perform it when there’s an action.</p>
+
+<p><br />
+#### Spark Actions</p>
+
+<p><img src="/assets/images/RDD6.png" alt="Drawing" style="width: 600px;" /></p>
+
+<p>```
+»&gt; rdd = sc.parallelize([1, 2, 3])
+»&gt; rdd.reduce(lambda a, b: a * b)
+Value: 6</p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd.take(2)
+Value: [1, 2] # as list</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd.collect()
+Value: [1, 2, 3] # as list. Careful, make sure the driver’s memory is big enough!</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<h1 id="getting-data-out-of-rdd">getting data out of rdd</h1>
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd = sc.parallelize([5, 3, 2, 1])
+rdd.takeOrdered(3, lambda s: -1 * s)
+Value: [5, 3, 2] # as list at the driver. lambda s: -1 * s makes the list in decreasing value
+```</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p><br />
+#### Spark Programming Model</p>
+
+<p>```
+lines = sc.textFile(“…”, 4)     # 4 partitions
+print lines.count() # count: action
+# count(): read data; sum # lines within partitions; combine sum in driver</p>
+
+<p>comments = lines.filter(isComment)
+print lines.count(), comments.count()   # comments.count() will cause recomputation, re-reading the data
+```</p>
+
+<p>To Avoid Reloading the Data</p>
+
+<p><code>
+lines = sc.textFile(“…”, 4)     # 4 partitions
+lines.cache()   # save, don’t recompute! Will run much much faster!
+comments = lines.filter(isComment)
+print lines.count(), comments.count()
+</code></p>
+
+<p>Spark life cycle</p>
+
+<ul>
+  <li>Create RDDs from external data or <strong>parallelize</strong> a collection in your driver program</li>
+  <li>Lazily transform them into new RDDs</li>
+  <li><code>cache()</code> some RDDs for reuse</li>
+  <li>Perform <strong>actions</strong> to execute parallel computation and produce results</li>
+</ul>
+
+<p>Spark Key-Value RDDs</p>
+
+<ul>
+  <li>Similar to MapReduce, Spark supports Key-Value pairs</li>
+  <li>Each element of a Pair RDD is a pair tuple</li>
+</ul>
+
+<p><code>
+&gt;&gt;&gt; rdd = sc.parallelize([(1, 2), (3, 4)])
+RDD: [(1, 2), (3, 4)]
+</code></p>
+
+<ul>
+  <li>Key-Value Transformation: <code>reduceByKey(func)</code>, <code>sortByKey(func)</code>, <code>groupByKey(func)</code></li>
+</ul>
+
+<p>```
+»&gt; rdd = sc.parallelize([(1, 2), (3, 4), (3, 6)])
+»&gt; rdd.reduceByKey(lambda a, b: a + b)
+RDD: [(1, 2), (3, 4), (3, 6)] -&gt; [(1, 2), (3, 10)]</p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
+rdd2.sortByKey()
+RDD: [(1, ‘a’), (2, ‘c’), (1, ‘b’)] -&gt; [(1, ‘a’), (1, ‘b’), (2, ‘c’)]</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
+rdd2.groupByKey()
+RDD: [(1, ‘a’), (2, ‘c’), (1, ‘b’)] -&gt; [(1, [‘a’, ‘b’]), (2, [‘c’])]
+# be careful, groupByKey() can cause a lot of data movement across the network and create large Iterables at workers
+```</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p><br />
+#### PySpark Closures</p>
+
+<p>PySpark shared variables</p>
+
+<ul>
+  <li>Broadcast Variables
+    <ul>
+      <li>efficiently send large, read-only value to all workers</li>
+      <li>saved at workers for use in one or more Spark operations</li>
+      <li>like sending a large, read-only lookup table to all the nodes</li>
+    </ul>
+  </li>
+  <li>Accumulators
+    <ul>
+      <li>aggregate values from workers back to driver</li>
+      <li>only driver can access value of accumulator</li>
+      <li>for tasks, accumulators are write-only.</li>
+      <li>use to count errors seen in RDD across workers</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Broadcast variables</strong>: send large dataset to workers, cache at workers</p>
+
+<p><code>
+# at the driver
+&gt;&gt;&gt; broadcastVar = sc.broadcast([1, 2, 3])
+# at the worker (code passed via a closure)
+&gt;&gt;&gt; broadcastVar.value
+[1, 2, 3]
+</code></p>
+
+<p>Example,</p>
+
+<p>```
+# Lookup the locations of the call signs on the RDD contactCounts.
+# We load a list of call sign prefixes to country code to support this lookup.
+# signPrefixes = loadCallSignTable(), load repeatedly for each worker, NOT GOOD
+signPrefixes = sc.broadcast(loadCallSignTable())</p>
+
+<p>def processSignCount(sign_count, signPrefixes):
+    country = lookupCountry(sign_count[0], signPrefixes.value)
+    count = sign_count[1]
+    return (country, count)</p>
+
+<p>countryContactCounts = 
+(contactCounts.map(processSignCount).reduceByKey(lambda x, y: x+y)))
+```</p>
+
+<p><strong>Accumulators</strong></p>
+
+<ul>
+  <li>variables that can only be “added” to by associative operations</li>
+  <li>used to efficiently implement parallel counters and sum</li>
+  <li>only driver can read an accumulator’s value, not tasks</li>
+</ul>
+
+<p>```
+»&gt; accum = sc.accumulator(0) # create the accumulator, set value to 0
+»&gt; rdd = sc.parallelize([1, 2, 3, 4])
+»&gt; def f(x):
+»&gt;     global accum
+»&gt;     accum += x</p>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>rdd.foreach(f)
+accum.value
+Value: 10</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<p>////</p>
+
+<h1 id="another-example-count-empty-lines">another example, count empty lines</h1>
+<p># create the rdd: file
+file = sc.textFile(inputFile)
+# create accumulator[int] init to 0
+blanklines = sc.accumulator(0)</p>
+
+<p>def extractCallSigns(line):
+    global blankLines  # make the global variable accessible
+    if (line == “”):
+        blankLines += 1
+    return line.split(“ “)</p>
+
+<h1 id="new-rdd-callsigns">new rdd: callSigns</h1>
+<p>callSigns = file.flatMap(extractCallSigns)
+print “Blank lines: %d” % blankLines.value
+```</p>
+
+<p>Tasks at workers cannot access accumulator’s values
+Tasks see accumulators as write-only vars
+Accumulators can be used in actions and transformations
+Actions: each task’s update to accumulator is applied only once
+Transformations: no guarantees (use only for debugging)
+Types: integers, double, long, float. See lab for example of custom type.
+Summary:
+master param: specify the # workers
+when create an RDD, specify # partitions for the RDD, and Spark will automatically create that RDD spread across the workers.
+when perform transforms or actions, Spark automatically push a closure containing that function to the workers so that it can run at the workers.</p>
+
+<p><br />
+#### Spark tutorial</p>
+
+<ul>
+  <li>transforms: <code>map()</code>; <code>filter()</code></li>
+  <li>actions: <code>count()</code>; <code>collect()</code>; <code>first()</code> is equivalent to <code>take(1)</code>; <code>take()</code>; <code>top()</code> (descending order); 
+<code>takeOrdered()</code> (ascending order); <code>reduce()</code></li>
+  <li>advanced actions: <code>takeSample(withReplacement=T/F, num, seed)</code>, <code>countByValue()</code>: a histogram dictionary</li>
+  <li>additional transforms: <code>flatMap()</code>; <code>groupByKey()</code>: only use when <code>reduceByKey()</code> is not helpful; <code>reduceByKey()</code></li>
+  <li>advanced transforms: <code>mapPartitions()</code>, <code>mapPartitionWithIndex()</code></li>
+  <li>Caching RDDs: <code>.cache()</code>, <code>.is_cached</code></li>
+  <li><code>.unpersist()</code>, <code>.getStorageLevel()</code>, <code>.toDebugString()</code></li>
+</ul>
+
+<p>When learning Spark, for easy debugging, this form is recommended:</p>
+
+<p><code>
+RDD.transformation1()
+RDD.action1()
+RDD.transformation2()
+RDD.action2()
+</code></p>
+
+<p>When more experienced with Spark, write like this,</p>
+
+<p><code>
+RDD.transformation1().transformation2().action()
+</code></p>
+
+<p>Readability and code style: to make the expert coding style more readable, enclose the statement in 
+parentheses and put each method, transformation, or action on a separate line.</p>
+
+<p><code>
+# Final version
+(sc
+ .parallelize(data)
+ .map(lambda y: y - 1)
+ .filter(lambda x: x &lt; 10)
+ .collect())
+</code></p>
+
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

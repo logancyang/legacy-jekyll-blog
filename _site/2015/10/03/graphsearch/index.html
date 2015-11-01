@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Graph Search: Subsets, Permutations &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Graph Search: Subsets, Permutations</h1>
+  <time datetime="2015-10-03T00:00:00-05:00" class="post-date">03 Oct 2015</time>
+  <h3 id="traits-for-using-bfs">Traits for using BFS:</h3>
+
+<ol>
+  <li>Shortest path in a simple graph: given a initial state, a final state, a transition rule between states, ask how many (the least #) transitions from init to final.</li>
+  <li>Graph traversal. Only visit each node once.</li>
+</ol>
+
+<h3 id="traits-for-using-dfs">Traits for using DFS:</h3>
+
+<p>(DFS method: build search tree, check conditions for recursing down a branch)</p>
+
+<ol>
+  <li>Enumerate subsets, permutations.</li>
+  <li>Find all possible solutions.</li>
+</ol>
+
+<p>Generally, when we do a search to enumerate cases using DFS recursion, there are 3 steps we should keep in mind,</p>
+
+<ol>
+  <li>Define the recursion.</li>
+  <li>Think about what to do in the base case. When should we return directly.</li>
+  <li>In general cases (other than base case), how to make the problem smaller and recurse down.</li>
+</ol>
+
+<h3 id="subsets-i--ii-dfs-template">Subsets I &amp; II (DFS template)</h3>
+
+<p>The thinking is to categorize cases by different head items. 
+Enumerate the head item of a case (path) in a for loop in this way:</p>
+
+<ol>
+  <li>Append the item into the path.</li>
+  <li>DFS recurse down onto the next case (generally a smaller case, with advanced index and/or updated reference parameter).</li>
+  <li>Pop the item from the path, to iterate to a different head item on the next iteration.</li>
+</ol>
+
+<p>For this specific Subsets problem, the base case is just adding the current path. For Subsets II, the only difference is that the input can have duplicates and we don’t want the result subsets to be duplicate sets. Since the input is sorted (or we sort it by ourselves before DFS), when we encounter a number which is equal to the previous number in the for loop, we continue. Because the same number is taking the same place as the previous one, the resulting subsets with either of them are the same sets.</p>
+
+<h3 id="permutations-i--ii-dfs-template">Permutations I &amp; II (DFS template)</h3>
+
+<p>It’s quite similar to the Subsets problems. The thinking is also to categorize cases by different head items, and enumerate the head item of a case (path) in a for loop. The difference is that now we don’t want to keep track of the index as a parameter passed into DFS. Our base case is that when the path has the same length as the original input sequence, the current path is added.</p>
+
+<p>The for loop is now as such:</p>
+
+<ol>
+  <li>Append the item into the path.</li>
+  <li>DFS recurse down after appending the new head item. Avoid the same number by checking if it’s already in path, if yes, continue.</li>
+  <li>Pop the item from the path, iterate to a different head item on the next iteration.</li>
+</ol>
+
+<p>For permutations II where we allow duplicates in the input list, we must sort it first and then do DFS. In the results, duplicate permutations must be avoided, but how? We introduce a new list, visited. We only add continuous same numbers to path, meaning if the previous same number is not visited, we continue. Check the code for details.</p>
+
+<h3 id="summary-for-subsets-and-permutations">Summary for Subsets and Permutations</h3>
+
+<p>This kind of problems is not easy to understand. Recursion tree diagrams can help to clarify, but also keep in mind the code templates: inside the for loop, check condition to recurse down, then append in path, DFS down with path (with appropriate update in some parameter), pop from path.</p>
+
+<p><br /></p>
+
+<h4 id="subsets">Subsets</h4>
+
+<p><img src="/assets/images/subsets.png" alt="Drawing" style="width: 1000px;" /></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @param S: The set of numbers.</span>
+<span class="sd">    @return: A list of lists. See example.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">subsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">S</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">([],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+        <span class="c"># base case, add each path of each recursion (sorted as required)</span>
+        <span class="c"># must make new list, list(path). If not, </span>
+        <span class="c"># res (path) points to the obj passed in, which is empty at the beginning</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="c"># i is the first item&#39;s index in a path</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)):</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+
+<p><br /></p>
+
+<h4 id="permutations">Permutations:</h4>
+
+<p><img src="/assets/images/permutations.png" alt="Drawing" style="width: 1000px;" /></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @param nums: A list of Integers.</span>
+<span class="sd">    @return: A list of permutations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">permute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">nums</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">([],</span> <span class="n">nums</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">DFS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="c"># base case</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="c"># must make new list, list(path). If not, </span>
+            <span class="c"># it points to the obj passed in, which is empty at the beginning</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="c"># check if the ith number is already in path</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+
+<p>Combination Sum is the Sum version of Subsets, with duplicates allowed.</p>
+
+<p><br /></p>
+
+<h4 id="palindrome-partitioning">Palindrome Partitioning</h4>
+
+<p>We deem the cuts to be the member of a subset, and this problem becomes finding all subsets of valid cuts. If there are N cuts, we can choose whether to include each cut, so there are 2^N ways to cut our string. For O(2^N) problems, it’s usually a Subsets problem.</p>
+
+<p>The thinking is that, we have a substring from start to i, s[start:i], called prefix. This is the next head item of the new node (path) in the DFS tree, we later append it to path, DFS down, and pop. But before that we should check if it is a valid palindrome.</p>
+
+<p>For a fixed start, we loop through all substrings starting there, check if it satisfies the condition (palindrome in this case), if yes DFS down starting at i (the next char after s[old_start:i]). Again the template of DFS:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">old_start_ind</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+    <span class="n">get</span> <span class="n">next_head</span> <span class="n">item</span>
+    <span class="n">check</span> <span class="k">if</span> <span class="n">next_head</span> <span class="n">satisfies</span> <span class="n">our</span> <span class="n">condition</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">,</span> <span class="k">continue</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_head</span><span class="p">)</span>
+    <span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span> <span class="ow">or</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>    <span class="c"># i or i+1 greater than old_start_ind</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+
+<p>For <code>"aab"</code>, we have start = 0: <code>|a|ab, |aa|b, |aab|</code>; start = 1: <code>a|a|b, a|ab|</code>; start = 2: <code>aa|b|</code>; start = 3 == len, <code>aab|</code>, add one full path and return. start progresses by new recursion, i scans inside each recursion from <code>start+1</code> to <code>len+1</code>.</p>
+
+<p>This is the method to enumerate all substrings that satisfies some condition.</p>
+
+<p><br /></p>
+
+<h4 id="factor-combinations">Factor Combinations</h4>
+
+<p>For example, 8 -&gt; <code>[[2, 2, 2], [2, 4]]</code>. Do not include 1 or n as a factor, and each sublist should be ascending.</p>
+
+<p>This is a typical DFS problem: list all solutions (combinations) or a certain decomposition problem, in this case,
+factorization.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">factors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="c"># base case</span>
+        <span class="c"># len(path) == 1 is the case [n], which is not included in this question</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="c"># recursion</span>
+        <span class="c"># factor must include n itself</span>
+        <span class="c"># or when it&#39;s down to the last factor, it&#39;s not added</span>
+        <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c"># check if it&#39;s a factor of not</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">factor</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c"># ensure ascending order</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">or</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">factor</span><span class="p">:</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">factor</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">return</span></code></pre></div>
+
+<p>3 points that need special attention in this particular problem,</p>
+
+<ul>
+  <li>For n &lt;= 3, <code>result = []</code></li>
+  <li>For the loop from 2 to n, must include n: <code>for factor in xrange(2, n+1): ...</code>. Because if we don’t include n,
+the factors are not added to <code>path</code>. For example,</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">If we use xrange(2, n)...
+
+Input: 8
+
+Ex1:
+
+1st level DFS: n = 8, factor = 2, dfs(n/2 = 4, [2])
+2nd level DFS: n = 4, factor = 2, dfs(n/2 = 2, [2, 2])
+3rd level DFS: n = 2, factor is in xrange(2, 2) which is nothing, abort
+Failed to add path [2, 2, 2]
+
+Ex2:
+
+1st level DFS: n = 8, factor = 2, dfs(n/2 = 4, [2])
+2nd level DFS: n = 4, factor is in xrange(2, 4), factor cannot reach 4
+Failed to add path [2, 4]</code></pre></div>
+
+<ul>
+  <li>To ensure ascending order in <code>path</code>s, check for <code>path == [] or path[-1] &lt;= factor</code> before <code>append(factor)</code>.</li>
+</ul>
+
+<p>(Note that Python has short circuit evaluation in the conditionals. For <code>or</code> it means that if <code>path == []</code>, the 
+latter part(s) won’t be checked. So there won’t be a case where <code>path[-1]</code> does not exist in this expression.)</p>
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

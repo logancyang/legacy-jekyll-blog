@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Big Data with Apache Spark: Intro and Motivation &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Big Data with Apache Spark: Intro and Motivation</h1>
+  <time datetime="2015-10-09T00:00:00-05:00" class="post-date">09 Oct 2015</time>
+  <h4 id="data-science-vs-databases">Data Science vs Databases:</h4>
+
+<p>In contrast to databases which have valuable data such as bank or medical records, data science has 
+cheap data like web logs, GPS data, sensor data. So data science deals with Big Data.</p>
+
+<p><strong>CAP theorem</strong> for data science: we can only have 2 of the 3 following properties, we can’t have all.</p>
+
+<ul>
+  <li>Consistency</li>
+  <li>Availability</li>
+  <li>Partition tolerance</li>
+</ul>
+
+<p>Databases use SQL, in data science we use NoSQL data stores. Much of the data in data science are 
+non-structured or semi-structured, cannot be stored in relational databases. NoSQL has much more rich 
+queries than SQL.</p>
+
+<h4 id="data-science-vs-scientific-computing">Data Science vs Scientific Computing</h4>
+
+<p><strong>SC</strong>: physics-based models; <strong>DS</strong>: general ML classifier</p>
+
+<p><strong>SC</strong>: mostly deterministic, precise; <strong>DS</strong>: statistical models, handle unmodeled complexity</p>
+
+<p><strong>SC</strong>: run on supercomputers; <strong>DS</strong>: run on cheap clusters like EC2</p>
+
+<h4 id="data-science-vs-machine-learning">Data Science vs Machine Learning</h4>
+
+<p><strong>ML</strong>: developing new models; <strong>DS</strong>: explore models, build and tune hybrids</p>
+
+<p><strong>ML</strong>: Prove mathematical properties of models; <strong>DS</strong>: Understand empirical properties</p>
+
+<p><strong>ML</strong>: Improve/validate on a few small clean datasets; <strong>DS</strong>: Develop/use tools that can handle massive datasets</p>
+
+<p><strong>ML</strong>: Publish a paper; <strong>DS</strong>: take action!</p>
+
+<h4 id="doing-data-science">Doing data science</h4>
+
+<ol>
+  <li>Identify the problem</li>
+  <li>Collect data</li>
+  <li>Clean the data</li>
+  <li>Build models</li>
+  <li>Evaluate models</li>
+  <li>Communicate results</li>
+</ol>
+
+<p>Cloud Computing enables Data Science: cheap clusters you can rent.</p>
+
+<h4 id="whats-hard-about-data-science">What’s hard about data science</h4>
+
+<ul>
+  <li>Overcoming assumptions</li>
+  <li>Making ad-hoc explanations of data patterns</li>
+  <li>Not checking enough (validate models, data pipeline integrity, etc.)</li>
+  <li>Overgeneralizing</li>
+  <li>Communication</li>
+  <li>Using statistical tests correctly</li>
+  <li>Prototype —&gt; Production</li>
+  <li>Data pipeline complexity</li>
+</ul>
+
+<h4 id="etl-extract-transform-load"><strong>ETL</strong>: Extract, Transform, Load</h4>
+
+<ol>
+  <li><strong>Extract</strong> data from the sources: file, database, event log, website, Hadoop Distributed File System (HDFS)</li>
+  <li><strong>Load</strong> data into the sink: Python, R, SQLite, NoSQL store, files, HDFS, Relational Database Management System (RDBMS)</li>
+  <li><strong>Transform</strong> data at the source or sink</li>
+</ol>
+
+<p>Plus:</p>
+
+<ul>
+  <li>Data transfer, serialization/deserialization</li>
+  <li>Transformation pipeline or workflow</li>
+  <li>Recording the execution of a workflow is known as capturing lineage or provenance. 
+Spark’s Resilient Distributed Datasets do this automatically.</li>
+</ul>
+
+<h4 id="data-science-roles">Data Science Roles:</h4>
+
+<p><strong>2 kinds of individual: business person, programmer.</strong></p>
+
+<ul>
+  <li>businessperson: excel functions/charts, VB</li>
+  <li>programmer:
+    <ul>
+      <li>Data sources: web scraping, web services API; excel sheets exported as Comma Separated Values (csv); 
+database queries</li>
+      <li>ETL: wget, curl, Beautiful Soup, lxml</li>
+      <li>Data Warehouse: flat files</li>
+      <li>Business Intelligence and Analytics: Numpy, Matplotlib, R, Matlab, Octave</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>2 kinds of organizations: an enterprise and a web company.</strong></p>
+
+<p>Other archetypes of individual:</p>
+
+<ul>
+  <li>Hackers: efficient programmers who uses R/Matlab, Python, SQL/Pig</li>
+  <li>Scripters: R/Matlab</li>
+  <li>Application Users: SAS, SPSS</li>
+</ul>
+
+<h4 id="big-data-and-hardware-trends">Big Data and Hardware Trends</h4>
+
+<p>Traditional data analysis tools: Unix shell cmd, Pandas, R. They all run on a single machine.
+Now, 1TB of disk is only $35, but it takes up to 3 hours to read 1TB of data.
+Solution: distribute data over large clusters.</p>
+
+<p>For example, a task such as counting words in really big documents can be done better with a cluster.
+In the cluster, some machines only process/store a specific part of the result.</p>
+
+<p>Why is cluster computing difficult?</p>
+
+<ul>
+  <li>Moving data is hard</li>
+  <li>Node failure</li>
+  <li>Node runs slow</li>
+</ul>
+
+<p>Solution 1: MapReduce</p>
+
+<ul>
+  <li>MapReduce deals with failures and slow tasks by re-launching the tasks on other machines.</li>
+  <li>MapReduce handles the execution of Map and Reduce functions on many machines including the <strong>shuffling 
+of data between Map and Reduce functions</strong>. It also automatically <strong>recovers from both machine failures 
+and slow machines.</strong></li>
+</ul>
+
+<p>Solution 2: Spark</p>
+
+<ul>
+  <li>Spark motivation: Disk I/O is very slow. Running MapReduce iteratively —&gt; speed of disk</li>
+  <li>Memory is cheap now: process in-memory, do not write to disk</li>
+  <li>Spark abstraction: Resilient Distributed Datasets (RDDs)</li>
+</ul>
+
+<p>RDDs enable us to write programs in terms of operations on distributed datasets. They are partitioned
+collections of objects spread across a cluster, stored in memory or on disk. RDDs are built and manipulated
+through a diverse set of parallel <strong>transformations</strong>: <code>map</code>, <code>filter</code>, <code>join</code>; and <strong>actions</strong>: <code>count</code>, 
+<code>collect</code>, <code>save</code>. Also, RDDs are automatically rebuilt on machine failure.</p>
+
+<p>On top of Apache Spark, there are <strong>Spark SQL</strong>, <strong>Spark Streaming</strong>, <strong>MLlib</strong> (machine learning), 
+<strong>GraphX</strong> (graph).</p>
+
+<p><em>Comments:</em></p>
+
+<p>Using memory instead of disks offers two huge benefits. The first benefit is that memory is much faster 
+than disks. The time to read or write a value to memory is only a few nanoseconds, while the time to 
+read or write is several milliseconds - that means <strong>memory is a million times faster than disks</strong>. The 
+second benefit is that keeping intermediate results in memory means that <strong>they do not have to be converted 
+into a format that can be stored on disks</strong>. The process of converting a memory object to a disk object is 
+called serialization and the process of converting a disk object to a memory object is called 
+deserialization. Serializing and deserializing objects is a very expensive and time consuming process. 
+Keeping intermediate results in memory avoids this significant overhead. Taken together, the faster 
+access times and avoidance of serialization/deserialization overhead make Spark much faster than Map Reduce 
+- up to 100 times faster!</p>
+
+<p><br /></p>
+
+<h4 id="difference-between-spark-and-hadoop-mapreduce">Difference between Spark and Hadoop MapReduce</h4>
+
+<p><img src="/assets/images/sparkVsHadoop.png" alt="Drawing" style="width: 800px;" /></p>
+
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

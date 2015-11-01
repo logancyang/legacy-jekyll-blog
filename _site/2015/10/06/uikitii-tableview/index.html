@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      UIKit Fundamentals II - Table View &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">UIKit Fundamentals II - Table View</h1>
+  <time datetime="2015-10-06T00:00:00-05:00" class="post-date">06 Oct 2015</time>
+  <ul>
+  <li><code>UITableView</code> has 2 delegate protocols, a total of 44 methods:
+    <ul>
+      <li><code>UITableViewDelegate</code>: response to user <strong>events</strong></li>
+      <li><code>UITableViewDataSource</code>: access to <strong>data</strong> and cells</li>
+    </ul>
+  </li>
+  <li><code>UITableViewDelegate</code>
+    <ul>
+      <li>What should happen when a button in a cell is tapped?</li>
+      <li>What should be the response to cell selection? (*)</li>
+      <li>How should I respond when a user begins editing a row?</li>
+      <li>What should happen when a cell is deselected?</li>
+    </ul>
+  </li>
+  <li><code>UITableViewDataSource</code>
+    <ul>
+      <li>How many rows do I have? (*)</li>
+      <li>How many sections do I have?</li>
+      <li>What are the titles for the sections?</li>
+      <li>What is the cell view for each row? (*)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>(*) marked points are the most essential when building a table view.</p>
+
+<ul>
+  <li>TableView delegate method signatures: the first parameter of the methods in the TableView delegate
+is always the TableView itself (similar to the TextField delegate introduced earlier).</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">// UITextFieldDelegate</span>
+<span class="k">func</span> <span class="n">textField</span><span class="p">(</span><span class="nl">textField</span><span class="p">:</span> <span class="bp">UITextField</span><span class="p">,</span> <span class="n">shouldChangeCharactersInRange</span> <span class="nl">range</span><span class="p">:</span> <span class="n">NSRange</span><span class="p">,</span> \
+                <span class="n">replacementString</span> <span class="nl">string</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+            <span class="p">}</span>
+
+<span class="c1">// UITableViewDelegate</span>
+<span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">canEditRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+            <span class="p">}</span></code></pre></div>
+
+<ul>
+  <li><code>indexPath</code> is a struct with 2 members: row, section
+    <ul>
+      <li>For more on <a href="https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID83">structs</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Some questions that can be answered by the methods:</p>
+
+<ol>
+  <li>How many rows? <em>Data Source Protocol method</em></li>
+</ol>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span></code></pre></div>
+
+<ol>
+  <li>What is the cell for each row? <em>Data Source Protocol method</em></li>
+</ol>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">cellForRowAtIndexPath</span><span class="p">(</span><span class="n">_</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span><span class="o">?</span></code></pre></div>
+
+<ol>
+  <li>What should happen when a cell is selected?</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span></code></pre></div>
+
+<h3 id="practice-app-favoritethings">Practice App: FavoriteThings</h3>
+
+<p>(In <code>ios-nanodegree-uikit-2.0</code>, check out branch: <code>step4.1-favoriteThings-incomplete</code>)</p>
+
+<p>The storyboard is set, write the view controller code.</p>
+
+<ul>
+  <li>The correct implementation of getting the number of rows: use <code>numberOfRowsInSection</code> 
+given by the DataSource protocol.</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">favoriteThings</span><span class="p">.</span><span class="n">count</span>
+    <span class="p">}</span></code></pre></div>
+
+<ul>
+  <li>How <code>cellForRowAtIndexPath</code> Wrangles Cells
+    <ul>
+      <li>Cache the objects that are reused, only update the data. It lets scrolling become faster.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Steps for populating table cells:
+(in <code>cellForRowAtIndexPath</code>…)</p>
+
+<ol>
+  <li>Dequeue a reusable cell (using the correct reuse identifier).</li>
+  <li>Find the model object for the corresponding row.</li>
+  <li>Set the images and labels in the cell</li>
+  <li>Return the cell</li>
+</ol>
+
+<p>We use the standard <code>UITableViewCell</code> with property <code>textLabel</code>.</p>
+
+<p>Our reuse identifier is <code>FavoriteThingCell</code>.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">cellForRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
+      
+      <span class="c1">// TODO: Implement method</span>
+      <span class="c1">// 1. Dequeue a reusable cell from the table, using the correct “reuse identifier”</span>
+      <span class="c1">// 2. Find the model object that corresponds to that row</span>
+      <span class="c1">// 3. Set the images and labels in the cell with the data from the model object</span>
+      <span class="c1">// 4. return the cell.</span>
+        
+        <span class="k">let</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">tableView</span><span class="p">.</span><span class="n">dequeueReusableCellWithIdentifier</span><span class="p">(</span><span class="s">&quot;FavoriteThingCell&quot;</span><span class="p">)</span><span class="o">!</span>
+            <span class="kt">as</span> <span class="bp">UITableViewCell</span>
+        <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="o">?</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">favoriteThings</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cell</span>
+    <span class="p">}</span></code></pre></div>
+
+<p>Note: In <code>let cell...</code>, <code>as!</code> results in error, move <code>!</code> to the place it is to unwrap the optional:</p>
+
+<p><code>func dequeueReusableCellWithIdentifier(_ identifier: String) -&gt; UITableViewCell?</code></p>
+
+<h3 id="practice-app-doremi">Practice App: DoReMi:</h3>
+
+<p>The table in the storyboard is set, write the view controller code.</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
+
+<span class="k">class</span> <span class="nl">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">UITableViewDataSource</span> <span class="p">{</span>
+
+    <span class="c1">// Use this string property as your reuse identifier, </span>
+    <span class="c1">// Storyboard has been set up for you using this String.</span>
+    <span class="k">let</span> <span class="n">cellReuseIdentifier</span> <span class="o">=</span> <span class="s">&quot;MyCellReuseIdentifier&quot;</span>
+    
+    <span class="c1">// Choose some data to show in your table</span>
+    <span class="c1">// a list of dicts</span>
+    <span class="k">let</span> <span class="n">model</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;Do&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A deer. A female deer.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;Re&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A drop of golden sun.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;Mi&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A name, I call myself.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;Fa&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A long long way to run.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;So&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A needle pulling thread.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;La&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A note to follow So.&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s">&quot;text&quot;</span> <span class="o">:</span> <span class="s">&quot;Ti&quot;</span><span class="p">,</span> <span class="s">&quot;detail&quot;</span> <span class="o">:</span> <span class="s">&quot;A drink with jam and bread.&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
+    
+    <span class="c1">// Add the two essential table data source methods here</span>
+    
+    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">model</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">cellForRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
+        <span class="c1">// bug: not as!</span>
+        <span class="k">let</span> <span class="n">cell</span> <span class="o">=</span>  <span class="n">tableView</span><span class="p">.</span><span class="n">dequeueReusableCellWithIdentifier</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">cellReuseIdentifier</span><span class="p">)</span><span class="o">!</span> <span class="kt">as</span> <span class="bp">UITableViewCell</span>
+        
+        <span class="k">let</span> <span class="n">dictionary</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">model</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">]</span>
+        
+        <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="o">?</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">cell</span><span class="p">.</span><span class="n">detailTextLabel</span><span class="o">?</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">&quot;detail&quot;</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">cell</span>
+    <span class="p">}</span>
+
+<span class="p">}</span></code></pre></div>
+
+<h3 id="practice-app-bond-villains">Practice App: Bond Villains</h3>
+
+<p>Written model and view controller code, set the table in the storyboard.</p>
+
+<ol>
+  <li>The Villain Struct
+    <ul>
+      <li>What are its properties?</li>
+      <li>Does it have any custom init methods?</li>
+      <li>How will the static helper methods allow users to construct the model for the app?</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">struct</span> <span class="n">Villain</span> <span class="p">{</span>
+
+    <span class="k">let</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
+    <span class="k">let</span> <span class="nl">evilScheme</span><span class="p">:</span> <span class="n">String</span>
+    <span class="k">let</span> <span class="nl">imageName</span><span class="p">:</span> <span class="n">String</span>
+
+    <span class="k">static</span> <span class="k">let</span> <span class="n">NameKey</span> <span class="o">=</span> <span class="s">&quot;NameKey&quot;</span>
+    <span class="k">static</span> <span class="k">let</span> <span class="n">EvilSchemeKey</span> <span class="o">=</span> <span class="s">&quot;EvilScheme&quot;</span>
+    <span class="k">static</span> <span class="k">let</span> <span class="n">ImageNameKey</span> <span class="o">=</span> <span class="s">&quot;ImageNameKey&quot;</span>
+
+    <span class="c1">// Generate a Villain from a three entry dictionary</span>
+
+    <span class="k">init</span><span class="p">(</span><span class="nl">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="nl">String</span> <span class="p">:</span> <span class="n">String</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="n">Villain</span><span class="p">.</span><span class="n">NameKey</span><span class="p">]</span><span class="o">!</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">evilScheme</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="n">Villain</span><span class="p">.</span><span class="n">EvilSchemeKey</span><span class="p">]</span><span class="o">!</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">imageName</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="n">Villain</span><span class="p">.</span><span class="n">ImageNameKey</span><span class="p">]</span><span class="o">!</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<ol>
+  <li>
+    <p>The XCAssets. How are the images tied to the data in the model?</p>
+  </li>
+  <li>
+    <p>The View Controller</p>
+    <ul>
+      <li>How does the view controller get access to the model?</li>
+      <li>How are the UITableViewDataSource methods implemented?</li>
+      <li>What is the reuse identifier for the cells in this project? (This will be important in the next step)</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
+
+<span class="k">class</span> <span class="nl">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">UITableViewDataSource</span><span class="p">,</span> <span class="bp">UITableViewDelegate</span> <span class="p">{</span>
+
+    <span class="c1">// Get ahold of some villains, for the table</span>
+    <span class="c1">// This is an array of Villain instances</span>
+    <span class="k">let</span> <span class="n">allVillains</span> <span class="o">=</span> <span class="n">Villain</span><span class="p">.</span><span class="n">allVillains</span>
+
+    <span class="c1">// MARK: Table View Data Source</span>
+
+    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">allVillains</span><span class="p">.</span><span class="n">count</span>
+    <span class="p">}</span>
+
+    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">cellForRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">tableView</span><span class="p">.</span><span class="n">dequeueReusableCellWithIdentifier</span><span class="p">(</span><span class="s">&quot;VillainCell&quot;</span><span class="p">)</span><span class="o">!</span> <span class="kt">as</span> <span class="bp">UITableViewCell</span>
+        <span class="k">let</span> <span class="n">villain</span> <span class="o">=</span> <span class="n">allVillains</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">]</span>
+
+        <span class="c1">// Set the name and image</span>
+        <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="o">?</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">villain</span><span class="p">.</span><span class="n">name</span>
+        <span class="n">cell</span><span class="p">.</span><span class="n">imageView</span><span class="o">?</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">named</span><span class="p">:</span> <span class="n">villain</span><span class="p">.</span><span class="n">imageName</span><span class="p">)</span>
+
+        <span class="c1">// If the cell has a detail label, we will put the evil scheme in.</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="n">detailTextLabel</span> <span class="o">=</span> <span class="n">cell</span><span class="p">.</span><span class="n">detailTextLabel</span> <span class="p">{</span>
+            <span class="n">detailTextLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Scheme: \(villain.evilScheme)&quot;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">cell</span>
+    <span class="p">}</span>
+
+    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">canEditRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span>
+    <span class="p">}</span>
+
+<span class="p">}</span></code></pre></div>
+
+<p>To setup the tableView in the storyboard:</p>
+
+<ol>
+  <li>Add a table to the main view
+    <ul>
+      <li>Drag a table view to the main view and leave a bit space above (just below the battery sign)</li>
+    </ul>
+  </li>
+  <li>Add constraints: <em>add all missing constraints</em></li>
+  <li>Connect the table’s data source property to the view controller
+    <ul>
+      <li>Right click the table view, drag the small circle beside the outlet <em>dataSource</em> to the ViewController
+  icon on top</li>
+    </ul>
+  </li>
+  <li>Create a prototype cell
+    <ul>
+      <li>Go to Attributes inspector, set the <em>Prototype Cells</em> to 1</li>
+    </ul>
+  </li>
+  <li>Set the cell’s reuse identifier
+    <ul>
+      <li>Open Outline, under <em>Table View</em>, click <em>Table View Cell</em></li>
+      <li>In the Attributes inspector, specify the reuse identifier as “VillainCell”, the same as in the code.</li>
+      <li>HIT RETURN after entering the identifier! (ALWAYS hit return after inputting text in the inspectors,
+  or the storyboard won’t save it)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Running the app at this point, we can see the pictures and the names, but not the schemes.</p>
+
+<p>Change the style for the cells to show details</p>
+
+<h3 id="challenge-app-roshambo-with-history">Challenge App: Roshambo With History</h3>
+
+<p>Begin the project by checking out step4.7-roshamboWithHistory-incomplete.</p>
+
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>

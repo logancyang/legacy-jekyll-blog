@@ -5,11 +5,19 @@ permalink:           pretty
 relative_permalinks: true
 
 # Setup
-title:               Poole
-tagline:             The Jekyll Butler
-url:                 http://getpoole.com
+title:               Recipe for Intelligence
+tagline:             coding, machine learning and other stuff
+url:                 http://loganyc1934.github.io
 paginate:            1
 baseurl:             ""
+
+highlighter: pygments
+# Build settings
+markdown: redcarpet
+markdown_ext: markdown,mkdown,mkdn,mkd,md
+
+redcarpet:
+  extensions: ["no_intra_emphasis", "tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
 
 # Assets
 #
@@ -20,11 +28,16 @@ sass:
 
 # About/contact
 author:
-  name:              Mark Otto
-  url:               https://twitter.com/mdo
-  email:             markdotto@gmail.com
+  name:              Logan Yang
+  url:               https://twitter.com/chaololo
+  email:             lolo.yang86@gmail.com
 
 # Custom vars
 version:             2.0.0
 github:
-  repo:              https://github.com/poole/poole
+  repo:              https://github.com/loganyc1934
+
+# navigation bar
+pages_list:       
+  About: '/about'
+  Archive: '/archive'
