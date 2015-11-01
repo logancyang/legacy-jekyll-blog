@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "UIKit Fundamentals II - Table View"
+comments: True
 ---
 
 - `UITableView` has 2 delegate protocols, a total of 44 methods:

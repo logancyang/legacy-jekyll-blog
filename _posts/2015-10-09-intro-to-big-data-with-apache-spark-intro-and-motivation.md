@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Big Data with Apache Spark: Intro and Motivation"
+comments: True
 ---
 
 #### Data Science vs Databases:

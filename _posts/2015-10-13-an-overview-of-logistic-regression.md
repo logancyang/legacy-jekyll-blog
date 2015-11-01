@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "An Overview of Logistic Regression"
+comments: True
 ---
 
 #### _Why the sigmoid?_

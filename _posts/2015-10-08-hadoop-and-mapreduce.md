@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Big Data with Hadoop and MapReduce"
+comments: True
 ---
 
 ### Intro to Hadoop and MapReduce

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Graph Search: Subsets, Permutations"
+comments: True
 ---
 
 

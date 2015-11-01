@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "UIKit fundamentals I - Actions & Outlets, Presenting ViewControllers, Delegates"
+comments: True
 ---
 
 ## Outlets and Actions

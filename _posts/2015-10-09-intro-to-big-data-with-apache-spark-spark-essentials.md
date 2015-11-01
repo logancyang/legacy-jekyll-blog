@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Big Data with Apache Spark: Spark Essentials"
+comments: True
 ---
 
 #### PySpark: Python Programming Interface to Spark

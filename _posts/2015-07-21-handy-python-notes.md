@@ -1,9 +1,7 @@
 ---
 layout: post
 title: "Handy Python Notes"
-description: "Some notes for Python I had along the way"
-category: [coding, notes]
-tags: [python]
+comments: True
 ---
 
 ### Key Concepts

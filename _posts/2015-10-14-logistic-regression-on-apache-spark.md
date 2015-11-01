@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Logistic Regression with Apache Spark"
+comments: True
 ---
 
-Logistic regression is widely used to predict a binary response. It is a linear method as described 
+Logistic regression is widely used to predict binary responses. It is a linear method as described 
 in my other post 
-[An Overview of Logistic Regression](http://loganyc1934.github.io/spark/ml/2015/10/13/an-overview-of-logistic-regression/).
+[An Overview of Logistic Regression](http://loganyc1934.github.io/2015/10/13/an-overview-of-logistic-regression/).
 
 Binary logistic regression can be generalized into multinomial logistic regression to train and 
 predict multiclass classification problems. For example, for K possible outcomes, one of the outcomes 

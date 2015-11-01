@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Machine Learning Foundations: The Learning Problem"
+comments: True
 ---
 
 ### The Essence of Machine Learning

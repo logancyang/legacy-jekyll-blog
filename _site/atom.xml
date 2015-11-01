@@ -4,7 +4,7 @@
  <title>Recipe for Intelligence</title>
  <link href="http://loganyc1934.github.io/atom.xml" rel="self"/>
  <link href="http://loganyc1934.github.io/"/>
- <updated>2015-11-01T11:58:36-06:00</updated>
+ <updated>2015-11-01T15:09:32-06:00</updated>
  <id>http://loganyc1934.github.io</id>
  <author>
    <name>Logan Yang</name>
@@ -230,9 +230,9 @@ in the table view controller.&lt;/li&gt;
    <link href="http://loganyc1934.github.io/2015/10/14/logistic-regression-on-apache-spark/"/>
    <updated>2015-10-14T00:00:00-05:00</updated>
    <id>http://loganyc1934.github.io/2015/10/14/logistic-regression-on-apache-spark</id>
-   <content type="html">&lt;p&gt;Logistic regression is widely used to predict a binary response. It is a linear method as described 
+   <content type="html">&lt;p&gt;Logistic regression is widely used to predict binary responses. It is a linear method as described 
 in my other post 
-&lt;a href=&quot;http://loganyc1934.github.io/spark/ml/2015/10/13/an-overview-of-logistic-regression/&quot;&gt;An Overview of Logistic Regression&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;http://loganyc1934.github.io/2015/10/13/an-overview-of-logistic-regression/&quot;&gt;An Overview of Logistic Regression&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Binary logistic regression can be generalized into multinomial logistic regression to train and 
 predict multiclass classification problems. For example, for K possible outcomes, one of the outcomes 
@@ -2226,9 +2226,9 @@ latter part(s) won&amp;#39;t be checked. So there won&amp;#39;t be a case where 
  
  <entry>
    <title>Handy Python Notes</title>
-   <link href="http://loganyc1934.github.io/coding/notes/2015/07/21/handy-python-notes/"/>
+   <link href="http://loganyc1934.github.io/2015/07/21/handy-python-notes/"/>
    <updated>2015-07-21T00:00:00-05:00</updated>
-   <id>http://loganyc1934.github.io/coding/notes/2015/07/21/handy-python-notes</id>
+   <id>http://loganyc1934.github.io/2015/07/21/handy-python-notes</id>
    <content type="html">&lt;h3 id=&quot;key-concepts&quot;&gt;Key Concepts&lt;/h3&gt;
 
 &lt;ul&gt;
