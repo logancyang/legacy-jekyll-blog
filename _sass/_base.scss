@@ -2,11 +2,11 @@
 //
 // Update the foundational and global aspects of the page.
 
-* {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
+//* {
+// -webkit-box-sizing: border-box;
+//     -moz-box-sizing: border-box;
+//          box-sizing: border-box;
+//}
 
 html,
 body {
@@ -15,11 +15,13 @@ body {
 }
 
 html {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  // change font
+  font-family: "avenir", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.8;
 
   @media (min-width: 38em) {
+  // change font size
     font-size: 18px;
   }
 }

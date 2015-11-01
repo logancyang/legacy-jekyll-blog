@@ -170,7 +170,7 @@ PySpark shared variables
 
 **Broadcast variables**: send large dataset to workers, cache at workers
 
-```
+```python
 # at the driver
 >>> broadcastVar = sc.broadcast([1, 2, 3])
 # at the worker (code passed via a closure)
@@ -180,7 +180,7 @@ PySpark shared variables
 
 Example,
 
-```
+```python
 # Lookup the locations of the call signs on the RDD contactCounts.
 # We load a list of call sign prefixes to country code to support this lookup.
 # signPrefixes = loadCallSignTable(), load repeatedly for each worker, NOT GOOD
@@ -201,7 +201,7 @@ countryContactCounts =
 - used to efficiently implement parallel counters and sum
 - only driver can read an accumulator’s value, not tasks
 
-```
+```python
 >>> accum = sc.accumulator(0) # create the accumulator, set value to 0
 >>> rdd = sc.parallelize([1, 2, 3, 4])
 >>> def f(x):
@@ -256,7 +256,7 @@ when perform transforms or actions, Spark automatically push a closure containin
 
 When learning Spark, for easy debugging, this form is recommended:
 
-```
+```python
 RDD.transformation1()
 RDD.action1()
 RDD.transformation2()
@@ -265,14 +265,14 @@ RDD.action2()
 
 When more experienced with Spark, write like this,
 
-```
+```python
 RDD.transformation1().transformation2().action()
 ```
 
 Readability and code style: to make the expert coding style more readable, enclose the statement in 
 parentheses and put each method, transformation, or action on a separate line.
 
-```
+```python
 # Final version
 (sc
  .parallelize(data)

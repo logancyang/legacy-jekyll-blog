@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -62,32 +63,41 @@ the predicted class.</p>
 <p>Spark implemented two algorithms to solve logistic regression: gradient descent and L-BFGS. Here we
 focus on gradient descent.</p>
 
-<p><br />
-#### Stochastic Gradient Descent (SGD)</p>
+<p><br></p>
+
+<h4 id="stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</h4>
 
 <p>Optimization problems whose objective function f is written as a sum are particularly suitable to be 
 solved using stochastic gradient descent (SGD). For logistic regression, the optimization formulation 
 commonly used:</p>
 
-<script type="math/tex; mode=display">f(\mathbf{w})=\frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }\_{ i },{ y }\_{ i }) } 
-+\lambda R(\mathbf{w})</script>
+<p>$$
+f(\mathbf{w})=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }_{ i },{ y }_{ i }) } 
++\lambda R(\mathbf{w})
+$$</p>
 
 <p>where the logistic loss \( L \) is</p>
 
-<script type="math/tex; mode=display">L(\mathbf{w};\mathbf{x},y)=log(1+exp(-y{ \mathbf{w} }^{ T }\mathbf{x}))</script>
+<p>$$
+L(\mathbf{w};\mathbf{x},y)=log(1+exp(-y{ \mathbf{w} }^{ T }\mathbf{x}))
+$$</p>
 
 <p>The loss is written as an average of the individual losses coming from each data point.</p>
 
 <p>A stochastic subgradient is a randomized choice of a vector, such that in expectation, we obtain a 
-true subgradient of the original objective function. Picking one data point \( i\in [1,…,n] \) 
+true subgradient of the original objective function. Picking one data point \( i\in [1,...,n] \) 
 uniformly at random, we obtain a stochastic subgradient, with respect to \(\mathbf{w} \) as follows:</p>
 
-<script type="math/tex; mode=display">{ f }'\_{ \mathbf{w},i }={ L }'\_{ \mathbf{w},i }+\lambda { R }'\_{ \mathbf{w},i }</script>
+<p>$$
+{ f }&#39;_{ \mathbf{w},i }={ L }&#39;_{ \mathbf{w},i }+\lambda { R }&#39;_{ \mathbf{w},i }
+$$</p>
 
 <p>This is determine by the i-th data point. Running SGD simply becomes walking in the direction of the
-negative stochastic subgradient \( { f }’_{ w,i } \), that is</p>
+negative stochastic subgradient \( { f }&#39;_{ w,i } \), that is</p>
 
-<script type="math/tex; mode=display">{ \mathbf{w} }^{ (t+1) }={ \mathbf{w} }^{ (t) }-\gamma { f }'\_{ \mathbf{w},i }</script>
+<p>$$
+{ \mathbf{w} }^{ (t+1) }={ \mathbf{w} }^{ (t) }-\gamma { f }&#39;_{ \mathbf{w},i }
+$$</p>
 
 <p><strong>Step-size</strong>. The parameter \( \gamma \) is the step-size, which in the default implementation is 
 chosen decreasing with the square root of the iteration counter, i.e. \( \gamma =\frac { s }{ \sqrt { t }  }  \)
@@ -97,25 +107,28 @@ for SGD methods can often be delicate in practice and is a topic of active resea
 
 <p><strong>Gradients</strong>. Here is a table of (sub)gradients of the machine learning methods implemented in MLlib.</p>
 
-<p><br /></p>
-<center><img src="/assets/images/logreg/lossAndGradients.png" alt="Drawing" style="width: 900px;" /></center>
-<p><br /></p>
+<p><br>
+<center><img src="/assets/images/logreg/lossAndGradients.png" alt="Drawing" style="width: 900px;"></center>
+<br></p>
 
-<p><br />
-#### Update Schemes for Distributed-SGD</p>
+<p><br></p>
+
+<h4 id="update-schemes-for-distributed-sgd">Update Schemes for Distributed-SGD</h4>
 
 <p>The SGD implementation in 
 <a href="http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.mllib.optimization.GradientDescent">GradientDescent</a>
-uses a simple distributed sampling of the data points.</p>
+uses a simple distributed sampling of the data points. </p>
 
 <p>Recall that the loss part of the optimization problem
 is \( \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }_{ i },{ y }_{ i }) } \),
-and therefore \( \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { L }’_{ w,i } } \) would be the true
+and therefore \( \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { L }&#39;_{ w,i } } \) would be the true
 subgradient. Since this would require the access to the full data set, the parameter <code>miniBatchFraction</code>
 specifies which fraction of the full data to use instead.
 The average of the gradients over this subset, i.e.</p>
 
-<script type="math/tex; mode=display">\frac { 1 }{ \left| S \right|  } \sum \_{ i\in S }^{  }{ { L }'\_{ w,i } }</script>
+<p>$$
+\frac { 1 }{ \left| S \right|  } \sum _{ i\in S }^{  }{ { L }&#39;_{ w,i } } 
+$$</p>
 
 <p>is a stochastic gradient. Here \( S \) is the sampled subset of size 
 \( \left| S \right|= \) <code>miniBatchFraction</code> \( \cdot n \)</p>
@@ -125,48 +138,50 @@ the sum of the partial results from each worker machine is performed by the stan
 
 <p>If the fraction of points <code>miniBatchFraction</code> is set to 1 (default), then the resulting step in each 
 iteration is exact (sub)gradient descent. In this case there is no randomness and no variance in the 
-used step directions.</p>
+used step directions. </p>
 
 <p>On the other extreme, if miniBatchFraction is chosen very small, such that only 
 a single point is sampled, i.e. \( \left| S \right|= \) <code>miniBatchFraction</code> \( \cdot n = 1\), 
 then the algorithm is equivalent to standard SGD. 
 In that case, the step direction depends from the uniformly random sampling of the point.</p>
 
-<p><br />
-#### SGD Implementation in MLlib</p>
+<p><br></p>
+
+<h4 id="sgd-implementation-in-mllib">SGD Implementation in MLlib</h4>
 
 <p><em>class</em> pyspark.mllib.classification.<strong>LogisticRegressionWithSGD</strong></p>
 
 <p><em>classmethod</em> <strong>train</strong>(<em>data, iterations=100, step=1.0, miniBatchFraction=1.0, 
-initialWeights=None, regParam=0.01, regType=’l2’, intercept=False, validateData=True</em>)</p>
+initialWeights=None, regParam=0.01, regType=&#39;l2&#39;, intercept=False, validateData=True</em>)</p>
 
 <p>Train a logistic regression model on the given data.</p>
 
-<p>Parameters:</p>
+<p>Parameters: </p>
 
 <ul>
-  <li><code>data</code> – The training data, an RDD of LabeledPoint.</li>
-  <li><code>iterations</code> – The number of iterations (default: 100).</li>
-  <li><code>step</code> – The step parameter used in SGD (default: 1.0).</li>
-  <li><code>miniBatchFraction</code> – Fraction of data to be used for each SGD iteration (default: 1.0).</li>
-  <li><code>initialWeights</code> – The initial weights (default: None).</li>
-  <li><code>regParam</code> – The regularizer parameter (default: 0.01).</li>
-  <li><code>regType</code> – The type of regularizer used for training our model. Allowed values:
-    <ul>
-      <li>“l1” for using L1 regularization</li>
-      <li>“l2” for using L2 regularization</li>
-      <li>None for no regularization</li>
-      <li>(default: “l2”)</li>
-    </ul>
-  </li>
-  <li>intercept – Boolean parameter which indicates the use or not of the augmented representation for 
+<li><code>data</code> – The training data, an RDD of LabeledPoint.</li>
+<li><code>iterations</code> – The number of iterations (default: 100).</li>
+<li><code>step</code> – The step parameter used in SGD (default: 1.0).</li>
+<li><code>miniBatchFraction</code> – Fraction of data to be used for each SGD iteration (default: 1.0).</li>
+<li><code>initialWeights</code> – The initial weights (default: None).</li>
+<li><code>regParam</code> – The regularizer parameter (default: 0.01).</li>
+<li><code>regType</code> – The type of regularizer used for training our model. Allowed values: 
+
+<ul>
+<li>“l1” for using L1 regularization</li>
+<li>“l2” for using L2 regularization</li>
+<li>None for no regularization</li>
+<li>(default: “l2”)</li>
+</ul></li>
+<li>intercept – Boolean parameter which indicates the use or not of the augmented representation for 
 training data (i.e. whether bias features are activated or not, default: False).</li>
-  <li>validateData – Boolean parameter which indicates if the algorithm should validate data before 
+<li>validateData – Boolean parameter which indicates if the algorithm should validate data before 
 training. (default: True)</li>
 </ul>
 
-<p><br />
-#### Click-Through Rate (CTR) Prediction with MLlib</p>
+<p><br></p>
+
+<h4 id="click-through-rate-ctr-prediction-with-mllib">Click-Through Rate (CTR) Prediction with MLlib</h4>
 
 <p>Here I will show an example of utilizing 
 <a href="https://spark.apache.org/docs/latest/api/python/pyspark.mllib.html#pyspark.mllib.classification.LogisticRegressionWithSGD">LogisticRegressionWithSGD</a>
@@ -177,182 +192,164 @@ categories before one-hot-encoding).</p>
 
 <p>In MLlib, each labeled data point is represented as the object
 <code>LabeledPoint(label, featureVector)</code>. The training set is an RDD of a lot of <code>LabeledPoint</code> objects,
-<code>OHETrainData</code>.</p>
+<code>OHETrainData</code>. </p>
 
 <p>First, use <code>LogisticRegressionWithSGD</code> to train a model using <code>OHETrainData</code> with
 the given hyperparameter configuration. <code>LogisticRegressionWithSGD</code> returns a
 <a href="https://spark.apache.org/docs/latest/api/python/pyspark.mllib.html#pyspark.mllib.regression.LogisticRegressionModel">LogisticRegressionModel</a>.
 Next, use the <code>LogisticRegressionModel.weights</code> and <code>LogisticRegressionModel.intercept</code> attributes to
-print out the model’s parameters.</p>
+print out the model&#39;s parameters.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pyspark.mllib.classification</span> <span class="kn">import</span> <span class="n">LogisticRegressionWithSGD</span>
 
-<p>```python
-from pyspark.mllib.classification import LogisticRegressionWithSGD</p>
+<span class="c"># fixed hyperparameters</span>
+<span class="n">numIters</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">stepSize</span> <span class="o">=</span> <span class="mf">10.</span>
+<span class="n">regParam</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">regType</span> <span class="o">=</span> <span class="s">&#39;l2&#39;</span>
+<span class="n">includeIntercept</span> <span class="o">=</span> <span class="bp">True</span>
 
-<h1 id="fixed-hyperparameters">fixed hyperparameters</h1>
-<p>numIters = 50
-stepSize = 10.
-regParam = 1e-6
-regType = ‘l2’
-includeIntercept = True</p>
+<span class="n">model0</span> <span class="o">=</span> <span class="n">LogisticRegressionWithSGD</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">OHETrainData</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">numIters</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">stepSize</span><span class="p">,</span> 
+                                         <span class="n">regParam</span><span class="o">=</span><span class="n">regParam</span><span class="p">,</span> <span class="n">regType</span><span class="o">=</span><span class="n">regType</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="n">includeIntercept</span><span class="p">)</span>
+<span class="n">sortedWeights</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">model0</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sortedWeights</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span> <span class="n">model0</span><span class="o">.</span><span class="n">intercept</span>
 
-<p>model0 = LogisticRegressionWithSGD.train(OHETrainData, iterations=numIters, step=stepSize, 
-                                         regParam=regParam, regType=regType, intercept=includeIntercept)
-sortedWeights = sorted(model0.weights)
-print sortedWeights[:5], model0.intercept</p>
-
-<p>’’’
-output:
-[-0.4589923685357562, -0.37973707648623972, -0.3699655826675331, -0.36934962879928285, -0.32697945415010637] 0.56455084025
-‘’’</p>
-
-<p>```</p>
-
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">[-0.4589923685357562, -0.37973707648623972, -0.3699655826675331, -0.36934962879928285, -0.32697945415010637] 0.56455084025</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</code></pre></div>
 <p>log loss is used to evaluate the model. To compute the log loss, we first need the predictions. To
-generate predictions from our trained model, we use the model’s weight and intercept attributes and 
+generate predictions from our trained model, we use the model&#39;s weight and intercept attributes and 
 pass them into the sigmoid function.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">exp</span> <span class="c">#  exp(-t) = e^-t</span>
 
-<p>```python
-from math import exp #  exp(-t) = e^-t</p>
+<span class="k">def</span> <span class="nf">getP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">intercept</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the probability for an observation given a set of weights and intercept.</span>
 
-<p>def getP(x, w, intercept):
-    “"”Calculate the probability for an observation given a set of weights and intercept.</p>
+<span class="sd">    Note:</span>
+<span class="sd">        We&#39;ll bound our raw prediction between 20 and -20 for numerical purposes.</span>
 
-<pre><code>Note:
-    We'll bound our raw prediction between 20 and -20 for numerical purposes.
+<span class="sd">    Args:</span>
+<span class="sd">        x (SparseVector): A vector with values of 1.0 for features that exist in this</span>
+<span class="sd">            observation and 0.0 otherwise.</span>
+<span class="sd">        w (DenseVector): A vector of weights (betas) for the model.</span>
+<span class="sd">        intercept (float): The model&#39;s intercept.</span>
 
-Args:
-    x (SparseVector): A vector with values of 1.0 for features that exist in this
-        observation and 0.0 otherwise.
-    w (DenseVector): A vector of weights (betas) for the model.
-    intercept (float): The model's intercept.
+<span class="sd">    Returns:</span>
+<span class="sd">        float: A probability between 0 and 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rawPrediction</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">intercept</span>
 
-Returns:
-    float: A probability between 0 and 1.
-"""
-rawPrediction = w.dot(x) + intercept
+    <span class="c"># Bound the raw prediction value</span>
+    <span class="n">rawPrediction</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">rawPrediction</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">rawPrediction</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rawPrediction</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">rawPrediction</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pred</span>
 
-# Bound the raw prediction value
-rawPrediction = min(rawPrediction, 20)
-rawPrediction = max(rawPrediction, -20)
-pred = (1 + exp(-rawPrediction))**(-1)
-return pred
-</code></pre>
+<span class="n">trainingPredictions</span> <span class="o">=</span> <span class="n">OHETrainData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">getP</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">model0</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">model0</span><span class="o">.</span><span class="n">intercept</span><span class="p">))</span>
 
-<p>trainingPredictions = OHETrainData.map(lambda point: getP(point.features, model0.weights, model0.intercept))</p>
+<span class="k">print</span> <span class="n">trainingPredictions</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<p>print trainingPredictions.take(5)</p>
-
-<p>’’’
-output:
-[0.30262882023911125, 0.10362661997434075, 0.283634247838756, 0.17846102057880114, 0.5389775379218853]
-‘’’</p>
-
-<p>```</p>
-
-<p>Now the \( p \)’s are calculated (probabilities for the data points to be in class y = 1), the 
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">[0.30262882023911125, 0.10362661997434075, 0.283634247838756, 0.17846102057880114, 0.5389775379218853]</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</code></pre></div>
+<p>Now the \( p \)&#39;s are calculated (probabilities for the data points to be in class y = 1), the 
 log loss can be computed with \( p \) and the true labels \( y \).</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">log</span>
 
-<p>```python
-from math import log</p>
+<span class="k">def</span> <span class="nf">computeLogLoss</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the value of log loss for a given probabilty and label.</span>
 
-<p>def computeLogLoss(p, y):
-    “"”Calculates the value of log loss for a given probabilty and label.</p>
+<span class="sd">    Note:</span>
+<span class="sd">        log(0) is undefined, so when p is 0 we need to add a small value (epsilon) to it</span>
+<span class="sd">        and when p is 1 we need to subtract a small value (epsilon) from it.</span>
 
-<pre><code>Note:
-    log(0) is undefined, so when p is 0 we need to add a small value (epsilon) to it
-    and when p is 1 we need to subtract a small value (epsilon) from it.
+<span class="sd">    Args:</span>
+<span class="sd">        p (float): A probabilty between 0 and 1.</span>
+<span class="sd">        y (int): A label.  Takes on the values 0 and 1.</span>
 
-Args:
-    p (float): A probabilty between 0 and 1.
-    y (int): A label.  Takes on the values 0 and 1.
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The log loss value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">10e-12</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">+=</span> <span class="n">epsilon</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">-=</span> <span class="n">epsilon</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">y</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
 
-Returns:
-    float: The log loss value.
-"""
-epsilon = 10e-12
-if p == 0:
-    p += epsilon
-if p == 1:
-    p -= epsilon
-return -y * log(p) - (1 - y) * log(1-p)
-</code></pre>
+<span class="n">classOneFracTrain</span> <span class="o">=</span> <span class="n">OHETrainData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">classOneFracTrain</span>
 
-<p>classOneFracTrain = OHETrainData.map(lambda point: point.label).mean()
-print classOneFracTrain</p>
+<span class="n">logLossTrBase</span> <span class="o">=</span> <span class="n">OHETrainData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">computeLogLoss</span><span class="p">(</span><span class="n">classOneFracTrain</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Baseline Train Logloss = {0:.3f}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">logLossTrBase</span><span class="p">)</span>
 
-<p>logLossTrBase = OHETrainData.map(lambda point: computeLogLoss(classOneFracTrain, point.label)).mean()
-print ‘Baseline Train Logloss = {0:.3f}\n’.format(logLossTrBase)</p>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">0.22717773523</span>
+<span class="sd">Baseline Train Logloss = 0.536</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
-<p>’’’
-output:
-0.22717773523
-Baseline Train Logloss = 0.536
-‘’’</p>
+<span class="k">def</span> <span class="nf">evaluateResults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the log loss for the data given the model.</span>
 
-<p>def evaluateResults(model, data):
-    “"”Calculates the log loss for the data given the model.</p>
+<span class="sd">    Args:</span>
+<span class="sd">        model (LogisticRegressionModel): A trained logistic regression model.</span>
+<span class="sd">        data (RDD of LabeledPoint): Labels and features for each observation.</span>
 
-<pre><code>Args:
-    model (LogisticRegressionModel): A trained logistic regression model.
-    data (RDD of LabeledPoint): Labels and features for each observation.
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Log loss for the data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">weights</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept</span>
+    <span class="n">logloss</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">computeLogLoss</span><span class="p">(</span><span class="n">getP</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">intercept</span><span class="p">),</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">logloss</span>
 
-Returns:
-    float: Log loss for the data.
-"""
-w = model.weights
-intercept = model.intercept
-logloss = data.map(lambda point: computeLogLoss(getP(point.features, w, intercept), point.label)).mean()
-return logloss
-</code></pre>
+<span class="n">logLossTrLR0</span> <span class="o">=</span> <span class="n">evaluateResults</span><span class="p">(</span><span class="n">model0</span><span class="p">,</span> <span class="n">OHETrainData</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">&#39;OHE Features Train Logloss:</span><span class="se">\n\t</span><span class="s">Baseline = {0:.3f}</span><span class="se">\n\t</span><span class="s">LogReg = {1:.3f}&#39;</span>
+       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">logLossTrBase</span><span class="p">,</span> <span class="n">logLossTrLR0</span><span class="p">))</span>
 
-<p>logLossTrLR0 = evaluateResults(model0, OHETrainData)
-print (‘OHE Features Train Logloss:\n\tBaseline = {0:.3f}\n\tLogReg = {1:.3f}’
-       .format(logLossTrBase, logLossTrLR0))</p>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">OHE Features Train Logloss:</span>
+<span class="sd">    Baseline = 0.536</span>
+<span class="sd">    LogReg = 0.457</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
-<p>’’’
-output:
-OHE Features Train Logloss:
-    Baseline = 0.536
-    LogReg = 0.457
-‘’’</p>
+<span class="n">classOneFracVal</span> <span class="o">=</span> <span class="n">OHEValidationData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">logLossValBase</span> <span class="o">=</span> <span class="n">OHEValidationData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">computeLogLoss</span><span class="p">(</span><span class="n">classOneFracTrain</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-<p>classOneFracVal = OHEValidationData.map(lambda point: point.label).mean()
-logLossValBase = OHEValidationData.map(lambda point: computeLogLoss(classOneFracTrain, point.label)).mean()</p>
+<span class="n">logLossValLR0</span> <span class="o">=</span> <span class="n">evaluateResults</span><span class="p">(</span><span class="n">model0</span><span class="p">,</span> <span class="n">OHEValidationData</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">&#39;OHE Features Validation Logloss:</span><span class="se">\n\t</span><span class="s">Baseline = {0:.3f}</span><span class="se">\n\t</span><span class="s">LogReg = {1:.3f}&#39;</span>
+       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">logLossValBase</span><span class="p">,</span> <span class="n">logLossValLR0</span><span class="p">))</span>
 
-<p>logLossValLR0 = evaluateResults(model0, OHEValidationData)
-print (‘OHE Features Validation Logloss:\n\tBaseline = {0:.3f}\n\tLogReg = {1:.3f}’
-       .format(logLossValBase, logLossValLR0))</p>
-
-<p>’’’
-output:
-OHE Features Validation Logloss:
-    Baseline = 0.528
-    LogReg = 0.457
-‘’’
-```</p>
-
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">OHE Features Validation Logloss:</span>
+<span class="sd">    Baseline = 0.528</span>
+<span class="sd">    LogReg = 0.457</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</code></pre></div>
 <p>After feature hashing and training several models for different step-sizes and regularization constants,
 the evaluation of the best model is shown below.</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">logLossTest</span> <span class="o">=</span> <span class="n">evaluateResults</span><span class="p">(</span><span class="n">bestModel</span><span class="p">,</span> <span class="n">hashTestData</span><span class="p">)</span>
 
-<p>```python
-logLossTest = evaluateResults(bestModel, hashTestData)</p>
+<span class="c"># Log loss for the baseline model</span>
+<span class="n">classOneFracTest</span> <span class="o">=</span> <span class="n">hashTestData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">logLossTestBaseline</span> <span class="o">=</span> <span class="n">hashTestData</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">point</span><span class="p">:</span> <span class="n">computeLogLoss</span><span class="p">(</span><span class="n">classOneFracTest</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-<h1 id="log-loss-for-the-baseline-model">Log loss for the baseline model</h1>
-<p>classOneFracTest = hashTestData.map(lambda point: point.label).mean()
-logLossTestBaseline = hashTestData.map(lambda point: computeLogLoss(classOneFracTest, point.label)).mean()</p>
+<span class="k">print</span> <span class="p">(</span><span class="s">&#39;Hashed Features Test Log Loss:</span><span class="se">\n\t</span><span class="s">Baseline = {0:.3f}</span><span class="se">\n\t</span><span class="s">LogReg = {1:.3f}&#39;</span>
+       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">logLossTestBaseline</span><span class="p">,</span> <span class="n">logLossTest</span><span class="p">))</span>
 
-<p>print (‘Hashed Features Test Log Loss:\n\tBaseline = {0:.3f}\n\tLogReg = {1:.3f}’
-       .format(logLossTestBaseline, logLossTest))</p>
-
-<p>’’’
-output:
-Hashed Features Test Log Loss:
-    Baseline = 0.537
-    LogReg = 0.456
-‘’’
-```</p>
-
-
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">output:</span>
+<span class="sd">Hashed Features Test Log Loss:</span>
+<span class="sd">    Baseline = 0.537</span>
+<span class="sd">    LogReg = 0.456</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</code></pre></div>
 </article>
 
 
@@ -391,6 +388,11 @@ Hashed Features Test Log Loss:
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -402,3 +404,7 @@ Hashed Features Test Log Loss:
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

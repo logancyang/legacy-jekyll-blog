@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -46,34 +47,34 @@
   <h1 class="post-title">UIKit Fundamentals II - Table View</h1>
   <time datetime="2015-10-06T00:00:00-05:00" class="post-date">06 Oct 2015</time>
   <ul>
-  <li><code>UITableView</code> has 2 delegate protocols, a total of 44 methods:
-    <ul>
-      <li><code>UITableViewDelegate</code>: response to user <strong>events</strong></li>
-      <li><code>UITableViewDataSource</code>: access to <strong>data</strong> and cells</li>
-    </ul>
-  </li>
-  <li><code>UITableViewDelegate</code>
-    <ul>
-      <li>What should happen when a button in a cell is tapped?</li>
-      <li>What should be the response to cell selection? (*)</li>
-      <li>How should I respond when a user begins editing a row?</li>
-      <li>What should happen when a cell is deselected?</li>
-    </ul>
-  </li>
-  <li><code>UITableViewDataSource</code>
-    <ul>
-      <li>How many rows do I have? (*)</li>
-      <li>How many sections do I have?</li>
-      <li>What are the titles for the sections?</li>
-      <li>What is the cell view for each row? (*)</li>
-    </ul>
-  </li>
+<li><p><code>UITableView</code> has 2 delegate protocols, a total of 44 methods:</p>
+
+<ul>
+<li><code>UITableViewDelegate</code>: response to user <strong>events</strong></li>
+<li><code>UITableViewDataSource</code>: access to <strong>data</strong> and cells</li>
+</ul></li>
+<li><p><code>UITableViewDelegate</code></p>
+
+<ul>
+<li>What should happen when a button in a cell is tapped?</li>
+<li>What should be the response to cell selection? (*)</li>
+<li>How should I respond when a user begins editing a row?</li>
+<li>What should happen when a cell is deselected?</li>
+</ul></li>
+<li><p><code>UITableViewDataSource</code></p>
+
+<ul>
+<li>How many rows do I have? (*)</li>
+<li>How many sections do I have?</li>
+<li>What are the titles for the sections?</li>
+<li>What is the cell view for each row? (*)</li>
+</ul></li>
 </ul>
 
 <p>(*) marked points are the most essential when building a table view.</p>
 
 <ul>
-  <li>TableView delegate method signatures: the first parameter of the methods in the TableView delegate
+<li>TableView delegate method signatures: the first parameter of the methods in the TableView delegate
 is always the TableView itself (similar to the TextField delegate introduced earlier).</li>
 </ul>
 
@@ -87,29 +88,29 @@ is always the TableView itself (similar to the TextField delegate introduced ear
             <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li><code>indexPath</code> is a struct with 2 members: row, section
-    <ul>
-      <li>For more on <a href="https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID83">structs</a></li>
-    </ul>
-  </li>
+<li><code>indexPath</code> is a struct with 2 members: row, section
+
+<ul>
+<li>For more on <a href="https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID83">structs</a></li>
+</ul></li>
 </ul>
 
 <p>Some questions that can be answered by the methods:</p>
 
 <ol>
-  <li>How many rows? <em>Data Source Protocol method</em></li>
+<li>How many rows? <em>Data Source Protocol method</em></li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span></code></pre></div>
 
 <ol>
-  <li>What is the cell for each row? <em>Data Source Protocol method</em></li>
+<li>What is the cell for each row? <em>Data Source Protocol method</em></li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">cellForRowAtIndexPath</span><span class="p">(</span><span class="n">_</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span><span class="o">?</span></code></pre></div>
 
 <ol>
-  <li>What should happen when a cell is selected?</li>
+<li>What should happen when a cell is selected?</li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span></code></pre></div>
@@ -121,7 +122,7 @@ is always the TableView itself (similar to the TextField delegate introduced ear
 <p>The storyboard is set, write the view controller code.</p>
 
 <ul>
-  <li>The correct implementation of getting the number of rows: use <code>numberOfRowsInSection</code> 
+<li>The correct implementation of getting the number of rows: use <code>numberOfRowsInSection</code> 
 given by the DataSource protocol.</li>
 </ul>
 
@@ -130,24 +131,24 @@ given by the DataSource protocol.</li>
     <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li>How <code>cellForRowAtIndexPath</code> Wrangles Cells
-    <ul>
-      <li>Cache the objects that are reused, only update the data. It lets scrolling become faster.</li>
-    </ul>
-  </li>
+<li>How <code>cellForRowAtIndexPath</code> Wrangles Cells
+
+<ul>
+<li>Cache the objects that are reused, only update the data. It lets scrolling become faster.</li>
+</ul></li>
 </ul>
 
 <p>Steps for populating table cells:
-(in <code>cellForRowAtIndexPath</code>…)</p>
+(in <code>cellForRowAtIndexPath</code>...)</p>
 
 <ol>
-  <li>Dequeue a reusable cell (using the correct reuse identifier).</li>
-  <li>Find the model object for the corresponding row.</li>
-  <li>Set the images and labels in the cell</li>
-  <li>Return the cell</li>
+<li>Dequeue a reusable cell (using the correct reuse identifier).</li>
+<li>Find the model object for the corresponding row.</li>
+<li>Set the images and labels in the cell</li>
+<li>Return the cell</li>
 </ol>
 
-<p>We use the standard <code>UITableViewCell</code> with property <code>textLabel</code>.</p>
+<p>We use the standard <code>UITableViewCell</code> with property <code>textLabel</code>. </p>
 
 <p>Our reuse identifier is <code>FavoriteThingCell</code>.</p>
 
@@ -218,13 +219,13 @@ given by the DataSource protocol.</li>
 <p>Written model and view controller code, set the table in the storyboard.</p>
 
 <ol>
-  <li>The Villain Struct
-    <ul>
-      <li>What are its properties?</li>
-      <li>Does it have any custom init methods?</li>
-      <li>How will the static helper methods allow users to construct the model for the app?</li>
-    </ul>
-  </li>
+<li>The Villain Struct
+
+<ul>
+<li>What are its properties?</li>
+<li>Does it have any custom init methods?</li>
+<li>How will the static helper methods allow users to construct the model for the app?</li>
+</ul></li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">struct</span> <span class="n">Villain</span> <span class="p">{</span>
@@ -247,17 +248,14 @@ given by the DataSource protocol.</li>
 <span class="p">}</span></code></pre></div>
 
 <ol>
-  <li>
-    <p>The XCAssets. How are the images tied to the data in the model?</p>
-  </li>
-  <li>
-    <p>The View Controller</p>
-    <ul>
-      <li>How does the view controller get access to the model?</li>
-      <li>How are the UITableViewDataSource methods implemented?</li>
-      <li>What is the reuse identifier for the cells in this project? (This will be important in the next step)</li>
-    </ul>
-  </li>
+<li><p>The XCAssets. How are the images tied to the data in the model?</p></li>
+<li><p>The View Controller</p>
+
+<ul>
+<li>How does the view controller get access to the model?</li>
+<li>How are the UITableViewDataSource methods implemented?</li>
+<li>What is the reuse identifier for the cells in this project? (This will be important in the next step)</li>
+</ul></li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
@@ -299,31 +297,31 @@ given by the DataSource protocol.</li>
 <p>To setup the tableView in the storyboard:</p>
 
 <ol>
-  <li>Add a table to the main view
-    <ul>
-      <li>Drag a table view to the main view and leave a bit space above (just below the battery sign)</li>
-    </ul>
-  </li>
-  <li>Add constraints: <em>add all missing constraints</em></li>
-  <li>Connect the table’s data source property to the view controller
-    <ul>
-      <li>Right click the table view, drag the small circle beside the outlet <em>dataSource</em> to the ViewController
-  icon on top</li>
-    </ul>
-  </li>
-  <li>Create a prototype cell
-    <ul>
-      <li>Go to Attributes inspector, set the <em>Prototype Cells</em> to 1</li>
-    </ul>
-  </li>
-  <li>Set the cell’s reuse identifier
-    <ul>
-      <li>Open Outline, under <em>Table View</em>, click <em>Table View Cell</em></li>
-      <li>In the Attributes inspector, specify the reuse identifier as “VillainCell”, the same as in the code.</li>
-      <li>HIT RETURN after entering the identifier! (ALWAYS hit return after inputting text in the inspectors,
-  or the storyboard won’t save it)</li>
-    </ul>
-  </li>
+<li>Add a table to the main view
+
+<ul>
+<li>Drag a table view to the main view and leave a bit space above (just below the battery sign)</li>
+</ul></li>
+<li>Add constraints: <em>add all missing constraints</em></li>
+<li>Connect the table&#39;s data source property to the view controller
+
+<ul>
+<li>Right click the table view, drag the small circle beside the outlet <em>dataSource</em> to the ViewController
+icon on top</li>
+</ul></li>
+<li>Create a prototype cell
+
+<ul>
+<li>Go to Attributes inspector, set the <em>Prototype Cells</em> to 1</li>
+</ul></li>
+<li>Set the cell&#39;s reuse identifier
+
+<ul>
+<li>Open Outline, under <em>Table View</em>, click <em>Table View Cell</em></li>
+<li>In the Attributes inspector, specify the reuse identifier as &quot;VillainCell&quot;, the same as in the code.</li>
+<li>HIT RETURN after entering the identifier! (ALWAYS hit return after inputting text in the inspectors,
+or the storyboard won&#39;t save it)</li>
+</ul></li>
 </ol>
 
 <p>Running the app at this point, we can see the pictures and the names, but not the schemes.</p>
@@ -333,7 +331,6 @@ given by the DataSource protocol.</li>
 <h3 id="challenge-app-roshambo-with-history">Challenge App: Roshambo With History</h3>
 
 <p>Begin the project by checking out step4.7-roshamboWithHistory-incomplete.</p>
-
 
 </article>
 
@@ -373,6 +370,11 @@ given by the DataSource protocol.</li>
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -384,3 +386,7 @@ given by the DataSource protocol.</li>
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

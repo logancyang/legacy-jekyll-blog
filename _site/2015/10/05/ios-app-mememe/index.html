@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -54,28 +55,28 @@ in View can have an Outlet connection to ViewController. Outlet is used as @prop
 which means that:</p>
 
 <ul>
-  <li>you can set something (like Update UILabel’s text, Set background image of a UIView etc.) of an object 
+<li>you can set something (like Update UILabel&#39;s text, Set background image of a UIView etc.) of an object 
 by using outlet.</li>
-  <li>you can get something from an object (like current value of UIStepper, current font size of a 
+<li>you can get something from an object (like current value of UIStepper, current font size of a 
 NSAttributedString etc.)</li>
 </ul>
 
 <p>Action: View pass on messages about view to ViewController by using Action (Or in technical terms ViewController set itself as Target for any Action in View). Action is a Method in ViewController (unlike Outlet which is @property in ViewController). Whenever something (any Event) happens to an object (like UIbutton is tapped) then Action pass on message to ViewController. Action (or Action method) can do something after receiving the message.
-Note: Action can be set only by UIControl’s child object; means you can’t set Action for UILabel, UIView etc.</p>
+Note: Action can be set only by UIControl&#39;s child object; means you can&#39;t set Action for UILabel, UIView etc.</p>
 
 <h4 id="practice-app-color-maker">Practice App: Color Maker</h4>
 
 <ul>
-  <li>To connect IBOutlet weak var with UISwitch (or other UI components),
+<li>To connect IBOutlet weak var with UISwitch (or other UI components),
 drag the small circle next to the var to the UISwitch.</li>
-  <li>To connect IBAction func to UISwitches, drag the small circle to one/all of them.</li>
-  <li>Pitfall: pay attention to the constraint. If there are negative constraints, there might be something wrong. This time, I slid the slider outside the UIImageView that holds the sliders so it appeared to be stuck at the rightmost edge.</li>
+<li>To connect IBAction func to UISwitches, drag the small circle to one/all of them.</li>
+<li>Pitfall: pay attention to the constraint. If there are negative constraints, there might be something wrong. This time, I slid the slider outside the UIImageView that holds the sliders so it appeared to be stuck at the rightmost edge.</li>
 </ul>
 
 <h2 id="presenting-view-controllers">Presenting View Controllers</h2>
 
 <ul>
-  <li>Navigation View vs. Modal View</li>
+<li>Navigation View vs. Modal View</li>
 </ul>
 
 <p>Navigation View: a view that enables the user to choose among views, shows the connections between different views.</p>
@@ -85,7 +86,7 @@ drag the small circle next to the var to the UISwitch.</li>
 <h4 id="practice-app-image-picker-activity-viewcontroller">Practice App: Image Picker, Activity ViewController</h4>
 
 <ul>
-  <li>To display the Apple Image Picker which enables users to pick images from camera roll, just add a button and its an action like this.</li>
+<li>To display the Apple Image Picker which enables users to pick images from camera roll, just add a button and its an action like this.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
@@ -94,7 +95,7 @@ drag the small circle next to the var to the UISwitch.</li>
     <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li>To display the Apple Activity ViewController which enables users to choose activities like saving and sharing documents, just add this action.</li>
+<li>To display the Apple Activity ViewController which enables users to choose activities like saving and sharing documents, just add this action.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentActivity</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
@@ -105,7 +106,7 @@ drag the small circle next to the var to the UISwitch.</li>
     <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li>To display the Apple Alert Controller, add this action.</li>
+<li>To display the Apple Alert Controller, add this action.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentAlert</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
@@ -131,7 +132,7 @@ We add the UIAlertAction okAction to dismiss the Alert View.</p>
 <p>Three ways of performing a segue:</p>
 
 <ol>
-  <li>Display the Dice View Controller with only code: when we want a reference of a ViewController in 
+<li>Display the Dice View Controller with only code: when we want a reference of a ViewController in 
 an Action, we identify this ViewController via its storyboard ID (it’s in the Identity inspector) by 
 using storyboard?.instantiateViewControllerWithIdentifier(“storyboardID”) method. This method returns 
 a view controller and must be downcast to DiceViewController.</li>
@@ -150,7 +151,7 @@ a view controller and must be downcast to DiceViewController.</li>
     <span class="p">}</span></code></pre></div>
 
 <ol>
-  <li>Display the Dice View Controller with code and storyboard: to use storyboard to set the segue, we first select the first view, and ctrl click drag to the second view. Select Modal in this case. Then select the segue, set the Identifier to rollDice in the Attributes inspector.</li>
+<li>Display the Dice View Controller with code and storyboard: to use storyboard to set the segue, we first select the first view, and ctrl click drag to the second view. Select Modal in this case. Then select the segue, set the Identifier to rollDice in the Attributes inspector. </li>
 </ol>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">rollTheDice</span><span class="p">()</span> <span class="p">{</span>
@@ -158,11 +159,11 @@ a view controller and must be downcast to DiceViewController.</li>
     <span class="p">}</span></code></pre></div>
 
 <ol>
-  <li>Display the Dice View Controller with only storyboard: we directly ctrl click drag from the UIButton to the new view, and set the Identifier of the segue in the Attributes inspector. Clear the action in it.</li>
+<li>Display the Dice View Controller with only storyboard: we directly ctrl click drag from the UIButton to the new view, and set the Identifier of the segue in the Attributes inspector. Clear the action in it.</li>
 </ol>
 
 <ul>
-  <li>To pass data between ViewControllers, we use the method prepareForSegue(). The key is to define the destination view controller so that we can represent it and use its properties, firstValue and secondValue in this case.</li>
+<li>To pass data between ViewControllers, we use the method prepareForSegue(). The key is to define the destination view controller so that we can represent it and use its properties, firstValue and secondValue in this case.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kr">override</span> <span class="k">func</span> <span class="nf">prepareForSegue</span><span class="p">(</span><span class="nl">segue</span><span class="p">:</span> <span class="bp">UIStoryboardSegue</span><span class="p">,</span> <span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
@@ -180,18 +181,12 @@ a view controller and must be downcast to DiceViewController.</li>
 <p>Note:</p>
 
 <ol>
-  <li>
-    <p>After adding the new view controller and setting its storyboard identifier, I encountered a strange 
+<li><p>After adding the new view controller and setting its storyboard identifier, I encountered a strange 
 runtime error that said the UIViewController cannot downcast to my second ViewController. Some searching 
 on Stackoverflow solved it. Just select the view controller and in the Identity inspector, under Module, 
-hit enter or select the module.</p>
-  </li>
-  <li>
-    <p>For UIImageView, ctrl click drag on it can set the image height and width.</p>
-  </li>
-  <li>
-    <p>Question remained for navigation bar and back button. They are missing.</p>
-  </li>
+hit enter or select the module.</p></li>
+<li><p>For UIImageView, ctrl click drag on it can set the image height and width.</p></li>
+<li><p>Question remained for navigation bar and back button. They are missing.</p></li>
 </ol>
 
 <p>See Github.</p>
@@ -213,7 +208,7 @@ of methods that delegate must implement. Any object that fulfills a protocol can
 something from the item on the right:</p>
 
 <p>Human Ear. The sounds involved in speech can be received by any ear that is tuned to the frequency 
-range of the speaker.</p>
+range of the speaker. </p>
 
 <p>Electric plug. Any object that implements a standard electric plug protocol can receive electricity 
 from a corresponding socket. Note that different regions of the world implement the electric plug protocol 
@@ -221,11 +216,11 @@ in different ways, but they all share basic components.</p>
 
 <h4 id="emoji-vs-colorizer-textfields">Emoji vs. Colorizer Textfields</h4>
 
-<p><img src="/assets/images/controlFlow.png" alt="Drawing" style="width: 1000px;" /></p>
+<p><img src="/assets/images/controlFlow.png" alt="Drawing" style="width: 1000px;"/></p>
 
 <p>The first 3 steps are behind the scene, the first step we can see is the 4th.</p>
 
-<p><img src="/assets/images/emojiColorizer.png" alt="Drawing" style="width: 1000px;" /></p>
+<p><img src="/assets/images/emojiColorizer.png" alt="Drawing" style="width: 1000px;"/></p>
 
 <p>Emoji textfield clears text when editing begins; colorizer does not.</p>
 
@@ -233,11 +228,11 @@ in different ways, but they all share basic components.</p>
 
 <p>Neither called textFieldDidEndEditing(), it saves the data to the model.</p>
 
-<h4 id="write-a-delegate-file-randomcolortextfielddelegateswift">Write a delegate file: RandomColorTextFieldDelegate.swift</h4>
+<h4 id="write-a-delegate-file-randomcolortextfielddelegate-swift">Write a delegate file: RandomColorTextFieldDelegate.swift</h4>
 
 <ul>
-  <li>Click the delegate folder, add new file, swift file, name it.</li>
-  <li>Import UIKit, define the class, subclassing NSObject, declare UITextFieldDelegate protocol.</li>
+<li>Click the delegate folder, add new file, swift file, name it.</li>
+<li>Import UIKit, define the class, subclassing NSObject, declare UITextFieldDelegate protocol.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">Foundation</span>
@@ -267,14 +262,14 @@ in different ways, but they all share basic components.</p>
 
 <h4 id="practice-app-textfields">Practice App: textFields</h4>
 
-<h4 id="app-mememe-10">App: MemeMe 1.0</h4>
+<h4 id="app-mememe-1-0">App: MemeMe 1.0</h4>
 
 <ul>
-  <li>Do not change the name of a set outlet, it’s in the xib file. If name is changed, there will be an uncaught exception saying the key of that variable has a problem, though build will succeed but the app will crash. If we absolutely want to change the name, delete the link of the outlet and set a new link and a new outlet. To delete the link, open the Connection inspector.</li>
-  <li>To have the original aspect ratio in the UIImageView, select Mode Aspect Fit instead of Scale to Fill in the Attributes inspector.</li>
-  <li>To set the constraints as they are showing, use the small triangular button at the bottom right.</li>
-  <li>Declare the delegates: UIImagePickerControllerDelegate, UINavigationControllerDelegate</li>
-  <li>Using the delegate method:</li>
+<li>Do not change the name of a set outlet, it’s in the xib file. If name is changed, there will be an uncaught exception saying the key of that variable has a problem, though build will succeed but the app will crash. If we absolutely want to change the name, delete the link of the outlet and set a new link and a new outlet. To delete the link, open the Connection inspector.</li>
+<li>To have the original aspect ratio in the UIImageView, select Mode Aspect Fit instead of Scale to Fill in the Attributes inspector.</li>
+<li>To set the constraints as they are showing, use the small triangular button at the bottom right.</li>
+<li>Declare the delegates: UIImagePickerControllerDelegate, UINavigationControllerDelegate</li>
+<li>Using the delegate method:</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">pickAnImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
@@ -293,17 +288,17 @@ in different ways, but they all share basic components.</p>
     <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li>The ordering of objects in the document outline matters, it’s the ordering of the layers in the layout. For example, objects ordered lower means it’s above the upper objects.</li>
-  <li>To separate Bar Button Items on the toolbar, drag a Flexible Space Bar Button item between them.</li>
-  <li>To set the UITextField background as transparent,</li>
+<li>The ordering of objects in the document outline matters, it’s the ordering of the layers in the layout. For example, objects ordered lower means it’s above the upper objects.</li>
+<li>To separate Bar Button Items on the toolbar, drag a Flexible Space Bar Button item between them.</li>
+<li>To set the UITextField background as transparent,</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="nb">self</span><span class="p">.</span><span class="n">myTextField</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">clearColor</span><span class="p">()</span></code></pre></div>
 
 <ul>
-  <li>To avoid UITextField attributes getting overridden, set other attributes like textAlignment and background color after setting defaultTextAttributes.</li>
-  <li>To hide the UITextField border, click it and choose in the Attributes inspector.</li>
-  <li>To move the view up and down when the keyboard shows and hides, for the bottom UITextField, do this</li>
+<li>To avoid UITextField attributes getting overridden, set other attributes like textAlignment and background color after setting defaultTextAttributes.</li>
+<li>To hide the UITextField border, click it and choose in the Attributes inspector.</li>
+<li>To move the view up and down when the keyboard shows and hides, for the bottom UITextField, do this</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">// when the keyboardWillShow notification is received, shift the view&#39;s frame up</span>
@@ -321,16 +316,15 @@ in different ways, but they all share basic components.</p>
     <span class="p">}</span></code></pre></div>
 
 <ul>
-  <li>To generate memed image, (hide the notification bar and toolbar)</li>
+<li>To generate memed image, (hide the notification bar and toolbar)</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">TODO</span></code></pre></div>
 
 <ul>
-  <li>To</li>
-  <li>To</li>
+<li>To</li>
+<li>To</li>
 </ul>
-
 
 </article>
 
@@ -370,6 +364,11 @@ in different ways, but they all share basic components.</p>
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -381,3 +380,7 @@ in different ways, but they all share basic components.</p>
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

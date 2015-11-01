@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -50,9 +51,9 @@
 <p>A Spark program first creates a SparkContext object</p>
 
 <ul>
-  <li>Tells Spark how and where to access a cluster</li>
-  <li>pySpark shell and Databricks Cloud automatically create the <strong>sc</strong> variable</li>
-  <li>iPython and programs must use a constructor to create a new SparkContext</li>
+<li>Tells Spark how and where to access a cluster</li>
+<li>pySpark shell and Databricks Cloud automatically create the <strong>sc</strong> variable</li>
+<li>iPython and programs must use a constructor to create a new SparkContext</li>
 </ul>
 
 <p>Use <strong>SparkContext</strong> to create RDDs</p>
@@ -60,33 +61,33 @@
 <p>The master parameter for <strong>sc</strong> determines which type and size of cluster to use</p>
 
 <ul>
-  <li>local clusters. can use 1 or K (#cores) worker threads</li>
-  <li>remote clusters. can connect to a Spark cluster or an Apache Mesos cluster</li>
-  <li>In the lab, the master param is set</li>
+<li>local clusters. can use 1 or K (#cores) worker threads</li>
+<li>remote clusters. can connect to a Spark cluster or an Apache Mesos cluster</li>
+<li>In the lab, the master param is set</li>
 </ul>
 
 <p>Resilient Distributed Datasets</p>
 
 <ul>
-  <li>The primary abstraction in Spark</li>
-  <li><strong>Immutable</strong> once constructed</li>
-  <li>Track lineage info to efficiently recompute lost data</li>
-  <li>Enable operations on collection of elements in parallel</li>
+<li>The primary abstraction in Spark</li>
+<li><strong>Immutable</strong> once constructed</li>
+<li>Track lineage info to efficiently recompute lost data</li>
+<li>Enable operations on collection of elements in parallel</li>
 </ul>
 
 <p>You construct RDDs</p>
 
 <ul>
-  <li>by <strong>parallelizing</strong> existing Python collections (lists)</li>
-  <li>by <strong>transforming</strong> an existing RDD</li>
-  <li>from <strong>files</strong> in HDFS or any other storage system</li>
+<li>by <strong>parallelizing</strong> existing Python collections (lists)</li>
+<li>by <strong>transforming</strong> an existing RDD</li>
+<li>from <strong>files</strong> in HDFS or any other storage system</li>
 </ul>
 
-<p><img src="/assets/images/RDD1.png" alt="Drawing" style="width: 400px;" />
-<img src="/assets/images/RDD2.png" alt="Drawing" style="width: 400px;" />
-<img src="/assets/images/RDD3.png" alt="Drawing" style="width: 400px;" />
-<img src="/assets/images/RDD4.png" alt="Drawing" style="width: 400px;" />
-<img src="/assets/images/RDD5.png" alt="Drawing" style="width: 600px;" /></p>
+<p><img src="/assets/images/RDD1.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/images/RDD2.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/images/RDD3.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/images/RDD4.png" alt="Drawing" style="width: 400px;"/>
+<img src="/assets/images/RDD5.png" alt="Drawing" style="width: 600px;"/></p>
 
 <p>Transformations are not calculated right away, they are like a recipe</p>
 
@@ -97,265 +98,181 @@
 - Restricted to a single expression</p>
 
 <p>Transformations: (<code>map</code>, <code>filter</code> run in drivers, <code>lambda</code>s run in workers)</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; rdd = sc.parallelize([1, 2, 3, 4])
+&gt;&gt;&gt; rdd.map(lambda x: x*2)
+RDD: [1, 2, 3, 4] -&gt; [2, 4, 6, 8]
 
-<p>```
-»&gt; rdd = sc.parallelize([1, 2, 3, 4])
-»&gt; rdd.map(lambda x: x*2)
-RDD: [1, 2, 3, 4] -&gt; [2, 4, 6, 8]</p>
+&gt;&gt;&gt; rdd.filter(lambda x: x%2 == 0)
+RDD: [1, 2, 3, 4] -&gt; [2, 4]
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd.filter(lambda x: x%2 == 0)
-RDD: [1, 2, 3, 4] -&gt; [2, 4]</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+&gt;&gt;&gt; rdd2 = sc.parallelize([1, 4, 2, 2, 3])
+&gt;&gt;&gt; rdd2.distinct()
+RDD: [1, 4, 2, 2, 3] -&gt; [1, 4, 2, 3]
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd2 = sc.parallelize([1, 4, 2, 2, 3])
-rdd2.distinct()
-RDD: [1, 4, 2, 2, 3] -&gt; [1, 4, 2, 3]</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+&gt;&gt;&gt; rdd = sc.parallelize([1, 2, 3])
+&gt;&gt;&gt; rdd.Map(lambda x: [x, x+5])
+RDD: [1, 2, 3] -&gt; [[1, 6], [2, 7], [3, 8]]
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd = sc.parallelize([1, 2, 3])
-rdd.Map(lambda x: [x, x+5])
-RDD: [1, 2, 3] -&gt; [[1, 6], [2, 7], [3, 8]]</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+// flatMap: flattens the list of lists -&gt; list
 
-<p>// flatMap: flattens the list of lists -&gt; list</p>
+&gt;&gt;&gt; rdd.flatMap(lambda x: [x, x+5])
+RDD: [1, 2, 3] -&gt; [1, 6, 2, 7, 3, 8]
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd.flatMap(lambda x: [x, x+5])
-RDD: [1, 2, 3] -&gt; [1, 6, 2, 7, 3, 8]</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
-
-<p>// Function literals are closures automatically passed to workers
-```</p>
-
+// Function literals are closures automatically passed to workers
+</code></pre></div>
 <p>Transformation is not executed right away: <strong>lazy evaluation</strong>. 
 Spark remembers the recipe, and perform it when there’s an action.</p>
 
-<p><br />
-#### Spark Actions</p>
+<p><br></p>
 
-<p><img src="/assets/images/RDD6.png" alt="Drawing" style="width: 600px;" /></p>
+<h4 id="spark-actions">Spark Actions</h4>
 
-<p>```
-»&gt; rdd = sc.parallelize([1, 2, 3])
-»&gt; rdd.reduce(lambda a, b: a * b)
-Value: 6</p>
+<p><img src="/assets/images/RDD6.png" alt="Drawing" style="width: 600px;"/></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; rdd = sc.parallelize([1, 2, 3])
+&gt;&gt;&gt; rdd.reduce(lambda a, b: a * b)
+Value: 6
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd.take(2)
-Value: [1, 2] # as list</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+&gt;&gt;&gt; rdd.take(2)
+Value: [1, 2] # as list
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd.collect()
-Value: [1, 2, 3] # as list. Careful, make sure the driver’s memory is big enough!</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+&gt;&gt;&gt; rdd.collect()
+Value: [1, 2, 3] # as list. Careful, make sure the driver’s memory is big enough!
 
-<h1 id="getting-data-out-of-rdd">getting data out of rdd</h1>
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd = sc.parallelize([5, 3, 2, 1])
-rdd.takeOrdered(3, lambda s: -1 * s)
+# getting data out of rdd
+&gt;&gt;&gt; rdd = sc.parallelize([5, 3, 2, 1])
+&gt;&gt;&gt; rdd.takeOrdered(3, lambda s: -1 * s)
 Value: [5, 3, 2] # as list at the driver. lambda s: -1 * s makes the list in decreasing value
-```</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+</code></pre></div>
+<p><br></p>
 
-<p><br />
-#### Spark Programming Model</p>
-
-<p>```
-lines = sc.textFile(“…”, 4)     # 4 partitions
+<h4 id="spark-programming-model">Spark Programming Model</h4>
+<div class="highlight"><pre><code class="language-text" data-lang="text">lines = sc.textFile(“…”, 4)     # 4 partitions
 print lines.count() # count: action
-# count(): read data; sum # lines within partitions; combine sum in driver</p>
+# count(): read data; sum # lines within partitions; combine sum in driver
 
-<p>comments = lines.filter(isComment)
+comments = lines.filter(isComment)
 print lines.count(), comments.count()   # comments.count() will cause recomputation, re-reading the data
-```</p>
-
+</code></pre></div>
 <p>To Avoid Reloading the Data</p>
-
-<p><code>
-lines = sc.textFile(“…”, 4)     # 4 partitions
+<div class="highlight"><pre><code class="language-text" data-lang="text">lines = sc.textFile(“…”, 4)     # 4 partitions
 lines.cache()   # save, don’t recompute! Will run much much faster!
 comments = lines.filter(isComment)
 print lines.count(), comments.count()
-</code></p>
-
+</code></pre></div>
 <p>Spark life cycle</p>
 
 <ul>
-  <li>Create RDDs from external data or <strong>parallelize</strong> a collection in your driver program</li>
-  <li>Lazily transform them into new RDDs</li>
-  <li><code>cache()</code> some RDDs for reuse</li>
-  <li>Perform <strong>actions</strong> to execute parallel computation and produce results</li>
+<li>Create RDDs from external data or <strong>parallelize</strong> a collection in your driver program</li>
+<li>Lazily transform them into new RDDs</li>
+<li><code>cache()</code> some RDDs for reuse</li>
+<li>Perform <strong>actions</strong> to execute parallel computation and produce results</li>
 </ul>
 
 <p>Spark Key-Value RDDs</p>
 
 <ul>
-  <li>Similar to MapReduce, Spark supports Key-Value pairs</li>
-  <li>Each element of a Pair RDD is a pair tuple</li>
+<li>Similar to MapReduce, Spark supports Key-Value pairs</li>
+<li>Each element of a Pair RDD is a pair tuple</li>
 </ul>
-
-<p><code>
-&gt;&gt;&gt; rdd = sc.parallelize([(1, 2), (3, 4)])
+<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; rdd = sc.parallelize([(1, 2), (3, 4)])
 RDD: [(1, 2), (3, 4)]
-</code></p>
-
+</code></pre></div>
 <ul>
-  <li>Key-Value Transformation: <code>reduceByKey(func)</code>, <code>sortByKey(func)</code>, <code>groupByKey(func)</code></li>
+<li>Key-Value Transformation: <code>reduceByKey(func)</code>, <code>sortByKey(func)</code>, <code>groupByKey(func)</code></li>
 </ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&gt;&gt;&gt; rdd = sc.parallelize([(1, 2), (3, 4), (3, 6)])
+&gt;&gt;&gt; rdd.reduceByKey(lambda a, b: a + b)
+RDD: [(1, 2), (3, 4), (3, 6)] -&gt; [(1, 2), (3, 10)]
 
-<p>```
-»&gt; rdd = sc.parallelize([(1, 2), (3, 4), (3, 6)])
-»&gt; rdd.reduceByKey(lambda a, b: a + b)
-RDD: [(1, 2), (3, 4), (3, 6)] -&gt; [(1, 2), (3, 10)]</p>
+&gt;&gt;&gt; rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
+&gt;&gt;&gt; rdd2.sortByKey()
+RDD: [(1, ‘a’), (2, ‘c’), (1, ‘b’)] -&gt; [(1, ‘a’), (1, ‘b’), (2, ‘c’)]
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
-rdd2.sortByKey()
-RDD: [(1, ‘a’), (2, ‘c’), (1, ‘b’)] -&gt; [(1, ‘a’), (1, ‘b’), (2, ‘c’)]</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
-
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
-rdd2.groupByKey()
+&gt;&gt;&gt; rdd2 = sc.parallelize([(1, ‘a’), (2, ‘c’), (1, ‘b’)])
+&gt;&gt;&gt; rdd2.groupByKey()
 RDD: [(1, ‘a’), (2, ‘c’), (1, ‘b’)] -&gt; [(1, [‘a’, ‘b’]), (2, [‘c’])]
 # be careful, groupByKey() can cause a lot of data movement across the network and create large Iterables at workers
-```</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+</code></pre></div>
+<p><br></p>
 
-<p><br />
-#### PySpark Closures</p>
+<h4 id="pyspark-closures">PySpark Closures</h4>
 
 <p>PySpark shared variables</p>
 
 <ul>
-  <li>Broadcast Variables
-    <ul>
-      <li>efficiently send large, read-only value to all workers</li>
-      <li>saved at workers for use in one or more Spark operations</li>
-      <li>like sending a large, read-only lookup table to all the nodes</li>
-    </ul>
-  </li>
-  <li>Accumulators
-    <ul>
-      <li>aggregate values from workers back to driver</li>
-      <li>only driver can access value of accumulator</li>
-      <li>for tasks, accumulators are write-only.</li>
-      <li>use to count errors seen in RDD across workers</li>
-    </ul>
-  </li>
+<li><p>Broadcast Variables</p>
+
+<ul>
+<li>efficiently send large, read-only value to all workers</li>
+<li>saved at workers for use in one or more Spark operations</li>
+<li>like sending a large, read-only lookup table to all the nodes</li>
+</ul></li>
+<li><p>Accumulators</p>
+
+<ul>
+<li>aggregate values from workers back to driver</li>
+<li>only driver can access value of accumulator</li>
+<li>for tasks, accumulators are write-only.</li>
+<li>use to count errors seen in RDD across workers</li>
+</ul></li>
 </ul>
 
 <p><strong>Broadcast variables</strong>: send large dataset to workers, cache at workers</p>
-
-<p><code>
-# at the driver
-&gt;&gt;&gt; broadcastVar = sc.broadcast([1, 2, 3])
-# at the worker (code passed via a closure)
-&gt;&gt;&gt; broadcastVar.value
-[1, 2, 3]
-</code></p>
-
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># at the driver</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">broadcastVar</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">broadcast</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="c"># at the worker (code passed via a closure)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">broadcastVar</span><span class="o">.</span><span class="n">value</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
 <p>Example,</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Lookup the locations of the call signs on the RDD contactCounts.</span>
+<span class="c"># We load a list of call sign prefixes to country code to support this lookup.</span>
+<span class="c"># signPrefixes = loadCallSignTable(), load repeatedly for each worker, NOT GOOD</span>
+<span class="n">signPrefixes</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">loadCallSignTable</span><span class="p">())</span>
 
-<p>```
-# Lookup the locations of the call signs on the RDD contactCounts.
-# We load a list of call sign prefixes to country code to support this lookup.
-# signPrefixes = loadCallSignTable(), load repeatedly for each worker, NOT GOOD
-signPrefixes = sc.broadcast(loadCallSignTable())</p>
+<span class="k">def</span> <span class="nf">processSignCount</span><span class="p">(</span><span class="n">sign_count</span><span class="p">,</span> <span class="n">signPrefixes</span><span class="p">):</span>
+    <span class="n">country</span> <span class="o">=</span> <span class="n">lookupCountry</span><span class="p">(</span><span class="n">sign_count</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">signPrefixes</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">sign_count</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">country</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
 
-<p>def processSignCount(sign_count, signPrefixes):
-    country = lookupCountry(sign_count[0], signPrefixes.value)
-    count = sign_count[1]
-    return (country, count)</p>
-
-<p>countryContactCounts = 
-(contactCounts.map(processSignCount).reduceByKey(lambda x, y: x+y)))
-```</p>
-
+<span class="n">countryContactCounts</span> <span class="o">=</span> 
+<span class="p">(</span><span class="n">contactCounts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">processSignCount</span><span class="p">)</span><span class="o">.</span><span class="n">reduceByKey</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)))</span>
+</code></pre></div>
 <p><strong>Accumulators</strong></p>
 
 <ul>
-  <li>variables that can only be “added” to by associative operations</li>
-  <li>used to efficiently implement parallel counters and sum</li>
-  <li>only driver can read an accumulator’s value, not tasks</li>
+<li>variables that can only be “added” to by associative operations</li>
+<li>used to efficiently implement parallel counters and sum</li>
+<li>only driver can read an accumulator’s value, not tasks</li>
 </ul>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">accum</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">accumulator</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># create the accumulator, set value to 0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="k">global</span> <span class="n">accum</span>
+<span class="o">&gt;&gt;&gt;</span>     <span class="n">accum</span> <span class="o">+=</span> <span class="n">x</span>
 
-<p>```
-»&gt; accum = sc.accumulator(0) # create the accumulator, set value to 0
-»&gt; rdd = sc.parallelize([1, 2, 3, 4])
-»&gt; def f(x):
-»&gt;     global accum
-»&gt;     accum += x</p>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rdd</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">accum</span><span class="o">.</span><span class="n">value</span>
+<span class="n">Value</span><span class="p">:</span> <span class="mi">10</span>
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>rdd.foreach(f)
-accum.value
-Value: 10</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+<span class="o">////</span>
 
-<p>////</p>
+<span class="c"># another example, count empty lines</span>
+<span class="c"># create the rdd: file</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">inputFile</span><span class="p">)</span>
+<span class="c"># create accumulator[int] init to 0</span>
+<span class="n">blanklines</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">accumulator</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<h1 id="another-example-count-empty-lines">another example, count empty lines</h1>
-<p># create the rdd: file
-file = sc.textFile(inputFile)
-# create accumulator[int] init to 0
-blanklines = sc.accumulator(0)</p>
+<span class="k">def</span> <span class="nf">extractCallSigns</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">blankLines</span>  <span class="c"># make the global variable accessible</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">line</span> <span class="o">==</span> <span class="err">“”</span><span class="p">):</span>
+        <span class="n">blankLines</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="err">“</span> <span class="err">“</span><span class="p">)</span>
 
-<p>def extractCallSigns(line):
-    global blankLines  # make the global variable accessible
-    if (line == “”):
-        blankLines += 1
-    return line.split(“ “)</p>
-
-<h1 id="new-rdd-callsigns">new rdd: callSigns</h1>
-<p>callSigns = file.flatMap(extractCallSigns)
-print “Blank lines: %d” % blankLines.value
-```</p>
-
+<span class="c"># new rdd: callSigns</span>
+<span class="n">callSigns</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">extractCallSigns</span><span class="p">)</span>
+<span class="k">print</span> <span class="err">“</span><span class="n">Blank</span> <span class="n">lines</span><span class="p">:</span> <span class="o">%</span><span class="n">d</span><span class="err">”</span> <span class="o">%</span> <span class="n">blankLines</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div>
 <p>Tasks at workers cannot access accumulator’s values
 Tasks see accumulators as write-only vars
 Accumulators can be used in actions and transformations
@@ -367,48 +284,39 @@ master param: specify the # workers
 when create an RDD, specify # partitions for the RDD, and Spark will automatically create that RDD spread across the workers.
 when perform transforms or actions, Spark automatically push a closure containing that function to the workers so that it can run at the workers.</p>
 
-<p><br />
-#### Spark tutorial</p>
+<p><br></p>
+
+<h4 id="spark-tutorial">Spark tutorial</h4>
 
 <ul>
-  <li>transforms: <code>map()</code>; <code>filter()</code></li>
-  <li>actions: <code>count()</code>; <code>collect()</code>; <code>first()</code> is equivalent to <code>take(1)</code>; <code>take()</code>; <code>top()</code> (descending order); 
+<li>transforms: <code>map()</code>; <code>filter()</code></li>
+<li>actions: <code>count()</code>; <code>collect()</code>; <code>first()</code> is equivalent to <code>take(1)</code>; <code>take()</code>; <code>top()</code> (descending order); 
 <code>takeOrdered()</code> (ascending order); <code>reduce()</code></li>
-  <li>advanced actions: <code>takeSample(withReplacement=T/F, num, seed)</code>, <code>countByValue()</code>: a histogram dictionary</li>
-  <li>additional transforms: <code>flatMap()</code>; <code>groupByKey()</code>: only use when <code>reduceByKey()</code> is not helpful; <code>reduceByKey()</code></li>
-  <li>advanced transforms: <code>mapPartitions()</code>, <code>mapPartitionWithIndex()</code></li>
-  <li>Caching RDDs: <code>.cache()</code>, <code>.is_cached</code></li>
-  <li><code>.unpersist()</code>, <code>.getStorageLevel()</code>, <code>.toDebugString()</code></li>
+<li>advanced actions: <code>takeSample(withReplacement=T/F, num, seed)</code>, <code>countByValue()</code>: a histogram dictionary</li>
+<li>additional transforms: <code>flatMap()</code>; <code>groupByKey()</code>: only use when <code>reduceByKey()</code> is not helpful; <code>reduceByKey()</code></li>
+<li>advanced transforms: <code>mapPartitions()</code>, <code>mapPartitionWithIndex()</code></li>
+<li>Caching RDDs: <code>.cache()</code>, <code>.is_cached</code></li>
+<li><code>.unpersist()</code>, <code>.getStorageLevel()</code>, <code>.toDebugString()</code> </li>
 </ul>
 
 <p>When learning Spark, for easy debugging, this form is recommended:</p>
-
-<p><code>
-RDD.transformation1()
-RDD.action1()
-RDD.transformation2()
-RDD.action2()
-</code></p>
-
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">RDD</span><span class="o">.</span><span class="n">transformation1</span><span class="p">()</span>
+<span class="n">RDD</span><span class="o">.</span><span class="n">action1</span><span class="p">()</span>
+<span class="n">RDD</span><span class="o">.</span><span class="n">transformation2</span><span class="p">()</span>
+<span class="n">RDD</span><span class="o">.</span><span class="n">action2</span><span class="p">()</span>
+</code></pre></div>
 <p>When more experienced with Spark, write like this,</p>
-
-<p><code>
-RDD.transformation1().transformation2().action()
-</code></p>
-
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">RDD</span><span class="o">.</span><span class="n">transformation1</span><span class="p">()</span><span class="o">.</span><span class="n">transformation2</span><span class="p">()</span><span class="o">.</span><span class="n">action</span><span class="p">()</span>
+</code></pre></div>
 <p>Readability and code style: to make the expert coding style more readable, enclose the statement in 
 parentheses and put each method, transformation, or action on a separate line.</p>
-
-<p><code>
-# Final version
-(sc
- .parallelize(data)
- .map(lambda y: y - 1)
- .filter(lambda x: x &lt; 10)
- .collect())
-</code></p>
-
-
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Final version</span>
+<span class="p">(</span><span class="n">sc</span>
+ <span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">collect</span><span class="p">())</span>
+</code></pre></div>
 </article>
 
 
@@ -447,6 +355,11 @@ parentheses and put each method, transformation, or action on a separate line.</
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -458,3 +371,7 @@ parentheses and put each method, transformation, or action on a separate line.</
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

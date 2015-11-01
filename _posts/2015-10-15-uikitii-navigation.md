@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "UIKit Fundamentals II - Navigation, Collection View, Tab View"
+comments: True
 ---
 
 ### Practice App: Make Your Own Adventure (MYOA)

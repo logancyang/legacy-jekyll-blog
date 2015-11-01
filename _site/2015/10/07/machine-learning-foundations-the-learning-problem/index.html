@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -49,75 +50,77 @@
 
 <p>Improving some performance measure with experience computed from data.</p>
 
-<p><strong>Data –&gt; ML –&gt; Improved performance measure</strong></p>
+<p><strong>Data --&gt; ML --&gt; Improved performance measure</strong></p>
 
 <h3 id="when-to-use-machine-learning">When to Use Machine Learning?</h3>
 
 <ol>
-  <li>Exists some ‘underlying pattern’ to be learned - so the ‘performance measure’ can be improved.</li>
-  <li>But NO programmable (easy) definition - so ML is needed.</li>
-  <li>Somehow there’s <strong>data</strong> about the pattern - so ML has input to learn from.</li>
+<li>Exists some &#39;underlying pattern&#39; to be learned - so the &#39;performance measure&#39; can be improved.</li>
+<li>But NO programmable (easy) definition - so ML is needed.</li>
+<li>Somehow there&#39;s <strong>data</strong> about the pattern - so ML has input to learn from.</li>
 </ol>
 
 <h3 id="some-interesting-examples">Some Interesting Examples</h3>
 
 <ul>
-  <li>Food:
-    <ul>
-      <li>data: tweets (words + location)</li>
-      <li>skill: tell food poisoning likeliness of restaurants</li>
-    </ul>
-  </li>
-  <li>Clothing:
-    <ul>
-      <li>data: sales figures + client surveys</li>
-      <li>skill: give fashion recommendation to clients</li>
-    </ul>
-  </li>
-  <li>Housing:
-    <ul>
-      <li>data: characteristics of buildings and energy loads</li>
-      <li>skill: predict energy loads</li>
-    </ul>
-  </li>
-  <li>Transportation:
-    <ul>
-      <li>data: traffic sign images and meanings</li>
-      <li>skill: recognize traffic signs</li>
-    </ul>
-  </li>
-  <li>Education:
-    <ul>
-      <li>data: students’ records of quizzes</li>
-      <li>skill: predict whether a student can answer another quiz question correctly</li>
-    </ul>
-  </li>
-  <li>Entertainment:
-    <ul>
-      <li>data: how many users have rated some movies</li>
-      <li>skill: predict how a user would rate an unrated movie</li>
-    </ul>
-  </li>
+<li><p>Food:</p>
+
+<ul>
+<li>data: tweets (words + location)</li>
+<li>skill: tell food poisoning likeliness of restaurants</li>
+</ul></li>
+<li><p>Clothing:</p>
+
+<ul>
+<li>data: sales figures + client surveys</li>
+<li>skill: give fashion recommendation to clients</li>
+</ul></li>
+<li><p>Housing:</p>
+
+<ul>
+<li>data: characteristics of buildings and energy loads</li>
+<li>skill: predict energy loads</li>
+</ul></li>
+<li><p>Transportation:</p>
+
+<ul>
+<li>data: traffic sign images and meanings</li>
+<li>skill: recognize traffic signs</li>
+</ul></li>
+<li><p>Education:</p>
+
+<ul>
+<li>data: students&#39; records of quizzes</li>
+<li>skill: predict whether a student can answer another quiz question correctly</li>
+</ul></li>
+<li><p>Entertainment:</p>
+
+<ul>
+<li>data: how many users have rated some movies</li>
+<li>skill: predict how a user would rate an unrated movie</li>
+</ul></li>
 </ul>
 
 <h3 id="components-of-ml">Components of ML</h3>
 
 <ul>
-  <li>Input feature vector <strong>x</strong></li>
-  <li>Output label y</li>
-  <li>Target function f: <strong>x</strong> -&gt; y</li>
-  <li>Data: training set</li>
+<li>Input feature vector <strong>x</strong></li>
+<li>Output label y</li>
+<li>Target function f: <strong>x</strong> -&gt; y</li>
+<li>Data: training set</li>
 </ul>
 
-<script type="math/tex; mode=display">D=\\{ (\mathbf{x}\_1, y\_1),(\mathbf{x}\_2, y\_2), ... (\mathbf{x}\_N, y\_N) \\}</script>
+<p>$$
+D=\{ (\mathbf{x}_1, y_1),(\mathbf{x}_2, y_2), ... (\mathbf{x}_N, y_N) \}
+$$</p>
 
 <ul>
-  <li>Hypothesis &lt;=&gt; skill
-    <ul>
-      <li>g: <strong>x</strong> -&gt; y</li>
-      <li>‘learned’ formula to be used</li>
-    </ul>
-  </li>
+<li>Hypothesis &lt;=&gt; skill
+
+<ul>
+<li>g: <strong>x</strong> -&gt; y</li>
+<li>&#39;learned&#39; formula to be used</li>
+</ul></li>
 </ul>
 
 <p>f: ideal formula</p>
@@ -125,73 +128,74 @@
 <p>g: hypothesis, approximates f</p>
 
 <ul>
-  <li>Purpose of ML: unknown f, find g that approximates f</li>
-  <li>Hypothesis set <strong>H</strong>, includes many g’s</li>
+<li>Purpose of ML: unknown f, find g that approximates f</li>
+<li>Hypothesis set <strong>H</strong>, includes many g&#39;s</li>
 </ul>
 
-<script type="math/tex; mode=display">g\in \mathbf{H}= \\{ h_{ k } \\}</script>
+<p>$$ g\in \mathbf{H}= \{ h_{ k } \} $$</p>
 
-<p><br />
-<br />
-### Machine Learning’s Relationship with Data Mining, Artificial Intelligence and Statistics</p>
+<p><br>
+<br></p>
+
+<h3 id="machine-learning-39-s-relationship-with-data-mining-artificial-intelligence-and-statistics">Machine Learning&#39;s Relationship with Data Mining, Artificial Intelligence and Statistics</h3>
 
 <h4 id="ml-vs-dm">ML vs. DM</h4>
 
 <ul>
-  <li>Definition
-    <ul>
-      <li>ML: find hypothesis g ~ f.</li>
-      <li>DM: use (huge) data to find ‘interesting’ properties.</li>
-    </ul>
-  </li>
-  <li>For KDD Cup, ML = DM</li>
-  <li>If ‘interesting property’ is g ~ f, ML and DM can help each other.</li>
-  <li>Traditional DM also focuses on efficient computing in large databases.</li>
+<li><p>Definition</p>
+
+<ul>
+<li>ML: find hypothesis g ~ f. </li>
+<li>DM: use (huge) data to find &#39;interesting&#39; properties. </li>
+</ul></li>
+<li><p>For KDD Cup, ML = DM</p></li>
+<li><p>If &#39;interesting property&#39; is g ~ f, ML and DM can help each other.</p></li>
+<li><p>Traditional DM also focuses on efficient computing in large databases.</p></li>
 </ul>
 
 <h4 id="ml-vs-ai">ML vs. AI</h4>
 
 <ul>
-  <li>g ~ f is intelligent: ML can realize AI, among other routes.</li>
-  <li>e.g. chess playing
-    <ul>
-      <li>traditional AI: game tree</li>
-      <li>ML for AI: learn from board data</li>
-    </ul>
-  </li>
+<li>g ~ f is intelligent: ML can realize AI, among other routes.</li>
+<li>e.g. chess playing
+
+<ul>
+<li>traditional AI: game tree</li>
+<li>ML for AI: learn from board data</li>
+</ul></li>
 </ul>
 
-<p><em>“ML is a possible route to realize AI”</em></p>
+<p><em>&quot;ML is a possible route to realize AI&quot;</em></p>
 
 <h4 id="ml-vs-statistics">ML vs. Statistics</h4>
 
 <ul>
-  <li>Statistics: use data to make inference about an unknown process</li>
-  <li>g is an inference outcome, f is unknown
-    <ul>
-      <li>statistics can be used to achieve ML</li>
-    </ul>
-  </li>
-  <li>Traditional statistics also focuses on provable results with math assumptions, and care less about
+<li>Statistics: use data to make inference about an unknown process</li>
+<li>g is an inference outcome, f is unknown
+
+<ul>
+<li>statistics can be used to achieve ML</li>
+</ul></li>
+<li>Traditional statistics also focuses on provable results with math assumptions, and care less about
 computation.</li>
 </ul>
 
-<p><em>“Statistics is a useful tool for ML”</em></p>
+<p><em>&quot;Statistics is a useful tool for ML&quot;</em></p>
 
-<p><br />
-<br />
-<br />
-#### Side note for redcarpet with MathJax:</p>
+<p><br>
+<br>
+<br></p>
+
+<h4 id="side-note-for-redcarpet-with-mathjax">Side note for redcarpet with MathJax:</h4>
 
 <ul>
-  <li>doesn’t respect $ or $$ (will parse characters within these, such as _), but has workarounds:</li>
-  <li>has a useful option, no_intra_emphasis, so underscores between ascii characters are not converted to <code>&lt;em&gt;</code> tags, so <code>$x_1$</code> is fine</li>
-  <li><strong>need to escape underscores</strong> after non-ascii characters, for example <code>$\mathbf{x}\_1$</code></li>
-  <li>need to double escape curly bracket: <code>\\{</code></li>
-  <li>need three backslash for new line <code>\\\</code></li>
-  <li><code>=</code> cannot be on its own line</li>
+<li>doesn&#39;t respect $ or $$ (will parse characters within these, such as _), but has workarounds:</li>
+<li>has a useful option, no_intra_emphasis, so underscores between ascii characters are not converted to <code>&lt;em&gt;</code> tags, so <code>$x_1$</code> is fine</li>
+<li><strong>need to escape underscores</strong> after non-ascii characters, for example <code>$\mathbf{x}\_1$</code></li>
+<li>need to double escape curly bracket: <code>\\{</code></li>
+<li>need three backslash for new line <code>\\\</code></li>
+<li><code>=</code> cannot be on its own line</li>
 </ul>
-
 
 </article>
 
@@ -231,6 +235,11 @@ computation.</li>
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -242,3 +251,7 @@ computation.</li>
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

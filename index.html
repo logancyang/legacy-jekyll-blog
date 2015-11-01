@@ -4,7 +4,7 @@ title: Home
 ---
 
 <div class="posts">
-  {% for post in paginator.posts %}
+  {% for post in site.posts limit 16 %}
   <article class="post">
     <h1 class="post-title">
       <a href="{{ site.baseurl }}{{ post.url }}">
@@ -14,7 +14,12 @@ title: Home
 
     <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
 
-    {{ post.content }}
+    <p>
+        {{ post.content | strip_html | truncatewords:75}}
+        </em></strong>  <!-- This is what does the task-->
+
+            <a href="{{ post.url }}">Read more...</a><br><br>
+    </p>
   </article>
   {% endfor %}
 </div>

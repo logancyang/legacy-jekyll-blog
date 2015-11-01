@@ -26,6 +26,7 @@
 </head>
 
 
+
   <body>
 
     <div class="container content">
@@ -48,36 +49,32 @@
   <h3 id="key-concepts">Key Concepts</h3>
 
 <ul>
-  <li>Immutable = hashable = can be element of a set (or key of dict)</li>
-  <li>
-    <p>mutable = unhashable = cannot be element of a set (or key of dict)</p>
-  </li>
-  <li>immutables in Python:
-    <ul>
-      <li>int, float, long, complex</li>
-      <li>str</li>
-      <li>tuple</li>
-      <li>bytes</li>
-      <li>frozenset</li>
-    </ul>
-  </li>
-  <li>mutables
-    <ul>
-      <li>byte array</li>
-      <li>list</li>
-      <li>set</li>
-      <li>dict</li>
-    </ul>
-  </li>
-  <li>
-    <p>Do not modify an container while looping over it. Create a copy and loop on that.</p>
-  </li>
-  <li>DO NOT ASSIGN STRING CHAR AS IN LIST!!!
-    <ul>
-      <li>list(string), modify, and ‘’.join(list) to get string back</li>
-      <li>To sort a string:</li>
-    </ul>
-  </li>
+<li>Immutable = hashable = can be element of a set (or key of dict)</li>
+<li><p>mutable = unhashable = cannot be element of a set (or key of dict)</p></li>
+<li><p>immutables in Python:</p>
+
+<ul>
+<li>int, float, long, complex</li>
+<li>str</li>
+<li>tuple</li>
+<li>bytes</li>
+<li>frozenset</li>
+</ul></li>
+<li><p>mutables</p>
+
+<ul>
+<li>byte array</li>
+<li>list</li>
+<li>set</li>
+<li>dict</li>
+</ul></li>
+<li><p>Do not modify an container while looping over it. Create a copy and loop on that.</p></li>
+<li><p>DO NOT ASSIGN STRING CHAR AS IN LIST!!!</p>
+
+<ul>
+<li>list(string), modify, and ‘’.join(list) to get string back</li>
+<li>To sort a string:</li>
+</ul></li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;dcba&quot;</span>
@@ -87,7 +84,7 @@
 <span class="s">&quot;abcd&quot;</span></code></pre></div>
 
 <ul>
-  <li>An example of function:</li>
+<li>An example of function:</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
@@ -110,12 +107,12 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">S</span>
 <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="swap-2-elements-in-a-list">Swap 2 Elements in a List</h3>
 
 <ul>
-  <li>Usually in all languages it looks like,</li>
+<li>Usually in all languages it looks like,</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">tmp</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -123,29 +120,29 @@
 <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span></code></pre></div>
 
 <ul>
-  <li>In Python it can be as simple as <code>A[i], A[j] = A[j], A[i]</code>!</li>
+<li>In Python it can be as simple as <code>A[i], A[j] = A[j], A[i]</code>!</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="the-list-count-method">The List Count Method</h3>
 
 <ul>
-  <li>The <code>list</code> data structure in Python has a method <code>list.count(element)</code> which takes O(n) time.</li>
-  <li>Can be high dimensional list, e.g. <code>board[:m][:n].count(element)</code>.
-    <ul>
-      <li>Side note: <code>set(2DList) =&gt; 1DSet</code></li>
-    </ul>
-  </li>
-  <li>If we want all counts, using a <code>dict</code> as a histogram gives all counts in one pass.</li>
+<li>The <code>list</code> data structure in Python has a method <code>list.count(element)</code> which takes O(n) time.</li>
+<li>Can be high dimensional list, e.g. <code>board[:m][:n].count(element)</code>.
+
+<ul>
+<li>Side note: <code>set(2DList) =&gt; 1DSet</code></li>
+</ul></li>
+<li>If we want all counts, using a <code>dict</code> as a histogram gives all counts in one pass.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="use-dict-as-a-histogram">Use Dict as a Histogram</h3>
 
 <ul>
-  <li>Don’t forget to check if key exists.</li>
+<li>Don’t forget to check if key exists.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span>
@@ -154,25 +151,25 @@
     <span class="nb">map</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span></code></pre></div>
 
 <ul>
-  <li>A better way, use dict.get(key, default=None).
-    <ul>
-      <li><strong>default</strong> – This is the Value to be returned in case key does not exist.</li>
-    </ul>
-  </li>
+<li>A better way, use dict.get(key, default=None). 
+
+<ul>
+<li><strong>default</strong> -- This is the Value to be returned in case key does not exist.</li>
+</ul></li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
     <span class="n">d</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="zip-2-lists-into-a-dictionary">Zip 2 Lists into a Dictionary</h3>
 
 <ul>
-  <li>zip two lists into a list of tuples</li>
-  <li>dict the list of tuples into a dictionary: note, the tuples must have length 2, error if 3</li>
-  <li>an easy way of constructing a reversed dictionary</li>
+<li>zip two lists into a list of tuples</li>
+<li>dict the list of tuples into a dictionary: note, the tuples must have length 2, error if 3</li>
+<li>an easy way of constructing a reversed dictionary</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -187,75 +184,75 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dict_ba</span>
 <span class="p">{</span><span class="s">&#39;y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;z&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="check-if-a-float-is-a-whole-number">Check if a Float is a Whole Number</h3>
 
 <ul>
-  <li>Two methods: <code>(my_float).is_integer()</code>, or <code>my_float % 1 == 0</code></li>
-  <li>The second one works because in Python, <code>5.5 % 1 = 0.5</code>, <code>5.0 % 1 = 0.0</code>, and <code>0.0 == 0</code> is <code>True</code>.</li>
+<li>Two methods: <code>(my_float).is_integer()</code>, or <code>my_float % 1 == 0</code></li>
+<li>The second one works because in Python, <code>5.5 % 1 = 0.5</code>, <code>5.0 % 1 = 0.0</code>, and <code>0.0 == 0</code> is <code>True</code>.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
-<h3 id="get-the-index-of-the-minmax-value-in-a-list-s">Get the Index of the Min/Max Value in a List S</h3>
+<h3 id="get-the-index-of-the-min-max-value-in-a-list-s">Get the Index of the Min/Max Value in a List S</h3>
 
 <ul>
-  <li>If there are duplicates, these methods return the first occurrence</li>
+<li>If there are duplicates, these methods return the first occurrence</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#   print max(enumerate(S))    # returns a tuple (ind, val), key is ind </span>
 <span class="k">print</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">S</span><span class="p">:</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>    <span class="c"># faster </span>
 <span class="k">print</span> <span class="n">S</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>    <span class="c"># easier to read</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="infinity">Infinity</h3>
 
 <ul>
-  <li><code>float('inf')</code> is positive inf, <code>float('-inf')</code> is negative</li>
-  <li>Be careful not to multiply inf by 0, it yields nan</li>
+<li><code>float(&#39;inf&#39;)</code> is positive inf, <code>float(&#39;-inf&#39;)</code> is negative</li>
+<li>Be careful not to multiply inf by 0, it yields nan</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="import-py-file-as-module">Import .py File as Module</h3>
 
 <ul>
-  <li>In Python, modeling a clustering as a set of sets is impossible since <strong>the elements of a set must be immutable</strong>.</li>
-  <li>Import self-defined module: put the file.py file into the same directory, and do</li>
-  <li>import <em>module</em> (as <em>alias</em>)</li>
+<li>In Python, modeling a clustering as a set of sets is impossible since <strong>the elements of a set must be immutable</strong>.</li>
+<li>Import self-defined module: put the file.py file into the same directory, and do</li>
+<li>import <em>module</em> (as <em>alias</em>)</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="closure">Closure</h3>
 
 <ul>
-  <li>Closure: http://en.wikipedia.org/wiki/Closure_%28computer_programming%29</li>
-  <li>Pass function as parameter into another function.</li>
+<li>Closure: <a href="http://en.wikipedia.org/wiki/Closure_%28computer_programming%29">http://en.wikipedia.org/wiki/Closure_%28computer_programming%29</a></li>
+<li>Pass function as parameter into another function.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">function_a</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">function_b</span><span class="p">():</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
-<h3 id="xrange-vs-range--python-2">xrange() vs range() — Python 2</h3>
+<h3 id="xrange-vs-range-—-python-2">xrange() vs range() — Python 2</h3>
 
 <ul>
-  <li>range creates a list, so if you do range(1, 10000000) it creates a list in memory with 10000000 elements.</li>
-  <li>xrange is a not generator but act as one, it is a sequence object that evaluates lazily.</li>
-  <li>there are no xrange() in Python 3, range() does the same</li>
+<li>range creates a list, so if you do range(1, 10000000) it creates a list in memory with 10000000 elements.</li>
+<li>xrange is a not generator but act as one, it is a sequence object that evaluates lazily.</li>
+<li>there are no xrange() in Python 3, range() does the same</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="lambda">Lambda</h3>
 
 <ul>
-  <li>runtime function with no name</li>
-  <li>often used in conjunction with filter(), map(), reduce()</li>
+<li>runtime function with no name</li>
+<li>often used in conjunction with filter(), map(), reduce()</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">f</span> <span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
@@ -268,7 +265,7 @@
 <span class="mi">64</span></code></pre></div>
 
 <ul>
-  <li>Or pass a small function as argument</li>
+<li>Or pass a small function as argument</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;four&#39;</span><span class="p">)]</span>
@@ -276,13 +273,13 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">pairs</span>
 <span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;four&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">)]</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="initialize-a-2d-array-nested-list">Initialize a 2D Array (Nested List)</h3>
 
 <ul>
-  <li><strong>USE LIST COMPREHENSION!</strong></li>
-  <li>DO NOT USE <code>[[None] * ncol] * nrow]</code>!  <code>[anything] * const</code> has sublists pointing to the same object.</li>
+<li><strong>USE LIST COMPREHENSION!</strong></li>
+<li>DO NOT USE <code>[[None] * ncol] * nrow]</code>!  <code>[anything] * const</code> has sublists pointing to the same object.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">ncol</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span> <span class="k">for</span> <span class="n">nrow</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
@@ -290,11 +287,11 @@
 <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span></code></pre></div>
 
 <ul>
-  <li>Similarly, to initialize a triangle where ncol &lt;= nrow:
-    <ul>
-      <li>don’t forget the nrow+1</li>
-    </ul>
-  </li>
+<li>Similarly, to initialize a triangle where ncol &lt;= nrow:
+
+<ul>
+<li>don’t forget the nrow+1</li>
+</ul></li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">S</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">ncol</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nrow</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">nrow</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
@@ -302,7 +299,7 @@
 <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span></code></pre></div>
 
 <ul>
-  <li>To initialize a contant 2D(or even higher dimensional) list with the shape of a given list “tri”</li>
+<li>To initialize a contant 2D(or even higher dimensional) list with the shape of a given list &quot;tri&quot;</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">tri</span> <span class="o">=</span> <span class="p">[</span>
@@ -316,21 +313,21 @@
 <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span></code></pre></div>
 
 <ul>
-  <li>To initialize a 2D list f1 where the value of the first row is 0 to j and the first col is 0 to i. 
+<li>To initialize a 2D list f1 where the value of the first row is 0 to j and the first col is 0 to i. 
 The commas and colons should be removed, just to make it more readable.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">f1</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="k">else</span><span class="p">:</span> <span class="n">i</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="k">else</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="flatten-a-2d-array">Flatten a 2D Array</h3>
 
 <ul>
-  <li>sublist in matrix, then, item in sublist.</li>
-  <li><strong>Nested loops in List Comprehension: outer loop first, then inner loop.</strong></li>
-  <li>flatten = [item for sublist in matrix for item in sublist]</li>
+<li>sublist in matrix, then, item in sublist.</li>
+<li><strong>Nested loops in List Comprehension: outer loop first, then inner loop.</strong></li>
+<li>flatten = [item for sublist in matrix for item in sublist]</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># equivalent to</span>
@@ -339,9 +336,9 @@ The commas and colons should be removed, just to make it more readable.</li>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">:</span>
         <span class="n">flatten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
-<h3 id="find-minmax-in-2d-nested-list">Find Min/Max in 2D Nested List</h3>
+<h3 id="find-min-max-in-2d-nested-list">Find Min/Max in 2D Nested List</h3>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">S</span> <span class="o">=</span> <span class="p">[[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">ncol</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nrow</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">nrow</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">S</span>
@@ -349,7 +346,7 @@ The commas and colons should be removed, just to make it more readable.</li>
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">sublist</span><span class="p">)</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">S</span><span class="p">)</span>
 <span class="mi">1</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="to-check-a-list-of-booleans-to-yield-a-boolean-all-any">To Check a List of Booleans to Yield a Boolean: all(), any()</h3>
 
@@ -360,26 +357,22 @@ The commas and colons should be removed, just to make it more readable.</li>
 <span class="bp">False</span></code></pre></div>
 
 <ul>
-  <li>Beware, DO NOT use it like <code>all([2, 2, 2]) == 2</code>, <code>all()</code> and <code>any()</code> are for booleans inside.</li>
+<li>Beware, DO NOT use it like <code>all([2, 2, 2]) == 2</code>, <code>all()</code> and <code>any()</code> are for booleans inside.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="if-else-in-list-comprehension">If-Else in List Comprehension</h3>
 
 <ul>
-  <li>To initialize a list f from list S, if S[i] == 0, f[i] = 1, else f[i] = 0. Here is a 2D example:</li>
+<li>To initialize a list f from list S, if S[i] == 0, f[i] = 1, else f[i] = 0. Here is a 2D example:</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))]</span></code></pre></div>
 
 <ul>
-  <li>
-    <p>[expr <strong>if</strong> S[] == val <strong>else</strong> <em>expr</em> <strong>for</strong> i <strong>in</strong> iterable]</p>
-  </li>
-  <li>
-    <p>What about elif??</p>
-  </li>
+<li><p>[expr <strong>if</strong> S[] == val <strong>else</strong> <em>expr</em> <strong>for</strong> i <strong>in</strong> iterable]</p></li>
+<li><p>What about elif??</p></li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
@@ -396,18 +389,18 @@ The commas and colons should be removed, just to make it more readable.</li>
 <span class="p">[</span><span class="s">&#39;yes&#39;</span><span class="p">,</span> <span class="s">&#39;no&#39;</span><span class="p">,</span> <span class="s">&#39;idle&#39;</span><span class="p">,</span> <span class="s">&#39;idle&#39;</span><span class="p">,</span> <span class="s">&#39;idle&#39;</span><span class="p">]</span></code></pre></div>
 
 <ul>
-  <li>To initialize a 2D (4*4) list f where <code>f[i][0] = i, f[0][j] = j, else 0</code>:</li>
+<li>To initialize a 2D (4*4) list f where <code>f[i][0] = i, f[0][j] = j, else 0</code>:</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="p">[[</span><span class="n">j</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span> <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span></code></pre></div>
 
 <ul>
-  <li>[expr <strong>if</strong> i == val <strong>else</strong> <em>expr</em> <strong>if</strong> j == val <strong>else</strong> <em>expr</em> <strong>for</strong> i <strong>in</strong> iterable]</li>
-  <li>very powerful pythonic list comprehension!!</li>
+<li>[expr <strong>if</strong> i == val <strong>else</strong> <em>expr</em> <strong>if</strong> j == val <strong>else</strong> <em>expr</em> <strong>for</strong> i <strong>in</strong> iterable]</li>
+<li>very powerful pythonic list comprehension!!</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="create-dict-with-keys-from-a-set-or-list">Create Dict with Keys from a Set or List</h3>
 
@@ -419,12 +412,12 @@ The commas and colons should be removed, just to make it more readable.</li>
 <span class="c"># output:</span>
 <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="using-lists-as-stacks">Using Lists as Stacks</h3>
 
 <ul>
-  <li>It’s very easy to use lists as stacks with append() and pop(). Last in first out.</li>
+<li>It&#39;s very easy to use lists as stacks with append() and pop(). Last in first out.</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
@@ -443,13 +436,13 @@ The commas and colons should be removed, just to make it more readable.</li>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">stack</span>
 <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="using-lists-as-queues">Using Lists as Queues</h3>
 
 <ul>
-  <li>We can use pop(0) and append() to implement the queue behavior but it’s not efficient. 
-Because popping from the first position is slow, all elements must shift. Instead it’s better to use 
+<li>We can use pop(0) and append() to implement the queue behavior but it&#39;s not efficient. 
+Because popping from the first position is slow, all elements must shift. Instead it&#39;s better to use 
 collections.deque and its append() and popleft() methods.</li>
 </ul>
 
@@ -464,12 +457,12 @@ collections.deque and its append() and popleft() methods.</li>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">queue</span>                           <span class="c"># Remaining queue in order of arrival</span>
 <span class="n">deque</span><span class="p">([</span><span class="s">&#39;Michael&#39;</span><span class="p">,</span> <span class="s">&#39;Terry&#39;</span><span class="p">,</span> <span class="s">&#39;Graham&#39;</span><span class="p">])</span></code></pre></div>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="a-peculiar-usage-of-augment-assignment-in-python">A Peculiar Usage of Augment Assignment in Python</h3>
 
 <ul>
-  <li>The augmented addition operator <code>+=</code> behaves unexpectedly in the following case,</li>
+<li>The augmented addition operator <code>+=</code> behaves unexpectedly in the following case,</li>
 </ul>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
@@ -480,25 +473,24 @@ collections.deque and its append() and popleft() methods.</li>
 <span class="p">[</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]</span></code></pre></div>
 
 <ul>
-  <li>What happened is that <code>+=</code> calls <strong>iadd</strong>() method and try to modify the list in-place,
+<li>What happened is that <code>+=</code> calls <strong>iadd</strong>() method and try to modify the list in-place,
 while adding all the elements of the iterable on the right to the list.</li>
 </ul>
 
-<p><em>To be continued…</em></p>
+<p><em>To be continued...</em></p>
 
-<p><br /></p>
+<p><br></p>
 
 <h4 id="some-good-resources">Some good resources:</h4>
 
 <ul>
-  <li><a href="https://docs.python.org/2/tutorial/">The tutorial from Python documentation</a></li>
-  <li><a href="https://docs.python.org/2/tutorial/datastructures.html#">Data Structures</a></li>
-  <li><a href="https://docs.python.org/2/tutorial/inputoutput.html">I/O</a></li>
-  <li><a href="https://docs.python.org/2/tutorial/errors.html">Errors and Exceptions</a></li>
-  <li><a href="http://anandology.com/python-practice-book/iterators.html">Classes, Iterators and Generators</a></li>
-  <li><a href="https://docs.python.org/2/library/">Standard Library</a></li>
+<li><a href="https://docs.python.org/2/tutorial/">The tutorial from Python documentation</a></li>
+<li><a href="https://docs.python.org/2/tutorial/datastructures.html#">Data Structures</a></li>
+<li><a href="https://docs.python.org/2/tutorial/inputoutput.html">I/O</a></li>
+<li><a href="https://docs.python.org/2/tutorial/errors.html">Errors and Exceptions</a></li>
+<li><a href="http://anandology.com/python-practice-book/iterators.html">Classes, Iterators and Generators</a></li>
+<li><a href="https://docs.python.org/2/library/">Standard Library</a></li>
 </ul>
-
 
 </article>
 
@@ -538,6 +530,11 @@ while adding all the elements of the iterable on the right to the list.</li>
 </aside>
 
 
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
 
 
       <div class="footer">
@@ -549,3 +546,7 @@ while adding all the elements of the iterable on the right to the list.</li>
 
   </body>
 </html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
