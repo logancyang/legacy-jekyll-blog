@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      iOS Networking with Swift &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">iOS Networking with Swift</h1>
+  <time datetime="2015-11-01T00:00:00-05:00" class="post-date">01 Nov 2015</time>
+  <p>Without networking, mobile apps can only perceive, process, and present the data that is local to 
+the host device. This greatly restricts the scope of problems which apps can solve and limits their 
+overall utility. By incorporating networking, apps truly become “mobile” -- they can interact with 
+interesting data using popular web services, coordinate multi-user activities, and build experiences 
+that bring users together.</p>
+
+<p>This post will cover concepts fundamental to communication over the network like HTTP, JSON, 
+and authentication. These concepts are also highly transferrable to other platforms, languages, 
+and applications. Additionally, it will mold your understanding of app design, especially when 
+networking constraints are involved.</p>
+
+<h3 id="review-quot-sleeping-in-the-library-quot">Review: &quot;Sleeping in the Library&quot;</h3>
+
+<p>Here we use Flickr&#39;s API as an example to show how to do networking with Swift.</p>
+
+<h4 id="1-define-constants">1. Define constants</h4>
+
+<p>Here, we define some constants used in the app. Each of these constants are used to construct the 
+URL of the HTTP GET request.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 1 - Define constants */</span>
+<span class="k">let</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;https://api.flickr.com/services/rest/&quot;</span>
+<span class="k">let</span> <span class="n">METHOD_NAME</span> <span class="o">=</span> <span class="s">&quot;flickr.galleries.getPhotos&quot;</span>
+<span class="k">let</span> <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">&quot;ENTER_YOUR_API_KEY_HERE&quot;</span>
+<span class="k">let</span> <span class="n">GALLERY_ID</span> <span class="o">=</span> <span class="s">&quot;5704-72157622566655097&quot;</span>
+<span class="k">let</span> <span class="n">EXTRAS</span> <span class="o">=</span> <span class="s">&quot;url_m&quot;</span>
+<span class="k">let</span> <span class="n">DATA_FORMAT</span> <span class="o">=</span> <span class="s">&quot;json&quot;</span>
+<span class="k">let</span> <span class="n">NO_JSON_CALLBACK</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
+<span class="n">It</span> <span class="n">makes</span> <span class="n">sense</span> <span class="n">to</span> <span class="n">keep</span> <span class="n">all</span> <span class="n">of</span> <span class="n">these</span> <span class="kt">as</span> <span class="n">separate</span> <span class="n">constants</span> <span class="n">so</span> <span class="n">that</span> <span class="n">you</span> <span class="n">can</span> <span class="n">mix</span> <span class="n">and</span> <span class="n">match</span> <span class="n">them</span> <span class="n">to</span> <span class="n">create</span> <span class="n">various</span> <span class="n">URLs</span> <span class="n">later</span> <span class="n">on</span> <span class="p">(</span><span class="k">if</span> <span class="n">we</span> <span class="n">were</span> <span class="n">to</span> <span class="n">expand</span> <span class="n">this</span> <span class="n">app</span><span class="p">).</span> <span class="n">It</span> <span class="n">also</span> <span class="n">makes</span> <span class="n">sense</span> <span class="n">to</span> <span class="n">keep</span> <span class="n">all</span> <span class="n">these</span> <span class="n">constants</span> <span class="k">in</span> <span class="n">one</span> <span class="n">area</span><span class="p">,</span> <span class="n">so</span> <span class="k">if</span> <span class="n">any</span> <span class="n">of</span> <span class="n">these</span> <span class="n">bits</span> <span class="n">that</span> <span class="n">we</span><span class="err">’</span><span class="n">re</span> <span class="n">getting</span> <span class="n">from</span> <span class="n">an</span> <span class="n">external</span> <span class="n">source</span> <span class="p">(</span><span class="n">flickr</span><span class="p">)</span> <span class="n">happen</span> <span class="n">to</span> <span class="n">change</span><span class="p">,</span> <span class="n">we</span> <span class="n">know</span> <span class="k">where</span> <span class="n">to</span> <span class="n">go</span> <span class="n">to</span> <span class="n">make</span> <span class="n">the</span> <span class="n">necessary</span> <span class="n">changes</span> <span class="k">in</span> <span class="n">our</span> <span class="n">own</span> <span class="n">app</span><span class="p">.</span>
+</code></pre></div>
+<h4 id="2-api-method-arguments">2. API method arguments</h4>
+
+<p>For convenience, we place the arguments used for the flickr.galleries.getPhotos method into a 
+dictionary. This dictionary will be used by the escapedParameters() helper function to help 
+construct the urlString.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 2 - API method arguments */</span>
+<span class="k">let</span> <span class="n">methodArguments</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;method&quot;</span><span class="o">:</span> <span class="n">METHOD_NAME</span><span class="p">,</span>
+    <span class="s">&quot;api_key&quot;</span><span class="o">:</span> <span class="n">API_KEY</span><span class="p">,</span>
+    <span class="s">&quot;gallery_id&quot;</span><span class="o">:</span> <span class="n">GALLERY_ID</span><span class="p">,</span>
+    <span class="s">&quot;extras&quot;</span><span class="o">:</span> <span class="n">EXTRAS</span><span class="p">,</span>
+    <span class="s">&quot;format&quot;</span><span class="o">:</span> <span class="n">DATA_FORMAT</span><span class="p">,</span>
+    <span class="s">&quot;nojsoncallback&quot;</span><span class="o">:</span> <span class="n">NO_JSON_CALLBACK</span>
+<span class="p">]</span>
+</code></pre></div>
+<h4 id="3-initialize-session-and-url">3. Initialize session and url</h4>
+
+<p>Here&#39;s where the good stuff starts. We&#39;ll explain this part more in detail later, but here are the essentials: 
+NSURLSession — a class that provides an API for downloading content via HTTP. 
+sharedSession() — a method of NSURLSession&#39;s that returns what&#39;s called a &quot;singleton instance&quot; of NSURLSession. 
+singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
+NSURLSession.sharedSession() returns a singleton instance of NSURLSession, the only one that can exist.</p>
+
+<p>We now create the urlString and subsequently the NSURL object. 
+Lastly, we use the NSURL object to create an instance of NSURLRequest.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 3 - Initialize session and url */</span>
+<span class="k">let</span> <span class="n">session</span> <span class="o">=</span> <span class="bp">NSURLSession</span><span class="p">.</span><span class="n">sharedSession</span><span class="p">()</span>
+<span class="k">let</span> <span class="n">urlString</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">escapedParameters</span><span class="p">(</span><span class="n">methodArguments</span><span class="p">)</span>
+<span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="bp">NSURL</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="n">urlString</span><span class="p">)</span><span class="o">!</span>
+<span class="k">let</span> <span class="n">request</span> <span class="o">=</span> <span class="bp">NSURLRequest</span><span class="p">(</span><span class="nl">URL</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="4-initialize-task-for-getting-data">4. Initialize task for getting data</h4>
+
+<p>Using the session and the request, we instantiate what&#39;s called a task for grabbing an image from 
+Flickr. We use the closure that starts out { data, response, downloadError in as a completion handler. 
+We will talk more about these later. Underneath that line, within the completion handler, 
+is where we will work with the response data.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 4 - Initialize task for getting data */</span>
+<span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">dataTaskWithRequest</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">{</span> <span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">downloadError</span> <span class="k">in</span>
+<span class="c1">// handle the response...</span>
+<span class="p">})</span>
+</code></pre></div>
+<h4 id="5-check-for-a-successful-response">5. Check for a successful response</h4>
+
+<p>In the completion handler, we use guard statements to check for a successful response to our request.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 5 - Check for a successful response */</span>
+<span class="cm">/* GUARD: Was there an error? */</span>
+<span class="n">guard</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;There was an error with your request: \(error)&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+
+<span class="cm">/* GUARD: Did we get a successful 2XX response? */</span>
+<span class="n">guard</span> <span class="k">let</span> <span class="n">statusCode</span> <span class="o">=</span> <span class="p">(</span><span class="n">response</span> <span class="kt">as</span><span class="o">?</span> <span class="bp">NSHTTPURLResponse</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">statusCode</span> <span class="k">where</span> <span class="n">statusCode</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">statusCode</span> <span class="o">&lt;=</span> <span class="mi">299</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span> <span class="kt">as</span><span class="o">?</span> <span class="bp">NSHTTPURLResponse</span> <span class="p">{</span>
+        <span class="n">print</span><span class="p">(</span><span class="s">&quot;Your request returned an invalid response! Status code: \(response.statusCode)!&quot;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="k">let</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span> <span class="p">{</span>
+        <span class="n">print</span><span class="p">(</span><span class="s">&quot;Your request returned an invalid response! Response: \(response)!&quot;</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">print</span><span class="p">(</span><span class="s">&quot;Your request returned an invalid response!&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+
+<span class="cm">/* GUARD: Was there any data returned? */</span>
+<span class="n">guard</span> <span class="k">let</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;No data was returned by the request!&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="6-parse-the-data-i-e-convert-the-data-to-json-and-look-for-values">6. Parse the data (i.e. convert the data to JSON and look for values!)</h4>
+
+<p>If we&#39;ve gotten to this point, then our request must have been successful! So now we parse the JSON response data into something we can use — we will cover this in more detail in Lesson 2.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 6 - Parse the data (i.e. convert the data to JSON and look for values!) */</span>
+<span class="k">let</span> <span class="nl">parsedResult</span><span class="p">:</span> <span class="n">AnyObject</span><span class="o">!</span>
+<span class="k">do</span> <span class="p">{</span>
+    <span class="n">parsedResult</span> <span class="o">=</span> <span class="n">try</span> <span class="bp">NSJSONSerialization</span><span class="p">.</span><span class="n">JSONObjectWithData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nl">options</span><span class="p">:</span> <span class="p">.</span><span class="n">AllowFragments</span><span class="p">)</span>
+<span class="p">}</span> <span class="n">catch</span> <span class="p">{</span>
+    <span class="n">parsedResult</span> <span class="o">=</span> <span class="nb">nil</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Could not parse the data as JSON: &#39;\(data)&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+
+<span class="cm">/* GUARD: Did Flickr return an error (stat != ok)? */</span>
+<span class="n">guard</span> <span class="k">let</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">parsedResult</span><span class="p">[</span><span class="s">&quot;stat&quot;</span><span class="p">]</span> <span class="kt">as</span><span class="o">?</span> <span class="n">String</span> <span class="k">where</span> <span class="n">stat</span> <span class="o">==</span> <span class="s">&quot;ok&quot;</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Flickr API returned an error. See error code and message in \(parsedResult)&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+
+<span class="cm">/* GUARD: Are the &quot;photos&quot; and &quot;photo&quot; keys in our result? */</span>
+<span class="n">guard</span> <span class="k">let</span> <span class="n">photosDictionary</span> <span class="o">=</span> <span class="n">parsedResult</span><span class="p">[</span><span class="s">&quot;photos&quot;</span><span class="p">]</span> <span class="kt">as</span><span class="o">?</span> <span class="bp">NSDictionary</span><span class="p">,</span>
+    <span class="n">photoArray</span> <span class="o">=</span> <span class="n">photosDictionary</span><span class="p">[</span><span class="s">&quot;photo&quot;</span><span class="p">]</span> <span class="kt">as</span><span class="o">?</span> <span class="p">[[</span><span class="nl">String</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">]]</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Cannot find keys &#39;photos&#39; and &#39;photo&#39; in \(parsedResult)&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="7-generate-a-random-number-then-select-a-random-photo">7. Generate a random number, then select a random photo</h4>
+
+<p>Our request will return JSON for multiple images in gallery 5704-72157622566655097, 
+but we just want to grab one of those images, at random. We then save the selected image&#39;s title and URL.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 7 - Generate a random number, then select a random photo */</span>
+<span class="k">let</span> <span class="n">randomPhotoIndex</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="n">arc4random_uniform</span><span class="p">(</span><span class="kt">UInt32</span><span class="p">(</span><span class="n">photoArray</span><span class="p">.</span><span class="n">count</span><span class="p">)))</span>
+<span class="k">let</span> <span class="n">photoDictionary</span> <span class="o">=</span> <span class="n">photoArray</span><span class="p">[</span><span class="n">randomPhotoIndex</span><span class="p">]</span> <span class="kt">as</span> <span class="p">[</span><span class="nl">String</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">]</span>
+<span class="k">let</span> <span class="n">photoTitle</span> <span class="o">=</span> <span class="n">photoDictionary</span><span class="p">[</span><span class="s">&quot;title&quot;</span><span class="p">]</span> <span class="kt">as</span><span class="o">?</span> <span class="n">String</span> <span class="cm">/* non-fatal */</span>
+
+<span class="cm">/* GUARD: Does our photo have a key for &#39;url_m&#39;? */</span>
+<span class="n">guard</span> <span class="k">let</span> <span class="n">imageUrlString</span> <span class="o">=</span> <span class="n">photoDictionary</span><span class="p">[</span><span class="s">&quot;url_m&quot;</span><span class="p">]</span> <span class="kt">as</span><span class="o">?</span> <span class="n">String</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Cannot find key &#39;url_m&#39; in \(photoDictionary)&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="8-if-an-image-exists-at-the-url-set-the-image-and-title">8. If an image exists at the url, set the image and title</h4>
+
+<p>If there is data at the URL, then we update the photoImageView and photoTitle! The line 
+dispatch_async(dispatch_get_main_queue(), { allows us to quickly update the User Interface, 
+so the picture and accompanying text can be seen right away. We will revisit this concept later on as well.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 8 - If an image exists at the url, set the image and title */</span>
+<span class="k">let</span> <span class="n">imageURL</span> <span class="o">=</span> <span class="bp">NSURL</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="n">imageUrlString</span><span class="p">)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(</span><span class="nl">contentsOfURL</span><span class="p">:</span> <span class="n">imageURL</span><span class="o">!</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="p">{</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">photoImageView</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">(</span><span class="nl">data</span><span class="p">:</span> <span class="n">imageData</span><span class="p">)</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">photoTitle</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">photoTitle</span> <span class="o">??</span> <span class="s">&quot;(Untitled)&quot;</span>
+    <span class="p">})</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;Image does not exist at \(imageURL)&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="9-resume-execute-the-task">9. Resume (execute) the task</h4>
+
+<p>task.resume() is the line that actually starts the execution of our request. Up to this point, 
+all the previous steps just define what we should do when the request executes and completes.</p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 9 - Resume (execute) the task */</span>
+<span class="n">task</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</code></pre></div>
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'loganyc1934'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2015/11/01/iOSNetworking/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
