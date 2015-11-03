@@ -58,13 +58,16 @@ let methodArguments = [
 #### 3. Initialize session and url 
 
 Here's where the good stuff starts. We'll explain this part more in detail later, but here are the essentials: 
-NSURLSession — a class that provides an API for downloading content via HTTP. 
-sharedSession() — a method of NSURLSession's that returns what's called a "singleton instance" of NSURLSession. 
-singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
-NSURLSession.sharedSession() returns a singleton instance of NSURLSession, the only one that can exist.
 
-We now create the urlString and subsequently the NSURL object. 
-Lastly, we use the NSURL object to create an instance of NSURLRequest.
+`NSURLSession` — a class that provides an API for downloading content via HTTP. 
+
+`sharedSession()` — a method of `NSURLSession`'s that returns what's called a "singleton instance" of `NSURLSession`. 
+
+singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
+`NSURLSession.sharedSession()` returns a singleton instance of `NSURLSession`, the only one that can exist.
+
+We now create the `urlString` and subsequently the `NSURL` object. 
+Lastly, we use the `NSURL` object to create an instance of `NSURLRequest`.
 
 ```swift
 /* 3 - Initialize session and url */
@@ -76,8 +79,8 @@ let request = NSURLRequest(URL: url)
 
 #### 4. Initialize task for getting data
 
-Using the session and the request, we instantiate what's called a task for grabbing an image from 
-Flickr. We use the closure that starts out { data, response, downloadError in as a completion handler. 
+Using the session and the request, we instantiate what's called a **task** for grabbing an image from 
+Flickr. We use the closure that starts out `{ data, response, downloadError in` as a completion handler. 
 We will talk more about these later. Underneath that line, within the completion handler, 
 is where we will work with the response data.
 
@@ -90,7 +93,7 @@ let task = session.dataTaskWithRequest(request) { data, response, downloadError 
 
 #### 5. Check for a successful response 
 
-In the completion handler, we use guard statements to check for a successful response to our request.
+In the completion handler, we use `guard` statements to check for a successful response to our request.
 
 ```swift
 /* 5 - Check for a successful response */
@@ -121,7 +124,8 @@ guard let data = data else {
 
 #### 6. Parse the data (i.e. convert the data to JSON and look for values!) 
 
-If we've gotten to this point, then our request must have been successful! So now we parse the JSON response data into something we can use — we will cover this in more detail in Lesson 2.
+If we've gotten to this point, then our request must have been successful! So now we parse the JSON 
+response data into something we can use.
 
 ```swift
 /* 6 - Parse the data (i.e. convert the data to JSON and look for values!) */
@@ -169,8 +173,8 @@ guard let imageUrlString = photoDictionary["url_m"] as? String else {
 #### 8. If an image exists at the url, set the image and title 
 
 If there is data at the URL, then we update the photoImageView and photoTitle! The line 
-dispatch_async(dispatch_get_main_queue(), { allows us to quickly update the User Interface, 
-so the picture and accompanying text can be seen right away. We will revisit this concept later on as well.
+`dispatch_async(dispatch_get_main_queue(), {` allows us to quickly update the User Interface, 
+so the picture and accompanying text can be seen right away.
 
 ```swift
 /* 8 - If an image exists at the url, set the image and title */
@@ -187,7 +191,7 @@ if let imageData = NSData(contentsOfURL: imageURL!) {
 
 #### 9. Resume (execute) the task 
 
-task.resume() is the line that actually starts the execution of our request. Up to this point, 
+`task.resume()` is the line that actually starts the execution of our request. Up to this point, 
 all the previous steps just define what we should do when the request executes and completes.
 
 ```swift

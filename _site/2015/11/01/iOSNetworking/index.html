@@ -92,14 +92,17 @@ construct the urlString.</p>
 </code></pre></div>
 <h4 id="3-initialize-session-and-url">3. Initialize session and url</h4>
 
-<p>Here&#39;s where the good stuff starts. We&#39;ll explain this part more in detail later, but here are the essentials: 
-NSURLSession — a class that provides an API for downloading content via HTTP. 
-sharedSession() — a method of NSURLSession&#39;s that returns what&#39;s called a &quot;singleton instance&quot; of NSURLSession. 
-singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
-NSURLSession.sharedSession() returns a singleton instance of NSURLSession, the only one that can exist.</p>
+<p>Here&#39;s where the good stuff starts. We&#39;ll explain this part more in detail later, but here are the essentials: </p>
 
-<p>We now create the urlString and subsequently the NSURL object. 
-Lastly, we use the NSURL object to create an instance of NSURLRequest.</p>
+<p><code>NSURLSession</code> — a class that provides an API for downloading content via HTTP. </p>
+
+<p><code>sharedSession()</code> — a method of <code>NSURLSession</code>&#39;s that returns what&#39;s called a &quot;singleton instance&quot; of <code>NSURLSession</code>. </p>
+
+<p>singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
+<code>NSURLSession.sharedSession()</code> returns a singleton instance of <code>NSURLSession</code>, the only one that can exist.</p>
+
+<p>We now create the <code>urlString</code> and subsequently the <code>NSURL</code> object. 
+Lastly, we use the <code>NSURL</code> object to create an instance of <code>NSURLRequest</code>.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 3 - Initialize session and url */</span>
 <span class="k">let</span> <span class="n">session</span> <span class="o">=</span> <span class="bp">NSURLSession</span><span class="p">.</span><span class="n">sharedSession</span><span class="p">()</span>
 <span class="k">let</span> <span class="n">urlString</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">escapedParameters</span><span class="p">(</span><span class="n">methodArguments</span><span class="p">)</span>
@@ -108,8 +111,8 @@ Lastly, we use the NSURL object to create an instance of NSURLRequest.</p>
 </code></pre></div>
 <h4 id="4-initialize-task-for-getting-data">4. Initialize task for getting data</h4>
 
-<p>Using the session and the request, we instantiate what&#39;s called a task for grabbing an image from 
-Flickr. We use the closure that starts out { data, response, downloadError in as a completion handler. 
+<p>Using the session and the request, we instantiate what&#39;s called a <strong>task</strong> for grabbing an image from 
+Flickr. We use the closure that starts out <code>{ data, response, downloadError in</code> as a completion handler. 
 We will talk more about these later. Underneath that line, within the completion handler, 
 is where we will work with the response data.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 4 - Initialize task for getting data */</span>
@@ -119,7 +122,7 @@ is where we will work with the response data.</p>
 </code></pre></div>
 <h4 id="5-check-for-a-successful-response">5. Check for a successful response</h4>
 
-<p>In the completion handler, we use guard statements to check for a successful response to our request.</p>
+<p>In the completion handler, we use <code>guard</code> statements to check for a successful response to our request.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 5 - Check for a successful response */</span>
 <span class="cm">/* GUARD: Was there an error? */</span>
 <span class="n">guard</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
@@ -147,7 +150,8 @@ is where we will work with the response data.</p>
 </code></pre></div>
 <h4 id="6-parse-the-data-i-e-convert-the-data-to-json-and-look-for-values">6. Parse the data (i.e. convert the data to JSON and look for values!)</h4>
 
-<p>If we&#39;ve gotten to this point, then our request must have been successful! So now we parse the JSON response data into something we can use — we will cover this in more detail in Lesson 2.</p>
+<p>If we&#39;ve gotten to this point, then our request must have been successful! So now we parse the JSON 
+response data into something we can use.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 6 - Parse the data (i.e. convert the data to JSON and look for values!) */</span>
 <span class="k">let</span> <span class="nl">parsedResult</span><span class="p">:</span> <span class="n">AnyObject</span><span class="o">!</span>
 <span class="k">do</span> <span class="p">{</span>
@@ -189,8 +193,8 @@ but we just want to grab one of those images, at random. We then save the select
 <h4 id="8-if-an-image-exists-at-the-url-set-the-image-and-title">8. If an image exists at the url, set the image and title</h4>
 
 <p>If there is data at the URL, then we update the photoImageView and photoTitle! The line 
-dispatch_async(dispatch_get_main_queue(), { allows us to quickly update the User Interface, 
-so the picture and accompanying text can be seen right away. We will revisit this concept later on as well.</p>
+<code>dispatch_async(dispatch_get_main_queue(), {</code> allows us to quickly update the User Interface, 
+so the picture and accompanying text can be seen right away.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 8 - If an image exists at the url, set the image and title */</span>
 <span class="k">let</span> <span class="n">imageURL</span> <span class="o">=</span> <span class="bp">NSURL</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="n">imageUrlString</span><span class="p">)</span>
 <span class="k">if</span> <span class="k">let</span> <span class="n">imageData</span> <span class="o">=</span> <span class="bp">NSData</span><span class="p">(</span><span class="nl">contentsOfURL</span><span class="p">:</span> <span class="n">imageURL</span><span class="o">!</span><span class="p">)</span> <span class="p">{</span>
@@ -204,7 +208,7 @@ so the picture and accompanying text can be seen right away. We will revisit thi
 </code></pre></div>
 <h4 id="9-resume-execute-the-task">9. Resume (execute) the task</h4>
 
-<p>task.resume() is the line that actually starts the execution of our request. Up to this point, 
+<p><code>task.resume()</code> is the line that actually starts the execution of our request. Up to this point, 
 all the previous steps just define what we should do when the request executes and completes.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 9 - Resume (execute) the task */</span>
 <span class="n">task</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
