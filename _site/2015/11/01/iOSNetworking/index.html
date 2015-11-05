@@ -10,7 +10,7 @@
 
   <title>
     
-      iOS Networking with Swift &middot; Recipe for Intelligence
+      iOS Networking with Swift I: Components &middot; Recipe for Intelligence
     
   </title>
 
@@ -44,7 +44,7 @@
       </div>
 
       <article class="post">
-  <h1 class="post-title">iOS Networking with Swift</h1>
+  <h1 class="post-title">iOS Networking with Swift I: Components</h1>
   <time datetime="2015-11-01T00:00:00-05:00" class="post-date">01 Nov 2015</time>
   <p>Without networking, mobile apps can only perceive, process, and present the data that is local to 
 the host device. This greatly restricts the scope of problems which apps can solve and limits their 
@@ -52,14 +52,15 @@ overall utility. By incorporating networking, apps truly become “mobile” -- 
 interesting data using popular web services, coordinate multi-user activities, and build experiences 
 that bring users together.</p>
 
-<p>This post will cover concepts fundamental to communication over the network like HTTP, JSON, 
+<p>This series of posts will cover concepts fundamental to communication over the network like HTTP, JSON, 
 and authentication. These concepts are also highly transferrable to other platforms, languages, 
 and applications. Additionally, it will mold your understanding of app design, especially when 
 networking constraints are involved.</p>
 
 <h3 id="review-quot-sleeping-in-the-library-quot">Review: &quot;Sleeping in the Library&quot;</h3>
 
-<p>Here we use Flickr&#39;s API as an example to show how to do networking with Swift.</p>
+<p>Here we use the <a href="https://www.flickr.com/services/api/">Flickr API</a> 
+as an example to show how to do networking with Swift.</p>
 
 <h4 id="1-define-constants">1. Define constants</h4>
 
@@ -101,8 +102,11 @@ construct the urlString.</p>
 <p>singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
 <code>NSURLSession.sharedSession()</code> returns a singleton instance of <code>NSURLSession</code>, the only one that can exist.</p>
 
-<p>We now create the <code>urlString</code> and subsequently the <code>NSURL</code> object. 
-Lastly, we use the <code>NSURL</code> object to create an instance of <code>NSURLRequest</code>.</p>
+<p>We now create the <code>urlString</code> and subsequently the <code>NSURL</code> object. Note that the <code>methodArguments</code> is
+contained in the <code>urlString</code>, so the API call is completed by adding the API arguments in the URL, which
+we use to initialize a request.</p>
+
+<p>Lastly, we use the <code>NSURL</code> object to create an instance of <code>NSURLRequest</code>.</p>
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 3 - Initialize session and url */</span>
 <span class="k">let</span> <span class="n">session</span> <span class="o">=</span> <span class="bp">NSURLSession</span><span class="p">.</span><span class="n">sharedSession</span><span class="p">()</span>
 <span class="k">let</span> <span class="n">urlString</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">escapedParameters</span><span class="p">(</span><span class="n">methodArguments</span><span class="p">)</span>
@@ -213,12 +217,32 @@ all the previous steps just define what we should do when the request executes a
 <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="cm">/* 9 - Resume (execute) the task */</span>
 <span class="n">task</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
 </code></pre></div>
+<h3 id="summary-of-the-steps">Summary of the steps</h3>
+
+<ol>
+<li>Client sends a HTTP request to the server (Flickr API) using the method <code>flickr.galleries.getPhotos</code>.</li>
+<li>Server responds with JSON containing information about the photos in gallery.</li>
+<li>Client stores the JSON, then randomly picks the URL of an image in the gallery.</li>
+<li>Client requests an image&#39;s data using the URL.</li>
+<li>Client displays the image.</li>
+<li>(If the button is pressed, go back to step 1)</li>
+</ol>
+
 </article>
 
 
 <aside class="related">
   <h2>Related Posts</h2>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/11/04/flickfinder/">
+            iOS Networking with Swift II: Flick Finder
+            <small><time datetime="2015-11-04T00:00:00-06:00">04 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
@@ -234,15 +258,6 @@ all the previous steps just define what we should do when the request executes a
           <a href="/2015/10/14/logistic-regression-on-apache-spark/">
             Logistic Regression with Apache Spark
             <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
-          </a>
-        </h3>
-      </li>
-    
-      <li>
-        <h3>
-          <a href="/2015/10/13/an-overview-of-logistic-regression/">
-            An Overview of Logistic Regression
-            <small><time datetime="2015-10-13T00:00:00-05:00">13 Oct 2015</time></small>
           </a>
         </h3>
       </li>

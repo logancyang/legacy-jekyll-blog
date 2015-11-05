@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "iOS Networking with Swift"
+title: "iOS Networking with Swift I: Components"
 comments: True
 ---
 
@@ -10,7 +10,7 @@ overall utility. By incorporating networking, apps truly become “mobile” -- 
 interesting data using popular web services, coordinate multi-user activities, and build experiences 
 that bring users together.
 
-This post will cover concepts fundamental to communication over the network like HTTP, JSON, 
+This series of posts will cover concepts fundamental to communication over the network like HTTP, JSON, 
 and authentication. These concepts are also highly transferrable to other platforms, languages, 
 and applications. Additionally, it will mold your understanding of app design, especially when 
 networking constraints are involved.
@@ -18,7 +18,8 @@ networking constraints are involved.
 
 ### Review: "Sleeping in the Library"
 
-Here we use Flickr's API as an example to show how to do networking with Swift.
+Here we use the [Flickr API](https://www.flickr.com/services/api/) 
+as an example to show how to do networking with Swift.
 
 #### 1. Define constants
 
@@ -66,7 +67,10 @@ Here's where the good stuff starts. We'll explain this part more in detail later
 singleton — a design pattern that restricts the instantiation of a class to one object. Calling 
 `NSURLSession.sharedSession()` returns a singleton instance of `NSURLSession`, the only one that can exist.
 
-We now create the `urlString` and subsequently the `NSURL` object. 
+We now create the `urlString` and subsequently the `NSURL` object. Note that the `methodArguments` is
+contained in the `urlString`, so the API call is completed by adding the API arguments in the URL, which
+we use to initialize a request.
+
 Lastly, we use the `NSURL` object to create an instance of `NSURLRequest`.
 
 ```swift
@@ -198,3 +202,13 @@ all the previous steps just define what we should do when the request executes a
 /* 9 - Resume (execute) the task */
 task.resume()
 ```
+
+### Summary of the steps
+
+1. Client sends a HTTP request to the server (Flickr API) using the method `flickr.galleries.getPhotos`.
+2. Server responds with JSON containing information about the photos in gallery.
+3. Client stores the JSON, then randomly picks the URL of an image in the gallery.
+4. Client requests an image's data using the URL.
+5. Client displays the image.
+6. (If the button is pressed, go back to step 1)
+

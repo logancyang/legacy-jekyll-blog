@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      iOS Networking with Swift II: Flick Finder &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">iOS Networking with Swift II: Flick Finder</h1>
+  <time datetime="2015-11-04T00:00:00-06:00" class="post-date">04 Nov 2015</time>
+  <p>With the knowledge of the <a href="http://loganyc1934.github.io/2015/11/01/iOSNetworking/">previous post</a>,
+we can write a photo searching app with the Flickr API. In the Flickr universe, a photo is called
+a <em>Flick</em>, so let&#39;s call this app <em>Flick Finder</em>. The project is 
+<a href="https://github.com/loganyc1934/FlickFinder">here</a>.</p>
+
+<h3 id="concepts">Concepts</h3>
+
+<ul>
+<li>Built networking app step-by-step</li>
+<li>Constructed and called web service method</li>
+<li>Parsed JSON data from HTTP response</li>
+<li>Populated view using data from HTTP response</li>
+<li>Read an API&#39;s documentation to solve an issue: maximum number of photos returned, randomly choose
+a page and an image.</li>
+</ul>
+
+<p><strong>Get the NSURLSessions singleton</strong></p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">session</span> <span class="o">=</span> <span class="bp">NSURLSession</span><span class="p">.</span><span class="n">sharedSession</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Create and run a NSURLSessionDataTask</strong></p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">url</span> <span class="o">=</span> <span class="bp">NSURL</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;https://api.flickr.com/services/rest/</span>
+    <span class="o">?</span><span class="n">method</span><span class="o">=</span><span class="n">flickr</span><span class="p">.</span><span class="n">photos</span><span class="p">.</span><span class="n">search</span><span class="o">&amp;</span><span class="n">api_key</span><span class="o">=</span><span class="n">d72c5a85006014ea74022c115e4ebd5b</span><span class="o">&amp;</span><span class="n">text</span><span class="o">=</span><span class="n">test</span><span class="o">&amp;</span><span class="n">format</span><span class="o">=</span><span class="n">json</span>
+    <span class="o">&amp;</span><span class="n">nojsoncallback</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="n">auth_token</span><span class="o">=</span><span class="mi">72157650613647678</span><span class="o">-</span><span class="mi">32</span><span class="n">c4dc1af8b80f31</span>
+    <span class="o">&amp;</span><span class="n">api_sig</span><span class="o">=</span><span class="mo">0353</span><span class="n">bdf97603872c2c2338390da3793d</span><span class="s">&quot;)!</span>
+
+<span class="k">let</span> <span class="n">request</span> <span class="o">=</span> <span class="bp">NSURLRequest</span><span class="p">(</span><span class="nl">URL</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="n">task</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">dataTaskWithRequest</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">{</span> <span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">downloadError</span> <span class="k">in</span>
+    <span class="c1">// do something here...</span>
+<span class="p">}</span>
+
+<span class="n">task</span><span class="p">.</span><span class="n">resume</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Parse raw JSON data into NSDictionary (if response is a dictionary)</strong></p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">var</span> <span class="nl">parsingError</span><span class="p">:</span> <span class="bp">NSError</span><span class="o">?</span> <span class="o">=</span> <span class="nb">nil</span>
+<span class="k">let</span> <span class="n">parsedResult</span> <span class="o">=</span> <span class="bp">NSJSONSerialization</span><span class="p">.</span><span class="n">JSONObjectWithData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> 
+    <span class="nl">options</span><span class="p">:</span> <span class="n">NSJSONReadingOptions</span><span class="p">.</span><span class="n">AllowFragments</span><span class="p">,</span> <span class="nl">error</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">parsingError</span><span class="p">)</span> 
+    <span class="kt">as</span> <span class="bp">NSDictionary</span>
+</code></pre></div>
+<p><strong>Shifting keyboard review</strong></p>
+
+<p>Pay attention to the process of hiding the keyboard through both <code>tapRecognizer: UITapGestureRecognizer</code>
+and the textField delegate. The components are:</p>
+
+<ul>
+<li><code>tapRecognizer = UITapGestureRecognizer(target: self, 
+action: &quot;handleSingleTap:&quot;)</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="k">func</span> <span class="nf">handleSingleTap</span><span class="p">(</span><span class="nl">recognizer</span><span class="p">:</span> <span class="bp">UITapGestureRecognizer</span><span class="p">){</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">endEditing</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>tapRecognizer?.numberOfTapsRequired = 1</code></li>
+<li><code>someTextField.delegate = self</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="c1">// textField delegate</span>
+    <span class="k">func</span> <span class="n">textFieldShouldReturn</span><span class="p">(</span><span class="nl">textField</span><span class="p">:</span> <span class="bp">UITextField</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+        <span class="n">textField</span><span class="p">.</span><span class="n">resignFirstResponder</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>func addKeyboardDismissRecognizer()</code>, <code>func removeKeyboardDismissRecognizer()</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="k">func</span> <span class="nf">addKeyboardDismissRecognizer</span><span class="p">(){</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">addGestureRecognizer</span><span class="p">(</span><span class="n">tapRecognizer</span><span class="o">!</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">func</span> <span class="nf">removeKeyboardDismissRecognizer</span><span class="p">(){</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">removeGestureRecognizer</span><span class="p">(</span><span class="n">tapRecognizer</span><span class="o">!</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>func subscribeToKeyboardNotifications</code>, <code>func unsubscribeToKeyboardNotifications</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="k">func</span> <span class="nf">subscribeToKeyboardNotifications</span><span class="p">(){</span>
+        <span class="bp">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span><span class="p">().</span><span class="n">addObserver</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> 
+            <span class="nl">selector</span><span class="p">:</span> <span class="s">&quot;keyboardWillShow:&quot;</span><span class="p">,</span> 
+            <span class="nl">name</span><span class="p">:</span> <span class="n">UIKeyboardWillShowNotification</span><span class="p">,</span> <span class="nl">object</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+        <span class="bp">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span><span class="p">().</span><span class="n">addObserver</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> 
+            <span class="nl">selector</span><span class="p">:</span> <span class="s">&quot;keyboardWillHide:&quot;</span><span class="p">,</span> 
+            <span class="nl">name</span><span class="p">:</span> <span class="n">UIKeyboardWillHideNotification</span><span class="p">,</span> <span class="nl">object</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">func</span> <span class="nf">unsubscribeToKeyboardNotifications</span><span class="p">(){</span>
+        <span class="bp">NSNotificationCenter</span><span class="p">.</span><span class="n">defaultCenter</span><span class="p">().</span><span class="n">removeObserver</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> 
+            <span class="nl">name</span><span class="p">:</span> <span class="n">UIKeyboardWillShowNotification</span><span class="p">,</span> <span class="nl">object</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>func keyboardWillShow()</code>, <code>func keyboardWillHide()</code>, shift the keyboard</li>
+</ul>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="c1">/// when the keyboardWillShow notification is received, shift the view&#39;s frame up</span>
+    <span class="k">func</span> <span class="nf">keyboardWillShow</span><span class="p">(</span><span class="nl">notification</span><span class="p">:</span> <span class="bp">NSNotification</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">getKeyboardHeight</span><span class="p">(</span><span class="n">notification</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// when the keyboardWillHide notification is received, shift the view&#39;s frame down</span>
+    <span class="k">func</span> <span class="nf">keyboardWillHide</span><span class="p">(</span><span class="nl">notification</span><span class="p">:</span> <span class="bp">NSNotification</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+    <span class="k">func</span> <span class="n">getKeyboardHeight</span><span class="p">(</span><span class="nl">notification</span><span class="p">:</span> <span class="bp">NSNotification</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CGFloat</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">userInfo</span> <span class="o">=</span> <span class="n">notification</span><span class="p">.</span><span class="n">userInfo</span>
+        <span class="k">let</span> <span class="n">keyboardSize</span> <span class="o">=</span> <span class="n">userInfo</span><span class="o">!</span><span class="p">[</span><span class="n">UIKeyboardFrameEndUserInfoKey</span><span class="p">]</span> 
+            <span class="kt">as</span><span class="o">!</span> <span class="bp">NSValue</span> <span class="c1">// of CGRect</span>
+        <span class="k">return</span> <span class="n">keyboardSize</span><span class="p">.</span><span class="n">CGRectValue</span><span class="p">().</span><span class="n">height</span>
+    <span class="p">}</span>
+</code></pre></div>
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/11/01/iOSNetworking/">
+            iOS Networking with Swift I: Components
+            <small><time datetime="2015-11-01T00:00:00-05:00">01 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/15/uikitii-navigation/">
+            UIKit Fundamentals II - Navigation, Collection View, Tab View
+            <small><time datetime="2015-10-15T00:00:00-05:00">15 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-05:00">14 Oct 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'loganyc1934'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2015/11/04/flickfinder/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2015. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
