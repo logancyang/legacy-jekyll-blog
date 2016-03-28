@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Server-side Development Using NodeJS (1) &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Server-side Development Using NodeJS (1)</h1>
+  <time datetime="2016-03-27T00:00:00-07:00" class="post-date">27 Mar 2016</time>
+  <p>This is my note for the NodeJS class offered by HKUST on Coursera.</p>
+
+<h2 id="two-salient-features-of-javascript">Two Salient Features of JavaScript</h2>
+
+<ul>
+<li>First-class functions: A function can be treated the same as any other
+variable.</li>
+<li>Closures:
+
+<ul>
+<li>A function defined inside another function has access to all the 
+variables declared in the outer function scope.</li>
+<li>The inner function will continue to have access to the variables 
+from the outer scope even after the outer function has returned.</li>
+</ul></li>
+</ul>
+
+<h2 id="the-callback-function">The Callback Function</h2>
+
+<ul>
+<li>Node has this convention: the first parameter is <code>error</code> for a callback
+function</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">someFunction</span><span class="p">)</span>
+</code></pre></div>
+<p>An example,</p>
+
+<p><code>rectange.js</code> module:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Rectangle dimensions should be greater than zero:&#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;l = &#39;</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;, and b = &#39;</span> <span class="o">+</span> <span class="nx">y</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">perimeter</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="nx">area</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p><code>solve.js</code> calls it,</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">rect</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./rectangle-2&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">solveRect</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Solving for rectangle with l = &#39;</span> <span class="o">+</span> <span class="nx">l</span> <span class="o">+</span> <span class="s1">&#39; and b = &#39;</span> <span class="o">+</span> <span class="nx">b</span><span class="p">);</span>
+
+  <span class="c1">// The 3rd param is a callback function</span>
+  <span class="nx">rect</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">rectangle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;The area is &#39;</span> <span class="o">+</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">area</span><span class="p">());</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;The perimeter is &#39;</span> <span class="o">+</span> <span class="nx">rectangle</span><span class="p">.</span><span class="nx">perimeter</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">solveRect</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">solveRect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<span class="nx">solveRect</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</code></pre></div>
+<p>The output:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Solving</span> <span class="k">for</span> <span class="nx">rectangle</span> <span class="kd">with</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">2</span> <span class="nx">and</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="nx">The</span> <span class="nx">area</span> <span class="nx">is</span> <span class="mi">8</span>
+<span class="nx">The</span> <span class="nx">perimeter</span> <span class="nx">is</span> <span class="mi">12</span>
+<span class="nx">Solving</span> <span class="k">for</span> <span class="nx">rectangle</span> <span class="kd">with</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">3</span> <span class="nx">and</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nx">The</span> <span class="nx">area</span> <span class="nx">is</span> <span class="mi">15</span>
+<span class="nx">The</span> <span class="nx">perimeter</span> <span class="nx">is</span> <span class="mi">16</span>
+<span class="nx">Solving</span> <span class="k">for</span> <span class="nx">rectangle</span> <span class="kd">with</span> <span class="nx">l</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="nx">and</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="p">[</span><span class="nb">Error</span><span class="o">:</span> <span class="nx">Rectangle</span> <span class="nx">dimensions</span> <span class="nx">should</span> <span class="nx">be</span> <span class="nx">greater</span> <span class="nx">than</span> <span class="nx">zero</span><span class="o">:</span><span class="nx">l</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span><span class="p">]</span>
+</code></pre></div>
+<h2 id="the-yargs-module">The <code>yargs</code> Module</h2>
+
+<p>To install <code>yargs</code> locally, do <code>npm install yargs --save</code>.</p>
+
+<p>Add this at the top of <code>solve.js</code></p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">argv</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;yargs&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">usage</span><span class="p">(</span><span class="s1">&#39;Usage: node $0 --l=[num] --b=[num]&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">demand</span><span class="p">([</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+  <span class="p">.</span><span class="nx">argv</span><span class="p">;</span>
+</code></pre></div>
+<p>And add <code>solveRect(argv.l, argv.b);</code> at the bottom.</p>
+
+<p>To supply the parameters in command line, for example,</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">node solve --l=2 --b=3
+</code></pre></div>
+<h2 id="http">HTTP</h2>
+
+<p>HTTP request message:</p>
+
+<ul>
+<li>Request line
+
+<ul>
+<li>Method: GET, POST, PUT, DELETE</li>
+<li>URL</li>
+<li>Version of HTTP</li>
+</ul></li>
+<li>Headers
+
+<ul>
+<li>(Multiple) header field name: Value</li>
+</ul></li>
+<li>Blank line</li>
+<li>Body: content</li>
+</ul>
+
+<p>For example,</p>
+
+<p>Request line
+<code>
+GET /index.html HTTP/1.1
+</code></p>
+
+<p>Headers
+<code>
+host: localhost:3000
+connection: keep-alive
+user-agent: Mozilla/5.0
+accept-encoding: gzip, deflate, sdch
+</code></p>
+
+<p>The HTTP response could be</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/html
+Date: Sun, 21 Feb 2016 06:01:43 GMT
+Transfer-Encoding: chunked
+
+&lt;html&gt;...&lt;/html&gt;
+</code></pre></div>
+<p>Response codes include</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">200: OK
+201: Created
+301: Moved Permanently
+304: Not Modified
+400: Bad Request
+401: Unauthorized
+403: Forbidden
+404: Not Found
+422: Unprocessable Entry
+500: Internal Server Error
+505: HTTP Version Not Supported
+</code></pre></div>
+<h2 id="node-and-http-module">Node and HTTP Module</h2>
+
+<ul>
+<li>Using the module: <code>var http = require(&#39;http&#39;);</code></li>
+<li>Creating a server: <code>var server = http.createServer(function(req, res) {...});</code></li>
+<li>Starting the server: <code>server.listen(port, ...);</code></li>
+<li>Incoming request message info available thru the first parameter <code>req</code>
+
+<ul>
+<li><code>req.headers</code>, <code>req.body</code></li>
+</ul></li>
+<li>Response message is constructed on the second parameter <code>res</code>
+
+<ul>
+<li><code>res.setHeader(&quot;Content-Type&quot;, &quot;text/html&quot;);</code></li>
+<li><code>res.statusCode = 200;</code></li>
+<li><code>res.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});</code></li>
+<li><code>res.write(&#39;Hello World!&#39;);</code></li>
+<li><code>res.end(&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;);</code>, this
+will finalize <code>res</code> and send out the message.</li>
+</ul></li>
+<li>Using <code>path</code> module (specific to OS): <code>var path = require(&#39;path&#39;);</code>
+
+<ul>
+<li><code>path.resolve(&#39;./public&#39; + fileUrl)</code> gives the absolute path of the file</li>
+<li><code>path.extname(filePath)</code> gives the extension of that file</li>
+</ul></li>
+<li>Using <code>fs</code> module: <code>var fs = require(&#39;fs&#39;);</code>
+
+<ul>
+<li><code>fs.exists(filePath, function(existsVar) {...});</code>, gives <code>true</code> or <code>false</code>,
+the second parameter is a callback function.</li>
+<li><code>fs.createReadStream(filePath).pipe(res);</code>, reads from the file and pipe
+the value into the response.</li>
+</ul></li>
+</ul>
+
+<h2 id="using-express-module-to-build-a-web-server">Using <code>Express</code> Module to Build a Web Server</h2>
+
+<ul>
+<li>What is <code>Express</code>: Fast, unopinionated, minimalist web framework for Node.js</li>
+<li><code>Express</code> middleware provides a lot of plug-in functionalities that can be
+used within the Express application</li>
+<li>Example: <code>morgan</code> for logging</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">morgan</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;morgan&#39;</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">morgan</span><span class="p">(</span><span class="s1">&#39;dev&#39;</span><span class="p">));</span>
+</code></pre></div>
+<ul>
+<li>Serving static web resources</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/public&#39;</span><span class="p">));</span>
+</code></pre></div>
+<p>Note: <code>__filename</code> and <code>__dirname</code> give the full path to the file and directory
+for the current module.</p>
+
+<h2 id="intro-to-rest-representational-state-transfer">Intro to REST - Representational State Transfer</h2>
+
+<ul>
+<li>What is a web service: A system designed to support interoperability of systems
+connected over a network
+
+<ul>
+<li>Service Oriented Architecture (SOA)</li>
+<li>A standardized way of integrating web-based applications using open standards
+operating over Internet</li>
+</ul></li>
+<li>Two common approaches used in practice
+
+<ul>
+<li>SOAP (Simple Object Access Protocol) based services</li>
+<li>Uses WSDL (Web Services Description Language)</li>
+<li>XML based</li>
+<li>More features than REST. More suitable for distributed applications.</li>
+<li>REST (Representational State Transfer)</li>
+<li>Use web standards</li>
+<li>Exchange of data using either XML or JSON</li>
+<li>Simpler compared to SOAP, WSDL etc. But more frequently used.</li>
+</ul></li>
+<li>REST
+
+<ul>
+<li>A style of software architecture for distributed hypermedia systems such as
+the World Wide Web</li>
+<li>Introduced in the doctoral dissertation of Roy Fielding, one of the principal
+authors of the HTTP specification.</li>
+<li>A collection of network architecture principles which outline how resources
+are defined and addressed.</li>
+<li>Four basic design principles</li>
+<li>Use HTTP methods explicitly</li>
+<li>Be stateless</li>
+<li>Expose directory structure-like URIs</li>
+<li>Transfer using XML, JSON or both</li>
+</ul></li>
+<li>REST and HTTP
+
+<ul>
+<li>The motivation for REST was to capture the characteristics of the Web</li>
+<li>URI (Uniform Resource Indicator) addressable resources</li>
+<li>HTTP protocol</li>
+<li>Make a Request -&gt; Receive Response -&gt; Display Response</li>
+<li>Exploits the use of the HTTP protocol beyond POST and GET</li>
+<li>PUT, DELETE</li>
+<li>Preserve idempotence</li>
+</ul></li>
+<li>Nouns, Verbs, and Representations
+
+<ul>
+<li>Nouns: resources, unconstrained, e.g. <a href="http://www.conFusion.food/dishes/123">http://www.conFusion.food/dishes/123</a></li>
+<li>Verbs: constrained, GET, PUT, POST, DELETE</li>
+<li>Representations: constrained, XML, JSON</li>
+</ul></li>
+<li>Resources
+
+<ul>
+<li>Any forms of data</li>
+<li>URI, path like (tree) structure</li>
+</ul></li>
+<li>Verbs &lt;--&gt; CRUD
+
+<ul>
+<li>HTTP GET &lt;--&gt; READ</li>
+<li>HTTP POST &lt;--&gt; CREATE</li>
+<li>HTTP PUT &lt;--&gt; UPDATE</li>
+<li>HTTP DELETE &lt;--&gt; DELETE</li>
+</ul></li>
+<li>Stateless server: every request is a new request from the client
+
+<ul>
+<li>Client side should track its own state, e.g. cookies</li>
+</ul></li>
+</ul>
+
+<h2 id="express-router">Express Router</h2>
+
+<ul>
+<li>Express Application Routes</li>
+<li>Identify an endpoint using URI</li>
+<li>Apply the verb on the URI</li>
+<li>Express supports this thru <code>app.all</code>, <code>app.get</code>, <code>app.post</code>, <code>app.put</code>,
+<code>app.delete</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/dishes/:dishId&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">&#39;Will send details of the dish&#39;</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">dishId</span> <span class="o">+</span> <span class="s1">&#39; to you!&#39;</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div>
+<ul>
+<li>Body parser: Middleware to parse the body of the message, populates the
+<code>req.body</code> property.</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span>
+<span class="c1">// Parse the JSON in the body</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+</code></pre></div>
+<ul>
+<li>Express Router creates a mini-Express application</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">dishRouter</span> <span class="o">=</span> <span class="nx">express</span><span class="p">.</span><span class="nx">Router</span><span class="p">();</span>
+<span class="nx">dishRouter</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+
+<span class="nx">dishRouter</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">all</span><span class="p">(...);</span>
+  <span class="p">.</span><span class="nx">get</span><span class="p">(...);</span>
+  <span class="p">...</span>
+</code></pre></div>
+<h2 id="setting-up-a-rest-api-week-1-assignment">Setting up a REST API: Week 1 Assignment</h2>
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/03/28/nodejs-note-2/">
+            Server-side Development Using NodeJS (2)
+            <small><time datetime="2016-03-28T00:00:00-07:00">28 Mar 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/11/04/flickfinder/">
+            iOS Networking with Swift II: Flick Finder
+            <small><time datetime="2015-11-04T00:00:00-08:00">04 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/11/01/iOSNetworking/">
+            iOS Networking with Swift I: Components
+            <small><time datetime="2015-11-01T00:00:00-07:00">01 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'loganyc1934'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2016/03/27/nodejs-note-1/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2016. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

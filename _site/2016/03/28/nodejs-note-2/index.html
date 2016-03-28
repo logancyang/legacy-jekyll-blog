@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Server-side Development Using NodeJS (2) &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Server-side Development Using NodeJS (2)</h1>
+  <time datetime="2016-03-28T00:00:00-07:00" class="post-date">28 Mar 2016</time>
+  <p>This is my note for the NodeJS class offered by HKUST on Coursera.</p>
+
+<h2 id="express-generator">Express Generator</h2>
+
+<ul>
+<li>Scaffold out an Express application, build a REST API server.</li>
+<li>Install express-generator</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> npm install express-generator -g
+</code></pre></div>
+<ul>
+<li>Scaffolding an Express Application</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">express node-express-gen
+cd node-express-gen
+npm install
+</code></pre></div>
+<ul>
+<li>Start the Express server</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">npm start
+</code></pre></div>
+<ul>
+<li>Copy the <code>dishRouter.js</code>, <code>promoRouter.js</code> and <code>leaderRouter.js</code> to 
+the routes folder within the Express application</li>
+<li>Copy the <code>index.html</code> and <code>aboutus.html</code> file from the <code>node-express/public</code> 
+folder to the <code>public</code> folder in the new project.</li>
+<li>Open the <code>app.js</code> file and then update the code</li>
+</ul>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">favicon</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;serve-favicon&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">logger</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;morgan&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">cookieParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cookie-parser&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">bodyParser</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;body-parser&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./routes/index&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">users</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./routes/users&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">dishRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./routes/dish-router&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">promoRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./routes/promo-router&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">leaderRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./routes/leader-router&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+
+<span class="c1">// view engine setup</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;views&#39;</span><span class="p">));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;jade&#39;</span><span class="p">);</span>
+
+<span class="c1">// uncomment after placing your favicon in /public</span>
+<span class="c1">//app.use(favicon(path.join(__dirname, &#39;public&#39;, &#39;favicon.ico&#39;)));</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">logger</span><span class="p">(</span><span class="s1">&#39;dev&#39;</span><span class="p">));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">json</span><span class="p">());</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">bodyParser</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">cookieParser</span><span class="p">());</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">)));</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="nx">routes</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/users&#39;</span><span class="p">,</span> <span class="nx">users</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/dishes&#39;</span><span class="p">,</span><span class="nx">dishRouter</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/promotions&#39;</span><span class="p">,</span><span class="nx">promoRouter</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/leadership&#39;</span><span class="p">,</span><span class="nx">leaderRouter</span><span class="p">);</span>
+
+<span class="c1">// catch 404 and forward to error handler</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">err</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Not Found&#39;</span><span class="p">);</span>
+  <span class="nx">err</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="mi">404</span><span class="p">;</span>
+  <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// error handlers</span>
+<span class="c1">// development error handler</span>
+<span class="c1">// will print stacktrace</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;env&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">status</span> <span class="o">||</span> <span class="mi">500</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">message</span><span class="o">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
+      <span class="nx">error</span><span class="o">:</span> <span class="nx">err</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// production error handler</span>
+<span class="c1">// no stacktraces leaked to user</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">status</span> <span class="o">||</span> <span class="mi">500</span><span class="p">);</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="o">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span>
+    <span class="nx">error</span><span class="o">:</span> <span class="p">{}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">app</span><span class="p">;</span>
+</code></pre></div>
+<ul>
+<li>Save the changes and run the server. You can then test the server by 
+sending requests and observing the behavior.</li>
+</ul>
+
+<h2 id="intro-to-mongodb">Intro to MongoDB</h2>
+
+<ul>
+<li>NoSQL 4 broad categories
+
+<ul>
+<li>Document DB, e.g. MongoDB</li>
+<li>Key-value DB, e.g. Redis</li>
+<li>Column-family DB, e.g. Cassandra</li>
+<li>Graph DB, e.g. Neo4J</li>
+</ul></li>
+<li>Document: A self-contained piece of info, e.g. JSON document</li>
+<li>Collection: Collection of documents</li>
+<li>Database: A set of collections</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Database -&gt; Collection -&gt; Doc (JSON)
+</code></pre></div>
+<ul>
+<li>Why NoSQL
+
+<ul>
+<li>Scalability: Availability, Consistency, Partition tolerance</li>
+<li>Ease of deployment: No object-relation mapping required</li>
+</ul></li>
+<li>Document DB
+
+<ul>
+<li>Server can support multiple databases</li>
+<li>A database: a set of collections</li>
+<li>A collection: a set of docs</li>
+<li>Document is JSON document with some additional features</li>
+</ul></li>
+<li>MongoDB Format
+
+<ul>
+<li>BSON: Binary JSON format</li>
+<li>Supports length prefix on each value, easy to skip over a field</li>
+<li>Info about the type of a field value</li>
+<li>Additional primitive types not supported by raw JSON like UTC date time,
+raw binary, and ObjectId</li>
+</ul></li>
+<li>MongoDB ObjectId
+
+<ul>
+<li>Every doc in MongoDB must have a unique <code>_id</code> field</li>
+<li>Default ObjectId created by MongoDB when you insert a doc</li>
+</ul></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
+    &quot;_id&quot;: ObjectId(&quot;somehash&quot;),
+    &quot;name&quot;: &quot;Uthapizza&quot;,
+    &quot;description&quot;: &quot;Test&quot;
+}
+</code></pre></div>
+<ul>
+<li>ObjectId is a 12 byte field: Timestamp (4), Machine ID (3), Proc ID (2),
+Increment (3)</li>
+<li><code>id.getTimestamp()</code> returns the timestamp in ISO time format</li>
+<li>Downloading and installing MongoDB</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">brew install mongodb --with-openssl
+</code></pre></div>
+<ul>
+<li>Starting the server and interacting with it using Mongo REPL shell
+
+<ul>
+<li>Create a <code>mongodb</code> folder and a <code>data</code> folder inside it.</li>
+</ul></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd mongodb
+mongod --dbpath=data
+</code></pre></div>
+<p>This will start the mongodb server.</p>
+
+<ul>
+<li>In another cmd window,</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">// Start MongoDB REPL
+mongodb
+// Print db name
+&gt; db
+test
+// Switch DB
+&gt; use conFusion
+switched to db conFusion
+&gt; db.find()
+...
+&gt; db.help()
+...
+&gt; db
+conFusion
+// Insert entry
+&gt; db.dishes.insert({name: &quot;Uthapizza&quot;, description: &quot;Test&quot;});
+WriteResult({&quot;nInserted&quot;: 1})
+&gt; db.dishes.find();
+{&quot;_id&quot;: ObjectId(&quot;...&quot;), &quot;name&quot;: ..., &quot;description&quot;: ...}
+&gt; db.dishes.find().pretty()
+{
+    ...
+}
+&gt; var id = new ObjectId()
+&gt; id
+ObjectId(&quot;...&quot;)
+&gt; id.getTimestamp()
+ISODate(&quot;...&quot;)
+</code></pre></div>
+<h2 id="node-and-mongodb">Node and MongoDB</h2>
+
+<ul>
+<li>Node MongoDB driver
+
+<ul>
+<li>A high-level API for a Node application to interact with MongoDB server</li>
+<li>Installation: <code>npm install mongodb --save</code> inside the project folder</li>
+</ul></li>
+<li>The Node MongoDB driver supports several operations that can be performed from
+a Node application
+
+<ul>
+<li>Connecting to a MongoDB</li>
+<li>Insert, delete, update, query docs</li>
+</ul></li>
+<li>Supports both callback based and promise based interactions</li>
+<li>A simple Node-MongoDB Application</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">npm install mongodb --save
+npm install assert --save
+</code></pre></div>
+<h4 id="exercise-i">Exercise I</h4>
+
+<p>simple-server.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MongoClient</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span>
+<span class="kd">var</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">);</span>
+
+<span class="c1">// Connection URL</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;mongodb://localhost:27017/conFusion&#39;</span><span class="p">;</span>
+<span class="c1">// Use connect method to connect to the Server, with callback func</span>
+<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">db</span><span class="p">){</span>
+  <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Connected to the server&quot;</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="nx">collection</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s2">&quot;dishes&quot;</span><span class="p">);</span>
+  <span class="c1">// Insert doc into db</span>
+  <span class="nx">collection</span><span class="p">.</span><span class="nx">insertOne</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Uthapizza&quot;</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span><span class="p">},</span>
+    <span class="c1">// Supply callback func for later available result</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;After insert:&quot;</span><span class="p">);</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">ops</span><span class="p">);</span>
+      <span class="c1">// Supply callback func for later available result</span>
+      <span class="nx">collection</span><span class="p">.</span><span class="nx">find</span><span class="p">({}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Found:&quot;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
+
+        <span class="nx">db</span><span class="p">.</span><span class="nx">dropCollection</span><span class="p">(</span><span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+          <span class="nx">db</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+        <span class="p">});</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<ul>
+<li>Then make sure MongoDB is running, run <code>node simple-server</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Connected to the server
+After insert:
+[ { name: &#39;Uthapizza&#39;,
+    description: &#39;test&#39;,
+    _id: 56f8b23f705fab5f64bebbbc } ]
+Found:
+[ { _id: 56f8b23f705fab5f64bebbbc,
+    name: &#39;Uthapizza&#39;,
+    description: &#39;test&#39; } ]
+</code></pre></div>
+<h4 id="exercise-ii">Exercise II</h4>
+
+<ul>
+<li>Develop a Node module containing some common MongoDB operations</li>
+<li>Use the Node module in the application and communicate with the MongoDB server</li>
+</ul>
+
+<p>operations.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">);</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">insertDocument</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Get the documents collection</span>
+  <span class="kd">var</span> <span class="nx">coll</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="nx">collection</span><span class="p">);</span>
+  <span class="c1">// Insert some documents into the collection</span>
+  <span class="nx">coll</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Inserted &quot;</span> <span class="o">+</span> <span class="nx">result</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">n</span> <span class="o">+</span> 
+      <span class="s2">&quot; documents into the document collection &quot;</span> <span class="o">+</span> <span class="nx">collection</span><span class="p">);</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">findDocuments</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Get the documents collection</span>
+  <span class="kd">var</span> <span class="nx">coll</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="nx">collection</span><span class="p">);</span>
+
+  <span class="c1">// Find some documents, {} means select all</span>
+  <span class="nx">coll</span><span class="p">.</span><span class="nx">find</span><span class="p">({}).</span><span class="nx">toArray</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">removeDocument</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// Get the documents collection</span>
+  <span class="kd">var</span> <span class="nx">coll</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="nx">collection</span><span class="p">);</span>
+
+  <span class="c1">// Delete the document</span>
+  <span class="nx">coll</span><span class="p">.</span><span class="nx">deleteOne</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Removed the document &quot;</span> <span class="o">+</span> <span class="nb">document</span><span class="p">);</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">updateDocument</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">update</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// Get the documents collection</span>
+  <span class="kd">var</span> <span class="nx">coll</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="nx">collection</span><span class="p">);</span>
+
+  <span class="c1">// Update document</span>
+  <span class="nx">coll</span><span class="p">.</span><span class="nx">updateOne</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="nx">update</span> <span class="p">},</span> <span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Updated the document with &quot;</span> <span class="o">+</span> <span class="nx">update</span><span class="p">);</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>server.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">MongoClient</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongodb&#39;</span><span class="p">).</span><span class="nx">MongoClient</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">dboper</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./operations&#39;</span><span class="p">);</span>
+
+<span class="c1">// Connection URL</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;mongodb://localhost:27017/conFusion&#39;</span><span class="p">;</span>
+
+<span class="c1">// Use connect method to connect to the Server</span>
+<span class="nx">MongoClient</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">db</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Connected correctly to server&quot;</span><span class="p">);</span>
+
+  <span class="c1">// db, document, collection, callback func</span>
+  <span class="nx">dboper</span><span class="p">.</span><span class="nx">insertDocument</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Vadonut&quot;</span><span class="p">,</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;Test&quot;</span> <span class="p">},</span>
+    <span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">ops</span><span class="p">);</span>
+
+    <span class="c1">// db, collection, callback func</span>
+    <span class="nx">dboper</span><span class="p">.</span><span class="nx">findDocuments</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
+    <span class="c1">// db, document key, document update, collection, callback func</span>
+    <span class="nx">dboper</span><span class="p">.</span><span class="nx">updateDocument</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Vadonut&quot;</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;Updated Test&quot;</span> <span class="p">},</span> <span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+
+        <span class="nx">dboper</span><span class="p">.</span><span class="nx">findDocuments</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
+
+          <span class="nx">db</span><span class="p">.</span><span class="nx">dropCollection</span><span class="p">(</span><span class="s2">&quot;dishes&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+            <span class="nx">db</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+          <span class="p">});</span>   
+        <span class="p">});</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<h2 id="mongoose-odm">Mongoose ODM</h2>
+
+<ul>
+<li>MongoDB does not impose structure of documents, can be any documents</li>
+<li>Mongoose ODM
+
+<ul>
+<li>Object Data Model, Object Document Mapping</li>
+<li>ORM: Object Relational Mapping</li>
+</ul></li>
+<li>Add structure to documents with schema</li>
+<li>Schema
+
+<ul>
+<li>Structure of the data: fields, types</li>
+<li>Can do validation</li>
+<li>Types: String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array</li>
+</ul></li>
+<li>Schema is used to create a Model function</li>
+<li>Embedded documents schema</li>
+</ul>
+
+<h4 id="exercise-iii">Exercise III</h4>
+
+<ul>
+<li>Install Mongoose</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">npm install mongoose --save
+</code></pre></div>
+<p>./models/dishes.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-currency&#39;</span><span class="p">).</span><span class="nx">loadType</span><span class="p">(</span><span class="nx">mongoose</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Currency</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Types</span><span class="p">.</span><span class="nx">Currency</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">commentSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+  <span class="nx">rating</span><span class="o">:</span>  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">Number</span><span class="p">,</span>
+    <span class="nx">min</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">max</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">comment</span><span class="o">:</span>  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">author</span><span class="o">:</span>  <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="nx">timestamps</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+
+<span class="c1">// create a schema</span>
+<span class="kd">var</span> <span class="nx">dishSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">image</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">category</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">label</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">price</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nx">Currency</span><span class="p">,</span>
+    <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">description</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="c1">// Sub-doc</span>
+  <span class="nx">comments</span><span class="o">:</span><span class="p">[</span><span class="nx">commentSchema</span><span class="p">]</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="nx">timestamps</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Dishes</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Dish&#39;</span><span class="p">,</span> <span class="nx">dishSchema</span><span class="p">);</span>
+
+<span class="c1">// make this available to our Node applications</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">Dishes</span><span class="p">;</span>
+</code></pre></div>
+<p>server.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">Dishes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./models/dishes&#39;</span><span class="p">);</span>
+
+<span class="c1">// Connection URL</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;mongodb://localhost:27017/conFusion&#39;</span><span class="p">;</span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">connection</span><span class="p">;</span>
+
+<span class="nx">db</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="s1">&#39;connection error:&#39;</span><span class="p">));</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// we&#39;re connected!</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Connected correctly to server&quot;</span><span class="p">);</span>
+
+  <span class="c1">// create a new dish</span>
+  <span class="nx">Dishes</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Uthapizza&#39;</span><span class="p">,</span>
+    <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">,</span>
+    <span class="nx">comments</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="nx">rating</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="nx">comment</span><span class="o">:</span> <span class="s1">&#39;This is insane&#39;</span><span class="p">,</span>
+        <span class="nx">author</span><span class="o">:</span> <span class="s1">&#39;Matt Daemon&#39;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dish</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Dish created!&#39;</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dish</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">dish</span><span class="p">.</span><span class="nx">_id</span><span class="p">;</span>
+
+    <span class="c1">// get all the dishes</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Dishes</span><span class="p">.</span><span class="nx">findByIdAndUpdate</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">$set</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;Updated Test&#39;</span>
+        <span class="p">}</span>
+      <span class="p">},</span> <span class="p">{</span>
+        <span class="k">new</span><span class="o">:</span> <span class="kc">true</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dish</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Updated Dish!&#39;</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dish</span><span class="p">);</span>
+
+        <span class="nx">dish</span><span class="p">.</span><span class="nx">comments</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+          <span class="nx">rating</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="nx">comment</span><span class="o">:</span> <span class="s1">&#39;I\&#39;m getting a sinking feeling!&#39;</span><span class="p">,</span>
+          <span class="nx">author</span><span class="o">:</span> <span class="s1">&#39;Leonardo di Carpaccio&#39;</span>
+        <span class="p">});</span>
+
+        <span class="nx">dish</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dish</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Updated Comments!&#39;</span><span class="p">);</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dish</span><span class="p">);</span>
+
+          <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;dishes&#39;</span><span class="p">).</span><span class="nx">drop</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">db</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+          <span class="p">});</span>
+        <span class="p">});</span>
+      <span class="p">});</span>
+    <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/03/27/nodejs-note-1/">
+            Server-side Development Using NodeJS (1)
+            <small><time datetime="2016-03-27T00:00:00-07:00">27 Mar 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/11/04/flickfinder/">
+            iOS Networking with Swift II: Flick Finder
+            <small><time datetime="2015-11-04T00:00:00-08:00">04 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/11/01/iOSNetworking/">
+            iOS Networking with Swift I: Components
+            <small><time datetime="2015-11-01T00:00:00-07:00">01 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'loganyc1934'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2016/03/28/nodejs-note-2/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2016. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
