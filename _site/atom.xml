@@ -4,7 +4,7 @@
  <title>Recipe for Intelligence</title>
  <link href="http://loganyc1934.github.io/atom.xml" rel="self"/>
  <link href="http://loganyc1934.github.io/"/>
- <updated>2016-03-28T01:43:57-07:00</updated>
+ <updated>2016-03-28T22:09:58-07:00</updated>
  <id>http://loganyc1934.github.io</id>
  <author>
    <name>Logan Yang</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Server-side Development Using NodeJS (2)</title>
-   <link href="http://loganyc1934.github.io/2016/03/28/nodejs-note-2/"/>
-   <updated>2016-03-28T00:00:00-07:00</updated>
-   <id>http://loganyc1934.github.io/2016/03/28/nodejs-note-2</id>
+   <link href="http://loganyc1934.github.io/2016/03/27/nodejs-note-2/"/>
+   <updated>2016-03-27T00:00:00-07:00</updated>
+   <id>http://loganyc1934.github.io/2016/03/27/nodejs-note-2</id>
    <content type="html">&lt;p&gt;This is my note for the NodeJS class offered by HKUST on Coursera.&lt;/p&gt;
 
 &lt;h2 id=&quot;express-generator&quot;&gt;Express Generator&lt;/h2&gt;
@@ -556,9 +556,9 @@ Found:
  
  <entry>
    <title>Server-side Development Using NodeJS (1)</title>
-   <link href="http://loganyc1934.github.io/2016/03/27/nodejs-note-1/"/>
-   <updated>2016-03-27T00:00:00-07:00</updated>
-   <id>http://loganyc1934.github.io/2016/03/27/nodejs-note-1</id>
+   <link href="http://loganyc1934.github.io/2016/03/26/nodejs-note-1/"/>
+   <updated>2016-03-26T00:00:00-07:00</updated>
+   <id>http://loganyc1934.github.io/2016/03/26/nodejs-note-1</id>
    <content type="html">&lt;p&gt;This is my note for the NodeJS class offered by HKUST on Coursera.&lt;/p&gt;
 
 &lt;h2 id=&quot;two-salient-features-of-javascript&quot;&gt;Two Salient Features of JavaScript&lt;/h2&gt;
