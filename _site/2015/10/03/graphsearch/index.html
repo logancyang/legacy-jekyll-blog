@@ -45,7 +45,7 @@
 
       <article class="post">
   <h1 class="post-title">Graph Search: Subsets, Permutations</h1>
-  <time datetime="2015-10-03T00:00:00-07:00" class="post-date">03 Oct 2015</time>
+  <time datetime="2015-10-03T00:00:00+08:00" class="post-date">03 Oct 2015</time>
   <h3 id="traits-for-using-bfs">Traits for using BFS:</h3>
 
 <ol>
@@ -70,7 +70,7 @@
 <li>In general cases (other than base case), how to make the problem smaller and recurse down.</li>
 </ol>
 
-<h3 id="subsets-i-amp-ii-dfs-template">Subsets I &amp; II (DFS template)</h3>
+<h3 id="subsets-i-ii-dfs-template">Subsets I &amp; II (DFS template)</h3>
 
 <p>The thinking is to categorize cases by different head items. 
 Enumerate the head item of a case (path) in a for loop in this way:</p>
@@ -83,7 +83,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
 
 <p>For this specific Subsets problem, the base case is just adding the current path. For Subsets II, the only difference is that the input can have duplicates and we don&#39;t want the result subsets to be duplicate sets. Since the input is sorted (or we sort it by ourselves before DFS), when we encounter a number which is equal to the previous number in the for loop, we continue. Because the same number is taking the same place as the previous one, the resulting subsets with either of them are the same sets.</p>
 
-<h3 id="permutations-i-amp-ii-dfs-template">Permutations I &amp; II (DFS template)</h3>
+<h3 id="permutations-i-ii-dfs-template">Permutations I &amp; II (DFS template)</h3>
 
 <p>It&#39;s quite similar to the Subsets problems. The thinking is also to categorize cases by different head items, and enumerate the head item of a case (path) in a for loop. The difference is that now we don&#39;t want to keep track of the index as a parameter passed into DFS. Our base case is that when the path has the same length as the original input sequence, the current path is added.</p>
 
@@ -107,7 +107,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
 
 <p><img src="/assets/images/subsets.png" alt="Drawing" style="width: 1000px;"/></p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    @param S: The set of numbers.</span>
 <span class="sd">    @return: A list of lists. See example.</span>
@@ -130,7 +130,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)):</span>
             <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
-            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></figure>
 
 <p><br></p>
 
@@ -138,7 +138,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
 
 <p><img src="/assets/images/permutations.png" alt="Drawing" style="width: 1000px;"/></p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    @param nums: A list of Integers.</span>
 <span class="sd">    @return: A list of permutations.</span>
@@ -165,7 +165,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
                 <span class="k">continue</span>
             <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
-            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+            <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></figure>
 
 <p>Combination Sum is the Sum version of Subsets, with duplicates allowed.</p>
 
@@ -179,13 +179,13 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
 
 <p>For a fixed start, we loop through all substrings starting there, check if it satisfies the condition (palindrome in this case), if yes DFS down starting at i (the next char after s[old_start:i]). Again the template of DFS:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">old_start_ind</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">old_start_ind</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
     <span class="n">get</span> <span class="n">next_head</span> <span class="n">item</span>
     <span class="n">check</span> <span class="k">if</span> <span class="n">next_head</span> <span class="n">satisfies</span> <span class="n">our</span> <span class="n">condition</span>
         <span class="k">if</span> <span class="ow">not</span><span class="p">,</span> <span class="k">continue</span>
     <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_head</span><span class="p">)</span>
     <span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">i</span> <span class="ow">or</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>    <span class="c"># i or i+1 greater than old_start_ind</span>
-    <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></div>
+    <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span></code></pre></figure>
 
 <p>For <code>&quot;aab&quot;</code>, we have start = 0: <code>|a|ab, |aa|b, |aab|</code>; start = 1: <code>a|a|b, a|ab|</code>; start = 2: <code>aa|b|</code>; start = 3 == len, <code>aab|</code>, add one full path and return. start progresses by new recursion, i scans inside each recursion from <code>start+1</code> to <code>len+1</code>. </p>
 
@@ -200,7 +200,7 @@ Enumerate the head item of a case (path) in a for loop in this way:</p>
 <p>This is a typical DFS problem: list all solutions (combinations) or a certain decomposition problem, in this case,
 factorization. </p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">factors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -228,7 +228,7 @@ factorization. </p>
                 <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">factor</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
                 <span class="n">path</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="k">return</span></code></pre></div>
+        <span class="k">return</span></code></pre></figure>
 
 <p>3 points that need special attention in this particular problem,</p>
 
@@ -238,7 +238,7 @@ factorization. </p>
 the factors are not added to <code>path</code>. For example,</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">If we use xrange(2, n)...
+<figure class="highlight"><pre><code class="language-text" data-lang="text">If we use xrange(2, n)...
 
 Input: 8
 
@@ -253,7 +253,7 @@ Ex2:
 
 1st level DFS: n = 8, factor = 2, dfs(n/2 = 4, [2])
 2nd level DFS: n = 4, factor is in xrange(2, 4), factor cannot reach 4
-Failed to add path [2, 4]</code></pre></div>
+Failed to add path [2, 4]</code></pre></figure>
 
 <ul>
 <li>To ensure ascending order in <code>path</code>s, check for <code>path == [] or path[-1] &lt;= factor</code> before <code>append(factor)</code>.</li>
@@ -273,7 +273,7 @@ latter part(s) won&#39;t be checked. So there won&#39;t be a case where <code>pa
         <h3>
           <a href="/2016/03/27/nodejs-note-2/">
             Server-side Development Using NodeJS (2)
-            <small><time datetime="2016-03-27T00:00:00-07:00">27 Mar 2016</time></small>
+            <small><time datetime="2016-03-27T00:00:00+08:00">27 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -282,7 +282,7 @@ latter part(s) won&#39;t be checked. So there won&#39;t be a case where <code>pa
         <h3>
           <a href="/2016/03/26/nodejs-note-1/">
             Server-side Development Using NodeJS (1)
-            <small><time datetime="2016-03-26T00:00:00-07:00">26 Mar 2016</time></small>
+            <small><time datetime="2016-03-26T00:00:00+08:00">26 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -291,7 +291,7 @@ latter part(s) won&#39;t be checked. So there won&#39;t be a case where <code>pa
         <h3>
           <a href="/2015/11/04/flickfinder/">
             iOS Networking with Swift II: Flick Finder
-            <small><time datetime="2015-11-04T00:00:00-08:00">04 Nov 2015</time></small>
+            <small><time datetime="2015-11-04T00:00:00+08:00">04 Nov 2015</time></small>
           </a>
         </h3>
       </li>
@@ -326,7 +326,7 @@ latter part(s) won&#39;t be checked. So there won&#39;t be a case where <code>pa
 
       <div class="footer">
         <p>
-          &copy; 2016. All rights reserved.
+          &copy; 2017. All rights reserved.
         </p>
       </div>
     </div>

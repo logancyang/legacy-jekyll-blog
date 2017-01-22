@@ -45,7 +45,7 @@
 
       <article class="post">
   <h1 class="post-title">UIKit fundamentals I - Actions & Outlets, Presenting ViewControllers, Delegates</h1>
-  <time datetime="2015-10-05T00:00:00-07:00" class="post-date">05 Oct 2015</time>
+  <time datetime="2015-10-05T00:00:00+08:00" class="post-date">05 Oct 2015</time>
   <h2 id="outlets-and-actions">Outlets and Actions</h2>
 
 <h4 id="actions-vs-outlets">Actions vs Outlets</h4>
@@ -89,27 +89,27 @@ drag the small circle next to the var to the UISwitch.</li>
 <li>To display the Apple Image Picker which enables users to pick images from camera roll, just add a button and its an action like this.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">nextController</span> <span class="o">=</span> <span class="bp">UIImagePickerController</span><span class="p">()</span>
         <span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">nextController</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li>To display the Apple Activity ViewController which enables users to choose activities like saving and sharing documents, just add this action.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentActivity</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentActivity</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">image</span> <span class="o">=</span> <span class="bp">UIImage</span><span class="p">()</span>
         <span class="k">let</span> <span class="n">controller</span> <span class="o">=</span> <span class="bp">UIActivityViewController</span><span class="p">(</span><span class="nl">activityItems</span><span class="p">:</span> <span class="p">[</span><span class="n">image</span><span class="p">],</span>
             <span class="nl">applicationActivities</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
         <span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li>To display the Apple Alert Controller, add this action.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentAlert</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">presentAlert</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">UIAlertController</span><span class="p">()</span>
         <span class="c1">// must add title and message to display</span>
         <span class="n">controller</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Test alert&quot;</span>
@@ -122,7 +122,7 @@ drag the small circle next to the var to the UISwitch.</li>
         <span class="c1">// present the alert view</span>
         <span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>Note that the Alert View doesn’t have a built-in cancel button like the previous two. 
 We add the UIAlertAction okAction to dismiss the Alert View.</p>
@@ -138,7 +138,7 @@ using storyboard?.instantiateViewControllerWithIdentifier(“storyboardID”) me
 a view controller and must be downcast to DiceViewController.</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">rollTheDice</span><span class="p">()</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">rollTheDice</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">var</span> <span class="nl">controller</span><span class="p">:</span> <span class="n">DiceViewController</span>
         <span class="c1">// set reference to the storyboard &quot;DiceViewController&quot;</span>
         <span class="c1">// the referenced storyboard must have this ID</span>
@@ -148,15 +148,15 @@ a view controller and must be downcast to DiceViewController.</li>
         <span class="n">controller</span><span class="p">.</span><span class="n">secondValue</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">randomDiceValue</span><span class="p">()</span>
         
         <span class="n">presentViewController</span><span class="p">(</span><span class="n">controller</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ol>
 <li>Display the Dice View Controller with code and storyboard: to use storyboard to set the segue, we first select the first view, and ctrl click drag to the second view. Select Modal in this case. Then select the segue, set the Identifier to rollDice in the Attributes inspector. </li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">rollTheDice</span><span class="p">()</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">rollTheDice</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">performSegueWithIdentifier</span><span class="p">(</span><span class="s">&quot;rollDice&quot;</span><span class="p">,</span> <span class="nl">sender</span><span class="p">:</span> <span class="nb">self</span><span class="p">)</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ol>
 <li>Display the Dice View Controller with only storyboard: we directly ctrl click drag from the UIButton to the new view, and set the Identifier of the segue in the Attributes inspector. Clear the action in it.</li>
@@ -166,7 +166,7 @@ a view controller and must be downcast to DiceViewController.</li>
 <li>To pass data between ViewControllers, we use the method prepareForSegue(). The key is to define the destination view controller so that we can represent it and use its properties, firstValue and secondValue in this case.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="kr">override</span> <span class="k">func</span> <span class="nf">prepareForSegue</span><span class="p">(</span><span class="nl">segue</span><span class="p">:</span> <span class="bp">UIStoryboardSegue</span><span class="p">,</span> <span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="kr">override</span> <span class="k">func</span> <span class="nf">prepareForSegue</span><span class="p">(</span><span class="nl">segue</span><span class="p">:</span> <span class="bp">UIStoryboardSegue</span><span class="p">,</span> <span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="o">?</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// in complex apps, check which segue is being called</span>
         <span class="k">if</span> <span class="n">segue</span><span class="p">.</span><span class="n">identifier</span> <span class="o">==</span> <span class="s">&quot;rollDice&quot;</span> <span class="p">{</span>
             <span class="k">let</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">segue</span><span class="p">.</span><span class="n">destinationViewController</span> <span class="kt">as</span><span class="o">!</span>
@@ -174,7 +174,7 @@ a view controller and must be downcast to DiceViewController.</li>
             <span class="n">controller</span><span class="p">.</span><span class="n">firstValue</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">randomDiceValue</span><span class="p">()</span>
             <span class="n">controller</span><span class="p">.</span><span class="n">secondValue</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">randomDiceValue</span><span class="p">()</span>
         <span class="p">}</span>        
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <h4 id="practice-app-rockpaperscissors">Practice App: RockPaperScissors</h4>
 
@@ -235,7 +235,7 @@ in different ways, but they all share basic components.</p>
 <li>Import UIKit, define the class, subclassing NSObject, declare UITextFieldDelegate protocol.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">Foundation</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">Foundation</span>
 <span class="k">import</span> <span class="n">UIKit</span>
 
 <span class="k">class</span> <span class="nl">RandomColorTextFieldDelegate</span><span class="p">:</span> <span class="bp">NSObject</span><span class="p">,</span> <span class="bp">UITextFieldDelegate</span> <span class="p">{</span>
@@ -258,7 +258,7 @@ in different ways, but they all share basic components.</p>
         <span class="n">textField</span><span class="p">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">randomColor</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">true</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <h4 id="practice-app-textfields">Practice App: textFields</h4>
 
@@ -272,7 +272,7 @@ in different ways, but they all share basic components.</p>
 <li>Using the delegate method:</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">pickAnImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="p">@</span><span class="kt">IBAction</span> <span class="k">func</span> <span class="n">pickAnImage</span><span class="p">(</span><span class="nl">sender</span><span class="p">:</span> <span class="n">AnyObject</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">let</span> <span class="n">pickerController</span> <span class="o">=</span> <span class="bp">UIImagePickerController</span><span class="p">()</span>
         <span class="n">pickerController</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span>
         <span class="nb">self</span><span class="p">.</span><span class="n">presentViewController</span><span class="p">(</span><span class="n">pickerController</span><span class="p">,</span> <span class="nl">animated</span><span class="p">:</span> <span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
@@ -285,7 +285,7 @@ in different ways, but they all share basic components.</p>
             <span class="n">imagePicker</span><span class="p">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
             <span class="nb">self</span><span class="p">.</span><span class="n">dismissViewControllerAnimated</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="nl">completion</span><span class="p">:</span> <span class="nb">nil</span><span class="p">)</span>
         <span class="p">}</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li>The ordering of objects in the document outline matters, it’s the ordering of the layers in the layout. For example, objects ordered lower means it’s above the upper objects.</li>
@@ -293,7 +293,7 @@ in different ways, but they all share basic components.</p>
 <li>To set the UITextField background as transparent,</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="nb">self</span><span class="p">.</span><span class="n">myTextField</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">clearColor</span><span class="p">()</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="nb">self</span><span class="p">.</span><span class="n">myTextField</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">clearColor</span><span class="p">()</span></code></pre></figure>
 
 <ul>
 <li>To avoid UITextField attributes getting overridden, set other attributes like textAlignment and background color after setting defaultTextAttributes.</li>
@@ -301,7 +301,7 @@ in different ways, but they all share basic components.</p>
 <li>To move the view up and down when the keyboard shows and hides, for the bottom UITextField, do this</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">// when the keyboardWillShow notification is received, shift the view&#39;s frame up</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="c1">// when the keyboardWillShow notification is received, shift the view&#39;s frame up</span>
     <span class="k">func</span> <span class="nf">keyboardWillShow</span><span class="p">(</span><span class="nl">notification</span><span class="p">:</span> <span class="bp">NSNotification</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="n">bottomTextField</span><span class="p">.</span><span class="n">isFirstResponder</span><span class="p">()</span> <span class="p">{</span>
             <span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">getKeyboardHeight</span><span class="p">(</span><span class="n">notification</span><span class="p">)</span>
@@ -313,13 +313,13 @@ in different ways, but they all share basic components.</p>
         <span class="k">if</span> <span class="n">bottomTextField</span><span class="p">.</span><span class="n">isFirstResponder</span><span class="p">()</span> <span class="p">{</span>
             <span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">getKeyboardHeight</span><span class="p">(</span><span class="n">notification</span><span class="p">)</span>
         <span class="p">}</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li>To generate memed image, (hide the notification bar and toolbar)</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">TODO</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">TODO</span></code></pre></figure>
 
 <ul>
 <li>To</li>
@@ -337,7 +337,7 @@ in different ways, but they all share basic components.</p>
         <h3>
           <a href="/2016/03/27/nodejs-note-2/">
             Server-side Development Using NodeJS (2)
-            <small><time datetime="2016-03-27T00:00:00-07:00">27 Mar 2016</time></small>
+            <small><time datetime="2016-03-27T00:00:00+08:00">27 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -346,7 +346,7 @@ in different ways, but they all share basic components.</p>
         <h3>
           <a href="/2016/03/26/nodejs-note-1/">
             Server-side Development Using NodeJS (1)
-            <small><time datetime="2016-03-26T00:00:00-07:00">26 Mar 2016</time></small>
+            <small><time datetime="2016-03-26T00:00:00+08:00">26 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -355,7 +355,7 @@ in different ways, but they all share basic components.</p>
         <h3>
           <a href="/2015/11/04/flickfinder/">
             iOS Networking with Swift II: Flick Finder
-            <small><time datetime="2015-11-04T00:00:00-08:00">04 Nov 2015</time></small>
+            <small><time datetime="2015-11-04T00:00:00+08:00">04 Nov 2015</time></small>
           </a>
         </h3>
       </li>
@@ -390,7 +390,7 @@ in different ways, but they all share basic components.</p>
 
       <div class="footer">
         <p>
-          &copy; 2016. All rights reserved.
+          &copy; 2017. All rights reserved.
         </p>
       </div>
     </div>

@@ -41,3 +41,5 @@ github:
 pages_list:       
   About: '/about'
   Archive: '/archive'
+
+gems: [jekyll-paginate]

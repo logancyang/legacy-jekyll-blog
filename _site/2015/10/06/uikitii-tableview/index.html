@@ -45,7 +45,7 @@
 
       <article class="post">
   <h1 class="post-title">UIKit Fundamentals II - Table View</h1>
-  <time datetime="2015-10-06T00:00:00-07:00" class="post-date">06 Oct 2015</time>
+  <time datetime="2015-10-06T00:00:00+08:00" class="post-date">06 Oct 2015</time>
   <ul>
 <li><p><code>UITableView</code> has 2 delegate protocols, a total of 44 methods:</p>
 
@@ -78,14 +78,14 @@
 is always the TableView itself (similar to the TextField delegate introduced earlier).</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">// UITextFieldDelegate</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">// UITextFieldDelegate</span>
 <span class="k">func</span> <span class="n">textField</span><span class="p">(</span><span class="nl">textField</span><span class="p">:</span> <span class="bp">UITextField</span><span class="p">,</span> <span class="n">shouldChangeCharactersInRange</span> <span class="nl">range</span><span class="p">:</span> <span class="n">NSRange</span><span class="p">,</span> \
                 <span class="n">replacementString</span> <span class="nl">string</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
             <span class="p">}</span>
 
 <span class="c1">// UITableViewDelegate</span>
 <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">canEditRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-            <span class="p">}</span></code></pre></div>
+            <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li><code>indexPath</code> is a struct with 2 members: row, section
@@ -101,19 +101,19 @@ is always the TableView itself (similar to the TextField delegate introduced ear
 <li>How many rows? <em>Data Source Protocol method</em></li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span></code></pre></figure>
 
 <ol>
 <li>What is the cell for each row? <em>Data Source Protocol method</em></li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">cellForRowAtIndexPath</span><span class="p">(</span><span class="n">_</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span><span class="o">?</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">cellForRowAtIndexPath</span><span class="p">(</span><span class="n">_</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span><span class="o">?</span></code></pre></figure>
 
 <ol>
 <li>What should happen when a cell is selected?</li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span></code></pre></figure>
 
 <h3 id="practice-app-favoritethings">Practice App: FavoriteThings</h3>
 
@@ -126,9 +126,9 @@ is always the TableView itself (similar to the TextField delegate introduced ear
 given by the DataSource protocol.</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nl">section</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">favoriteThings</span><span class="p">.</span><span class="n">count</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <ul>
 <li>How <code>cellForRowAtIndexPath</code> Wrangles Cells
@@ -152,7 +152,7 @@ given by the DataSource protocol.</li>
 
 <p>Our reuse identifier is <code>FavoriteThingCell</code>.</p>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">cellForRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift">    <span class="k">func</span> <span class="n">tableView</span><span class="p">(</span><span class="nl">tableView</span><span class="p">:</span> <span class="bp">UITableView</span><span class="p">,</span> <span class="n">cellForRowAtIndexPath</span> <span class="nl">indexPath</span><span class="p">:</span> <span class="bp">NSIndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">UITableViewCell</span> <span class="p">{</span>
       
       <span class="c1">// TODO: Implement method</span>
       <span class="c1">// 1. Dequeue a reusable cell from the table, using the correct “reuse identifier”</span>
@@ -164,7 +164,7 @@ given by the DataSource protocol.</li>
             <span class="kt">as</span> <span class="bp">UITableViewCell</span>
         <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="o">?</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">favoriteThings</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">cell</span>
-    <span class="p">}</span></code></pre></div>
+    <span class="p">}</span></code></pre></figure>
 
 <p>Note: In <code>let cell...</code>, <code>as!</code> results in error, move <code>!</code> to the place it is to unwrap the optional:</p>
 
@@ -174,7 +174,7 @@ given by the DataSource protocol.</li>
 
 <p>The table in the storyboard is set, write the view controller code.</p>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
 
 <span class="k">class</span> <span class="nl">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">UITableViewDataSource</span> <span class="p">{</span>
 
@@ -212,7 +212,7 @@ given by the DataSource protocol.</li>
         <span class="k">return</span> <span class="n">cell</span>
     <span class="p">}</span>
 
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <h3 id="practice-app-bond-villains">Practice App: Bond Villains</h3>
 
@@ -228,7 +228,7 @@ given by the DataSource protocol.</li>
 </ul></li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">struct</span> <span class="n">Villain</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">struct</span> <span class="n">Villain</span> <span class="p">{</span>
 
     <span class="k">let</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
     <span class="k">let</span> <span class="nl">evilScheme</span><span class="p">:</span> <span class="n">String</span>
@@ -245,7 +245,7 @@ given by the DataSource protocol.</li>
         <span class="nb">self</span><span class="p">.</span><span class="n">evilScheme</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="n">Villain</span><span class="p">.</span><span class="n">EvilSchemeKey</span><span class="p">]</span><span class="o">!</span>
         <span class="nb">self</span><span class="p">.</span><span class="n">imageName</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="n">Villain</span><span class="p">.</span><span class="n">ImageNameKey</span><span class="p">]</span><span class="o">!</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <ol>
 <li><p>The XCAssets. How are the images tied to the data in the model?</p></li>
@@ -258,7 +258,7 @@ given by the DataSource protocol.</li>
 </ul></li>
 </ol>
 
-<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
+<figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">import</span> <span class="n">UIKit</span>
 
 <span class="k">class</span> <span class="nl">ViewController</span><span class="p">:</span> <span class="bp">UIViewController</span><span class="p">,</span> <span class="bp">UITableViewDataSource</span><span class="p">,</span> <span class="bp">UITableViewDelegate</span> <span class="p">{</span>
 
@@ -292,7 +292,7 @@ given by the DataSource protocol.</li>
         <span class="k">return</span> <span class="nb">true</span>
     <span class="p">}</span>
 
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <p>To setup the tableView in the storyboard:</p>
 
@@ -343,7 +343,7 @@ or the storyboard won&#39;t save it)</li>
         <h3>
           <a href="/2016/03/27/nodejs-note-2/">
             Server-side Development Using NodeJS (2)
-            <small><time datetime="2016-03-27T00:00:00-07:00">27 Mar 2016</time></small>
+            <small><time datetime="2016-03-27T00:00:00+08:00">27 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -352,7 +352,7 @@ or the storyboard won&#39;t save it)</li>
         <h3>
           <a href="/2016/03/26/nodejs-note-1/">
             Server-side Development Using NodeJS (1)
-            <small><time datetime="2016-03-26T00:00:00-07:00">26 Mar 2016</time></small>
+            <small><time datetime="2016-03-26T00:00:00+08:00">26 Mar 2016</time></small>
           </a>
         </h3>
       </li>
@@ -361,7 +361,7 @@ or the storyboard won&#39;t save it)</li>
         <h3>
           <a href="/2015/11/04/flickfinder/">
             iOS Networking with Swift II: Flick Finder
-            <small><time datetime="2015-11-04T00:00:00-08:00">04 Nov 2015</time></small>
+            <small><time datetime="2015-11-04T00:00:00+08:00">04 Nov 2015</time></small>
           </a>
         </h3>
       </li>
@@ -396,7 +396,7 @@ or the storyboard won&#39;t save it)</li>
 
       <div class="footer">
         <p>
-          &copy; 2016. All rights reserved.
+          &copy; 2017. All rights reserved.
         </p>
       </div>
     </div>
