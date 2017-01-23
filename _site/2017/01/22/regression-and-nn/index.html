@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      Regression, Neural Network Basics &middot; Recipe for Intelligence
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+</head>
+
+
+
+  <body>
+
+    <div class="container content">
+      <div class="masthead">
+        <h3 class="masthead-title">
+          <a href="/" title="Home">Recipe for Intelligence</a>
+
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/about">About</a></small>
+          
+              &nbsp;&nbsp;&nbsp;<small><a href="/archive">Archive</a></small>
+          
+
+        </h3>
+      </div>
+
+      <article class="post">
+  <h1 class="post-title">Regression, Neural Network Basics</h1>
+  <time datetime="2017-01-22T00:00:00+08:00" class="post-date">22 Jan 2017</time>
+  <p>(This is my note for the Self-Driving Car Nanodegree on Udacity)</p>
+
+<h2 id="regression">Regression</h2>
+
+<p>The word regression comes from &quot;regression to the mean&quot; like the parent-children height example. Later it
+actually means <em>using functional form to approximate a bunch of data points</em>.</p>
+
+<p><strong>i.i.d.</strong>: Independent and identically distributed, a fundamental assumption for the data.</p>
+
+<ul>
+<li>Linear Regression</li>
+<li>Polynomial Regression</li>
+<li>Cross Validation
+
+<ul>
+<li>Split the training set into training and validation set. K-fold cross validation.</li>
+<li>To determine the complexity of the model (degree of polynomial in the case of polynomial regression), choose the complexity with the lowest validation error</li>
+</ul></li>
+</ul>
+
+<p><br></p>
+
+<h2 id="neural-networks">Neural Networks</h2>
+
+<ul>
+<li>Perceptron: \( \mathbf{wx} = y \), threshold \( y \) to get \( \hat y \)
+
+<ul>
+<li>If linearly separable, it <em>will</em> find a solution</li>
+<li>If not, it won&#39;t stop. But there&#39;s no way to know when to stop and declare it&#39;s not linearly separable.</li>
+</ul></li>
+<li>Gradient Descent: \( \mathbf{wx} = a \), activation. There&#39;s no thresholding.</li>
+<li><p>Perceptron vs. Gradient descent</p>
+
+<ul>
+<li>Perceptron:
+$$
+\Delta w_i = \eta * (y - \hat y) x_i
+$$</li>
+<li>Gradient descent:
+$$
+\Delta w_i = \eta * (y - a) x_i
+$$</li>
+<li>Difference: activation with or without thresholding. Gradient descent is more robust, it needs a differentiable loss. The 1-0 loss of perceptron is not differentiable.</li>
+<li>To get a differentiable / softer thresholding function, we have sigmoid (literally means s-like).</li>
+</ul></li>
+<li><p>Sigmoid unit in NN is just a softer thresholding version of Perceptron.</p></li>
+<li><p>Back-propagation for error: computationally beneficial organization of the chain rule.</p></li>
+<li><p>Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.</p></li>
+<li><p>Learning = optimization</p></li>
+<li><p>NN complexity</p>
+
+<ul>
+<li>More nodes</li>
+<li>More layers</li>
+<li>Larger weights</li>
+</ul></li>
+<li><p>Restriction bias: what it is that you are able to represent, the restriction on possible hypotheses functions</p>
+
+<ul>
+<li>Started out with Perceptron, linear</li>
+<li>Then more perceptrons for more complex functions</li>
+<li>Then use sigmoids instead of 1-0 hard thresholding</li>
+<li>So NN doesn&#39;t have much restriction. It can represent any boolean function (more units), any continuous function (one hidden layer), and any arbitrary function with discontinuities (more hidden layers).</li>
+<li>Danger of overfitting: use certain network structures, and cross validation.</li>
+</ul></li>
+<li><p>Preference bias: given two algorithm representations, why we prefer one over the other</p>
+
+<ul>
+<li>Initialize weights at small random values</li>
+<li>Always prefer simpler models when the error is similar: Occam&#39;s Razor</li>
+</ul></li>
+<li><p>Summary</p>
+
+<ul>
+<li>Perceptrons: thresholding unit</li>
+<li>Networks can produce any Boolean function.</li>
+<li>Perceptron rule: finite time for linearly separable data</li>
+<li>General differentiable rule - back propagation &amp; gradient descent</li>
+</ul></li>
+</ul>
+
+</article>
+
+
+<aside class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/03/27/nodejs-note-2/">
+            Server-side Development Using NodeJS (2)
+            <small><time datetime="2016-03-27T00:00:00+08:00">27 Mar 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/03/26/nodejs-note-1/">
+            Server-side Development Using NodeJS (1)
+            <small><time datetime="2016-03-26T00:00:00+08:00">26 Mar 2016</time></small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2015/11/04/flickfinder/">
+            iOS Networking with Swift II: Flick Finder
+            <small><time datetime="2015-11-04T00:00:00+08:00">04 Nov 2015</time></small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</aside>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+<!-- Add Disqus comments. -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'loganyc1934'; // required: replace example with your forum shortname
+  var disqus_identifier = "/2017/01/22/regression-and-nn/";
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      <div class="footer">
+        <p>
+          &copy; 2017. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>

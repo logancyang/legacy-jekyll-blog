@@ -4,13 +4,102 @@
  <title>Recipe for Intelligence</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2017-01-22T12:01:25+08:00</updated>
+ <updated>2017-01-23T08:59:04+08:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Logan Yang</name>
    <email>lolo.yang86@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Regression, Neural Network Basics</title>
+   <link href="http://localhost:4000/2017/01/22/regression-and-nn/"/>
+   <updated>2017-01-22T00:00:00+08:00</updated>
+   <id>http://localhost:4000/2017/01/22/regression-and-nn</id>
+   <content type="html">&lt;p&gt;(This is my note for the Self-Driving Car Nanodegree on Udacity)&lt;/p&gt;
+
+&lt;h2 id=&quot;regression&quot;&gt;Regression&lt;/h2&gt;
+
+&lt;p&gt;The word regression comes from &amp;quot;regression to the mean&amp;quot; like the parent-children height example. Later it
+actually means &lt;em&gt;using functional form to approximate a bunch of data points&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;i.i.d.&lt;/strong&gt;: Independent and identically distributed, a fundamental assumption for the data.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Linear Regression&lt;/li&gt;
+&lt;li&gt;Polynomial Regression&lt;/li&gt;
+&lt;li&gt;Cross Validation
+
+&lt;ul&gt;
+&lt;li&gt;Split the training set into training and validation set. K-fold cross validation.&lt;/li&gt;
+&lt;li&gt;To determine the complexity of the model (degree of polynomial in the case of polynomial regression), choose the complexity with the lowest validation error&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;neural-networks&quot;&gt;Neural Networks&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Perceptron: \( \mathbf{wx} = y \), threshold \( y \) to get \( \hat y \)
+
+&lt;ul&gt;
+&lt;li&gt;If linearly separable, it &lt;em&gt;will&lt;/em&gt; find a solution&lt;/li&gt;
+&lt;li&gt;If not, it won&amp;#39;t stop. But there&amp;#39;s no way to know when to stop and declare it&amp;#39;s not linearly separable.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Gradient Descent: \( \mathbf{wx} = a \), activation. There&amp;#39;s no thresholding.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Perceptron vs. Gradient descent&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Perceptron:
+$$
+\Delta w_i = \eta * (y - \hat y) x_i
+$$&lt;/li&gt;
+&lt;li&gt;Gradient descent:
+$$
+\Delta w_i = \eta * (y - a) x_i
+$$&lt;/li&gt;
+&lt;li&gt;Difference: activation with or without thresholding. Gradient descent is more robust, it needs a differentiable loss. The 1-0 loss of perceptron is not differentiable.&lt;/li&gt;
+&lt;li&gt;To get a differentiable / softer thresholding function, we have sigmoid (literally means s-like).&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sigmoid unit in NN is just a softer thresholding version of Perceptron.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Back-propagation for error: computationally beneficial organization of the chain rule.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Learning = optimization&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;NN complexity&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;More nodes&lt;/li&gt;
+&lt;li&gt;More layers&lt;/li&gt;
+&lt;li&gt;Larger weights&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Restriction bias: what it is that you are able to represent, the restriction on possible hypotheses functions&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Started out with Perceptron, linear&lt;/li&gt;
+&lt;li&gt;Then more perceptrons for more complex functions&lt;/li&gt;
+&lt;li&gt;Then use sigmoids instead of 1-0 hard thresholding&lt;/li&gt;
+&lt;li&gt;So NN doesn&amp;#39;t have much restriction. It can represent any boolean function (more units), any continuous function (one hidden layer), and any arbitrary function with discontinuities (more hidden layers).&lt;/li&gt;
+&lt;li&gt;Danger of overfitting: use certain network structures, and cross validation.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Preference bias: given two algorithm representations, why we prefer one over the other&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Initialize weights at small random values&lt;/li&gt;
+&lt;li&gt;Always prefer simpler models when the error is similar: Occam&amp;#39;s Razor&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Summary&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Perceptrons: thresholding unit&lt;/li&gt;
+&lt;li&gt;Networks can produce any Boolean function.&lt;/li&gt;
+&lt;li&gt;Perceptron rule: finite time for linearly separable data&lt;/li&gt;
+&lt;li&gt;General differentiable rule - back propagation &amp;amp; gradient descent&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Server-side Development Using NodeJS (2)</title>
