@@ -43,6 +43,7 @@ $$
 - Back-propagation for error: computationally beneficial organization of the chain rule.
 - Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.
 - Learning = optimization
+- Note that a 1-layer NN with sigmoid activation is equivalent to Logistic Regression!
 - NN complexity
 	- More nodes
 	- More layers

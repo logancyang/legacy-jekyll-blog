@@ -414,6 +414,16 @@ TypeError: can only concatenate list (not "str") to list
 * What happened is that `+=` calls __iadd__() method and try to modify the list in-place,
 while adding all the elements of the iterable on the right to the list.
 
+<br>
+
+### Class Method vs. Static Method
+* `@staticmethod` function is nothing more than a function defined inside a class. 
+It is callable without instantiating the class first. It’s definition is immutable via inheritance.
+
+* `@classmethod` function also callable without instantiating the class, 
+but its definition follows Sub class, not Parent class, via inheritance. That’s because the first argument for 
+`@classmethod` function must always be cls (class).
+
 *To be continued...*
 
 <br>
