@@ -4,7 +4,7 @@
  <title>Recipe for Intelligence</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2017-01-23T08:59:04+08:00</updated>
+ <updated>2017-02-24T12:54:49-08:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name>Logan Yang</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Regression, Neural Network Basics</title>
    <link href="http://localhost:4000/2017/01/22/regression-and-nn/"/>
-   <updated>2017-01-22T00:00:00+08:00</updated>
+   <updated>2017-01-22T00:00:00-08:00</updated>
    <id>http://localhost:4000/2017/01/22/regression-and-nn</id>
    <content type="html">&lt;p&gt;(This is my note for the Self-Driving Car Nanodegree on Udacity)&lt;/p&gt;
 
@@ -67,6 +67,7 @@ $$&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Back-propagation for error: computationally beneficial organization of the chain rule.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Learning = optimization&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Note that a 1-layer NN with sigmoid activation is equivalent to Logistic Regression!&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;NN complexity&lt;/p&gt;
 
 &lt;ul&gt;
@@ -104,7 +105,7 @@ $$&lt;/li&gt;
  <entry>
    <title>Server-side Development Using NodeJS (2)</title>
    <link href="http://localhost:4000/2016/03/27/nodejs-note-2/"/>
-   <updated>2016-03-27T00:00:00+08:00</updated>
+   <updated>2016-03-27T00:00:00-07:00</updated>
    <id>http://localhost:4000/2016/03/27/nodejs-note-2</id>
    <content type="html">&lt;p&gt;This is my note for the NodeJS class offered by HKUST on Coursera.&lt;/p&gt;
 
@@ -646,7 +647,7 @@ Found:
  <entry>
    <title>Server-side Development Using NodeJS (1)</title>
    <link href="http://localhost:4000/2016/03/26/nodejs-note-1/"/>
-   <updated>2016-03-26T00:00:00+08:00</updated>
+   <updated>2016-03-26T00:00:00-07:00</updated>
    <id>http://localhost:4000/2016/03/26/nodejs-note-1</id>
    <content type="html">&lt;p&gt;This is my note for the NodeJS class offered by HKUST on Coursera.&lt;/p&gt;
 
@@ -972,7 +973,7 @@ are defined and addressed.&lt;/li&gt;
  <entry>
    <title>iOS Networking with Swift II: Flick Finder</title>
    <link href="http://localhost:4000/2015/11/04/flickfinder/"/>
-   <updated>2015-11-04T00:00:00+08:00</updated>
+   <updated>2015-11-04T00:00:00-08:00</updated>
    <id>http://localhost:4000/2015/11/04/flickfinder</id>
    <content type="html">&lt;p&gt;With the knowledge of the &lt;a href=&quot;http://loganyc1934.github.io/2015/11/01/iOSNetworking/&quot;&gt;previous post&lt;/a&gt;,
 we can write a photo searching app with the Flickr API. In the Flickr universe, a photo is called
@@ -1089,7 +1090,7 @@ action: &amp;quot;handleSingleTap:&amp;quot;)&lt;/code&gt;&lt;/li&gt;
  <entry>
    <title>iOS Networking with Swift I: Components</title>
    <link href="http://localhost:4000/2015/11/01/iOSNetworking/"/>
-   <updated>2015-11-01T00:00:00+08:00</updated>
+   <updated>2015-11-01T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/11/01/iOSNetworking</id>
    <content type="html">&lt;p&gt;Without networking, mobile apps can only perceive, process, and present the data that is local to 
 the host device. This greatly restricts the scope of problems which apps can solve and limits their 
@@ -1278,7 +1279,7 @@ all the previous steps just define what we should do when the request executes a
  <entry>
    <title>UIKit Fundamentals II - Navigation, Collection View, Tab View</title>
    <link href="http://localhost:4000/2015/10/15/uikitii-navigation/"/>
-   <updated>2015-10-15T00:00:00+08:00</updated>
+   <updated>2015-10-15T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/15/uikitii-navigation</id>
    <content type="html">&lt;h3 id=&quot;practice-app-make-your-own-adventure-myoa&quot;&gt;Practice App: Make Your Own Adventure (MYOA)&lt;/h3&gt;
 
@@ -1491,7 +1492,7 @@ in the table view controller.&lt;/li&gt;
  <entry>
    <title>Logistic Regression with Apache Spark</title>
    <link href="http://localhost:4000/2015/10/14/logistic-regression-on-apache-spark/"/>
-   <updated>2015-10-14T00:00:00+08:00</updated>
+   <updated>2015-10-14T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/14/logistic-regression-on-apache-spark</id>
    <content type="html">&lt;p&gt;Logistic regression is widely used to predict binary responses. It is a linear method as described 
 in my other post 
@@ -1802,7 +1803,7 @@ the evaluation of the best model is shown below.&lt;/p&gt;
  <entry>
    <title>An Overview of Logistic Regression</title>
    <link href="http://localhost:4000/2015/10/13/an-overview-of-logistic-regression/"/>
-   <updated>2015-10-13T00:00:00+08:00</updated>
+   <updated>2015-10-13T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/13/an-overview-of-logistic-regression</id>
    <content type="html">&lt;h4 id=&quot;why-the-sigmoid&quot;&gt;&lt;em&gt;Why the sigmoid?&lt;/em&gt;&lt;/h4&gt;
 
@@ -2003,7 +2004,7 @@ optimization without actually compute the Hessian.&lt;/p&gt;&lt;/li&gt;
  <entry>
    <title>Big Data with Apache Spark: Spark Essentials</title>
    <link href="http://localhost:4000/2015/10/09/intro-to-big-data-with-apache-spark-spark-essentials/"/>
-   <updated>2015-10-09T00:00:00+08:00</updated>
+   <updated>2015-10-09T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/09/intro-to-big-data-with-apache-spark-spark-essentials</id>
    <content type="html">&lt;h4 id=&quot;pyspark-python-programming-interface-to-spark&quot;&gt;PySpark: Python Programming Interface to Spark&lt;/h4&gt;
 
@@ -2281,7 +2282,7 @@ parentheses and put each method, transformation, or action on a separate line.&l
  <entry>
    <title>Big Data with Apache Spark: Intro and Motivation</title>
    <link href="http://localhost:4000/2015/10/09/intro-to-big-data-with-apache-spark-intro-and-motivation/"/>
-   <updated>2015-10-09T00:00:00+08:00</updated>
+   <updated>2015-10-09T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/09/intro-to-big-data-with-apache-spark-intro-and-motivation</id>
    <content type="html">&lt;h4 id=&quot;data-science-vs-databases&quot;&gt;Data Science vs Databases:&lt;/h4&gt;
 
@@ -2454,7 +2455,7 @@ access times and avoidance of serialization/deserialization overhead make Spark 
  <entry>
    <title>Big Data with Hadoop and MapReduce</title>
    <link href="http://localhost:4000/2015/10/08/hadoop-and-mapreduce/"/>
-   <updated>2015-10-08T00:00:00+08:00</updated>
+   <updated>2015-10-08T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/08/hadoop-and-mapreduce</id>
    <content type="html">&lt;h3 id=&quot;intro-to-hadoop-and-mapreduce&quot;&gt;Intro to Hadoop and MapReduce&lt;/h3&gt;
 
@@ -2529,7 +2530,7 @@ with Hadoop so that the installation and integration can be easier.&lt;/p&gt;
  <entry>
    <title>Machine Learning Foundations: The Learning Problem</title>
    <link href="http://localhost:4000/2015/10/07/machine-learning-foundations-the-learning-problem/"/>
-   <updated>2015-10-07T00:00:00+08:00</updated>
+   <updated>2015-10-07T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/07/machine-learning-foundations-the-learning-problem</id>
    <content type="html">&lt;h3 id=&quot;the-essence-of-machine-learning&quot;&gt;The Essence of Machine Learning&lt;/h3&gt;
 
@@ -2687,7 +2688,7 @@ computation.&lt;/li&gt;
  <entry>
    <title>UIKit Fundamentals II - Table View</title>
    <link href="http://localhost:4000/2015/10/06/uikitii-tableview/"/>
-   <updated>2015-10-06T00:00:00+08:00</updated>
+   <updated>2015-10-06T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/06/uikitii-tableview</id>
    <content type="html">&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;&lt;code&gt;UITableView&lt;/code&gt; has 2 delegate protocols, a total of 44 methods:&lt;/p&gt;
@@ -2980,7 +2981,7 @@ or the storyboard won&amp;#39;t save it)&lt;/li&gt;
  <entry>
    <title>UIKit fundamentals I - Actions & Outlets, Presenting ViewControllers, Delegates</title>
    <link href="http://localhost:4000/2015/10/05/ios-app-mememe/"/>
-   <updated>2015-10-05T00:00:00+08:00</updated>
+   <updated>2015-10-05T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/05/ios-app-mememe</id>
    <content type="html">&lt;h2 id=&quot;outlets-and-actions&quot;&gt;Outlets and Actions&lt;/h2&gt;
 
@@ -3267,7 +3268,7 @@ in different ways, but they all share basic components.&lt;/p&gt;
  <entry>
    <title>Graph Search: Subsets, Permutations</title>
    <link href="http://localhost:4000/2015/10/03/graphsearch/"/>
-   <updated>2015-10-03T00:00:00+08:00</updated>
+   <updated>2015-10-03T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/10/03/graphsearch</id>
    <content type="html">&lt;h3 id=&quot;traits-for-using-bfs&quot;&gt;Traits for using BFS:&lt;/h3&gt;
 
@@ -3490,7 +3491,7 @@ latter part(s) won&amp;#39;t be checked. So there won&amp;#39;t be a case where 
  <entry>
    <title>Handy Python Notes</title>
    <link href="http://localhost:4000/2015/07/21/handy-python-notes/"/>
-   <updated>2015-07-21T00:00:00+08:00</updated>
+   <updated>2015-07-21T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/07/21/handy-python-notes</id>
    <content type="html">&lt;h3 id=&quot;key-concepts&quot;&gt;Key Concepts&lt;/h3&gt;
 
@@ -3923,6 +3924,18 @@ collections.deque and its append() and popleft() methods.&lt;/li&gt;
 while adding all the elements of the iterable on the right to the list.&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;class-method-vs-static-method&quot;&gt;Class Method vs. Static Method&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;@staticmethod&lt;/code&gt; function is nothing more than a function defined inside a class. 
+It is callable without instantiating the class first. It’s definition is immutable via inheritance.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;@classmethod&lt;/code&gt; function also callable without instantiating the class, 
+but its definition follows Sub class, not Parent class, via inheritance. That’s because the first argument for 
+&lt;code&gt;@classmethod&lt;/code&gt; function must always be cls (class).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;p&gt;&lt;em&gt;To be continued...&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -3943,7 +3956,7 @@ while adding all the elements of the iterable on the right to the list.&lt;/li&g
  <entry>
    <title>DNS, Web Host and Registrar</title>
    <link href="http://localhost:4000/2015/06/29/DNS/"/>
-   <updated>2015-06-29T00:00:00+08:00</updated>
+   <updated>2015-06-29T00:00:00-07:00</updated>
    <id>http://localhost:4000/2015/06/29/DNS</id>
    <content type="html">&lt;h3 id=&quot;dns-domain-name-system&quot;&gt;DNS – Domain Name System:&lt;/h3&gt;
 
