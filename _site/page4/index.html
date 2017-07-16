@@ -23,6 +23,16 @@
 
   <!-- RSS -->
   <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+  <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 
@@ -59,91 +69,6 @@
         </em></strong>  <!-- This is what does the task-->
 
             <a href="/2017/01/22/regression-and-nn/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2016/03/27/nodejs-note-2/">
-        Server-side Development Using NodeJS (2)
-      </a>
-    </h1>
-
-    <time datetime="2016-03-27T00:00:00-07:00" class="post-date">27 Mar 2016</time>
-
-    <p>
-        This is my note for the NodeJS class offered by HKUST on Coursera. Express Generator Scaffold out an Express application, build a REST API server. Install express-generator npm install express-generator -g Scaffolding an Express Application express node-express-gen cd node-express-gen npm install Start the Express server npm start Copy the dishRouter.js, promoRouter.js and leaderRouter.js to the routes folder within the Express application Copy the index.html and aboutus.html file from the node-express/public folder to the public folder...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2016/03/27/nodejs-note-2/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2016/03/26/nodejs-note-1/">
-        Server-side Development Using NodeJS (1)
-      </a>
-    </h1>
-
-    <time datetime="2016-03-26T00:00:00-07:00" class="post-date">26 Mar 2016</time>
-
-    <p>
-        This is my note for the NodeJS class offered by HKUST on Coursera. Two Salient Features of JavaScript First-class functions: A function can be treated the same as any other variable. Closures: A function defined inside another function has access to all the variables declared in the outer function scope. The inner function will continue to have access to the variables from the outer scope even after the outer function has returned. The Callback Function...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2016/03/26/nodejs-note-1/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/11/04/flickfinder/">
-        iOS Networking with Swift II: Flick Finder
-      </a>
-    </h1>
-
-    <time datetime="2015-11-04T00:00:00-08:00" class="post-date">04 Nov 2015</time>
-
-    <p>
-        With the knowledge of the previous post, we can write a photo searching app with the Flickr API. In the Flickr universe, a photo is called a Flick, so let&#39;s call this app Flick Finder. The project is here. Concepts Built networking app step-by-step Constructed and called web service method Parsed JSON data from HTTP response Populated view using data from HTTP response Read an API&#39;s documentation to solve an issue: maximum number of photos...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/11/04/flickfinder/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/11/01/iOSNetworking/">
-        iOS Networking with Swift I: Components
-      </a>
-    </h1>
-
-    <time datetime="2015-11-01T00:00:00-07:00" class="post-date">01 Nov 2015</time>
-
-    <p>
-        Without networking, mobile apps can only perceive, process, and present the data that is local to the host device. This greatly restricts the scope of problems which apps can solve and limits their overall utility. By incorporating networking, apps truly become “mobile” -- they can interact with interesting data using popular web services, coordinate multi-user activities, and build experiences that bring users together. This series of posts will cover concepts fundamental to communication over the...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/11/01/iOSNetworking/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/10/15/uikitii-navigation/">
-        UIKit Fundamentals II - Navigation, Collection View, Tab View
-      </a>
-    </h1>
-
-    <time datetime="2015-10-15T00:00:00-07:00" class="post-date">15 Oct 2015</time>
-
-    <p>
-        Practice App: Make Your Own Adventure (MYOA) Follow the steps below to recreate the MYOA on your own. Step 1: Create a new single view application Step 2: Delete the single view controller (You can delete this view controller by selecting the yellow icon and then tapping the delete button) Step 3: Drag a UINavigationController into the storyboard from the object library. Step 4: Delete the automatically generated root view controller and drag in a...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/10/15/uikitii-navigation/">Read more...</a><br><br>
     </p>
   </article>
   
@@ -217,74 +142,6 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/2015/10/08/hadoop-and-mapreduce/">
-        Big Data with Hadoop and MapReduce
-      </a>
-    </h1>
-
-    <time datetime="2015-10-08T00:00:00-07:00" class="post-date">08 Oct 2015</time>
-
-    <p>
-        Intro to Hadoop and MapReduce 3 V&#39;s of Big Data Volume: huge storage space needed. Variety: unstructured data, no schema for SQL. Velocity: data is generated extremely fast Hadoop solves all three problems: stores and processes mass amount of data efficiently. Doug Cutting: How Hadoop Came To Be Google published a paper about GFS, their distributed file system, and MapReduce. Doug Cutting and his partner implemented it in open-source. Hadoop started from 20-30 machines to...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/10/08/hadoop-and-mapreduce/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/10/07/machine-learning-foundations-the-learning-problem/">
-        Machine Learning Foundations: The Learning Problem
-      </a>
-    </h1>
-
-    <time datetime="2015-10-07T00:00:00-07:00" class="post-date">07 Oct 2015</time>
-
-    <p>
-        The Essence of Machine Learning Improving some performance measure with experience computed from data. Data --&gt; ML --&gt; Improved performance measure When to Use Machine Learning? Exists some &#39;underlying pattern&#39; to be learned - so the &#39;performance measure&#39; can be improved. But NO programmable (easy) definition - so ML is needed. Somehow there&#39;s data about the pattern - so ML has input to learn from. Some Interesting Examples Food: data: tweets (words + location) skill:...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/10/07/machine-learning-foundations-the-learning-problem/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/10/06/uikitii-tableview/">
-        UIKit Fundamentals II - Table View
-      </a>
-    </h1>
-
-    <time datetime="2015-10-06T00:00:00-07:00" class="post-date">06 Oct 2015</time>
-
-    <p>
-        UITableView has 2 delegate protocols, a total of 44 methods: UITableViewDelegate: response to user events UITableViewDataSource: access to data and cells UITableViewDelegate What should happen when a button in a cell is tapped? What should be the response to cell selection? (*) How should I respond when a user begins editing a row? What should happen when a cell is deselected? UITableViewDataSource How many rows do I have? (*) How many sections do I have?...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/10/06/uikitii-tableview/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/10/05/ios-app-mememe/">
-        UIKit fundamentals I - Actions & Outlets, Presenting ViewControllers, Delegates
-      </a>
-    </h1>
-
-    <time datetime="2015-10-05T00:00:00-07:00" class="post-date">05 Oct 2015</time>
-
-    <p>
-        Outlets and Actions Actions vs Outlets Outlet: ViewController talks to View by using Outlet. Any object (UILabel, UIButton, UIImage, UIView etc) in View can have an Outlet connection to ViewController. Outlet is used as @property in ViewController which means that: you can set something (like Update UILabel&#39;s text, Set background image of a UIView etc.) of an object by using outlet. you can get something from an object (like current value of UIStepper, current font...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/10/05/ios-app-mememe/">Read more...</a><br><br>
-    </p>
-  </article>
-  
-  <article class="post">
-    <h1 class="post-title">
       <a href="/2015/10/03/graphsearch/">
         Graph Search: Subsets, Permutations
       </a>
@@ -317,23 +174,6 @@
     </p>
   </article>
   
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/2015/06/29/DNS/">
-        DNS, Web Host and Registrar
-      </a>
-    </h1>
-
-    <time datetime="2015-06-29T00:00:00-07:00" class="post-date">29 Jun 2015</time>
-
-    <p>
-        DNS – Domain Name System: DNS is the glue that makes the web work. It translates a name www.google.com to an IP address that tells which web server is hosting the website. It also tells other email servers where to send email for a domain name using what is called the MX record. Without DNS, when someone types in www.google.com in a web browser, there is no conversion of the name to an IP address...
-        </em></strong>  <!-- This is what does the task-->
-
-            <a href="/2015/06/29/DNS/">Read more...</a><br><br>
-    </p>
-  </article>
-  
 </div>
 
 <div class="pagination">
@@ -357,6 +197,4 @@
   </body>
 </html>
 
-<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" ></script>

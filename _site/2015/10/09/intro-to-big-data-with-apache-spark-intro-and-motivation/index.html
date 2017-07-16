@@ -23,6 +23,16 @@
 
   <!-- RSS -->
   <link rel="alternate" type="application/atom+xml" title="Recipe for Intelligence" href="/atom.xml">
+  <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 
@@ -230,18 +240,18 @@ access times and avoidance of serialization/deserialization overhead make Spark 
     
       <li>
         <h3>
-          <a href="/2016/03/27/nodejs-note-2/">
-            Server-side Development Using NodeJS (2)
-            <small><time datetime="2016-03-27T00:00:00-07:00">27 Mar 2016</time></small>
+          <a href="/2015/10/14/logistic-regression-on-apache-spark/">
+            Logistic Regression with Apache Spark
+            <small><time datetime="2015-10-14T00:00:00-07:00">14 Oct 2015</time></small>
           </a>
         </h3>
       </li>
     
       <li>
         <h3>
-          <a href="/2016/03/26/nodejs-note-1/">
-            Server-side Development Using NodeJS (1)
-            <small><time datetime="2016-03-26T00:00:00-07:00">26 Mar 2016</time></small>
+          <a href="/2015/10/13/an-overview-of-logistic-regression/">
+            An Overview of Logistic Regression
+            <small><time datetime="2015-10-13T00:00:00-07:00">13 Oct 2015</time></small>
           </a>
         </h3>
       </li>
@@ -251,7 +261,7 @@ access times and avoidance of serialization/deserialization overhead make Spark 
 
 
 <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 </script>
 
   
@@ -284,6 +294,4 @@ access times and avoidance of serialization/deserialization overhead make Spark 
   </body>
 </html>
 
-<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" ></script>
