@@ -10,13 +10,10 @@ url:                 http://loganyc1934.github.io
 paginate:            1
 baseurl:             ""
 
-highlighter: pygments
+highlighter: rouge
 # Build settings
-markdown: redcarpet
+markdown: kramdown
 markdown_ext: markdown,mkdown,mkdn,mkd,md
-
-redcarpet:
-  extensions: ["no_intra_emphasis", "tables", "autolink", "strikethrough", "space_after_headers", "with_toc_data", "fenced_code_blocks"]
 
 comments: True
 # Assets

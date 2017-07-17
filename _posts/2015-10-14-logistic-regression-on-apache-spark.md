@@ -29,7 +29,7 @@ solved using stochastic gradient descent (SGD). For logistic regression, the opt
 commonly used:
 
 $$
-f(\mathbf{w})=\frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }\_{ i },{ y }\_{ i }) } 
+f(\mathbf{w})=\frac { 1 }{ n } \sum_{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }_{ i },{ y }_{ i }) } 
 +\lambda R(\mathbf{w})
 $$
 
@@ -46,14 +46,14 @@ true subgradient of the original objective function. Picking one data point \\( 
 uniformly at random, we obtain a stochastic subgradient, with respect to \\(\mathbf{w} \\) as follows:
 
 $$
-{ f }'\_{ \mathbf{w},i }={ L }'\_{ \mathbf{w},i }+\lambda { R }'\_{ \mathbf{w},i }
+{ f }'_{ \mathbf{w},i }={ L }'_{ \mathbf{w},i }+\lambda { R }'_{ \mathbf{w},i }
 $$
 
 This is determine by the i-th data point. Running SGD simply becomes walking in the direction of the
-negative stochastic subgradient \\( { f }'\_{ w,i } \\), that is
+negative stochastic subgradient \\( { f }'_{ w,i } \\), that is
 
 $$
-{ \mathbf{w} }^{ (t+1) }={ \mathbf{w} }^{ (t) }-\gamma { f }'\_{ \mathbf{w},i }
+{ \mathbf{w} }^{ (t+1) }={ \mathbf{w} }^{ (t) }-\gamma { f }'_{ \mathbf{w},i }
 $$
 
 **Step-size**. The parameter \\( \gamma \\) is the step-size, which in the default implementation is 
@@ -76,14 +76,14 @@ The SGD implementation in
 uses a simple distributed sampling of the data points. 
 
 Recall that the loss part of the optimization problem
-is \\( \frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }\_{ i },{ y }\_{ i }) } \\),
-and therefore \\( \frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ { L }'\_{ w,i } } \\) would be the true
+is $ \frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ L(\mathbf{w};{ \mathbf{x} }\_{ i },{ y }\_{ i }) } $,
+and therefore $ \frac { 1 }{ n } \sum \_{ i=1 }^{ n }{ { L }'\_{ w,i } } $ would be the true
 subgradient. Since this would require the access to the full data set, the parameter `miniBatchFraction`
 specifies which fraction of the full data to use instead.
 The average of the gradients over this subset, i.e.
 
 $$
-\frac { 1 }{ \left| S \right|  } \sum \_{ i\in S }^{  }{ { L }'\_{ w,i } } 
+\frac { 1 }{ \left| S \right|  } \sum_{ i\in S }^{  }{ { L }'_{ w,i } } 
 $$
 
 is a stochastic gradient. Here \\( S \\) is the sampled subset of size 

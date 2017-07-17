@@ -10,7 +10,7 @@
 
   <title>
     
-      Regression, Neural Network Basics &middot; Recipe for Intelligence
+      Notes on Regression and Neural Network &middot; Recipe for Intelligence
     
   </title>
 
@@ -54,90 +54,88 @@
       </div>
 
       <article class="post">
-  <h1 class="post-title">Regression, Neural Network Basics</h1>
+  <h1 class="post-title">Notes on Regression and Neural Network</h1>
   <time datetime="2017-01-22T00:00:00-08:00" class="post-date">22 Jan 2017</time>
-  <p>(This is my note for the Self-Driving Car Nanodegree on Udacity)</p>
+  <h2 id="regression">Regression</h2>
 
-<h2 id="regression">Regression</h2>
-
-<p>The word regression comes from &quot;regression to the mean&quot; like the parent-children height example. Later it
+<p>The word regression comes from “regression to the mean” like the parent-children height example. Later it
 actually means <em>using functional form to approximate a bunch of data points</em>.</p>
 
 <p><strong>i.i.d.</strong>: Independent and identically distributed, a fundamental assumption for the data.</p>
 
 <ul>
-<li>Linear Regression</li>
-<li>Polynomial Regression</li>
-<li>Cross Validation
-
-<ul>
-<li>Split the training set into training and validation set. K-fold cross validation.</li>
-<li>To determine the complexity of the model (degree of polynomial in the case of polynomial regression), choose the complexity with the lowest validation error</li>
-</ul></li>
+  <li>Linear Regression</li>
+  <li>Polynomial Regression</li>
+  <li>Cross Validation
+    <ul>
+      <li>Split the training set into training and validation set. K-fold cross validation.</li>
+      <li>To determine the complexity of the model (degree of polynomial in the case of polynomial regression), choose the complexity with the lowest validation error</li>
+    </ul>
+  </li>
 </ul>
 
-<p><br></p>
-
+<p><br /></p>
 <h2 id="neural-networks">Neural Networks</h2>
 
 <ul>
-<li>Perceptron: \( \mathbf{wx} = y \), threshold \( y \) to get \( \hat y \)
-
-<ul>
-<li>If linearly separable, it <em>will</em> find a solution</li>
-<li>If not, it won&#39;t stop. But there&#39;s no way to know when to stop and declare it&#39;s not linearly separable.</li>
-</ul></li>
-<li>Gradient Descent: \( \mathbf{wx} = a \), activation. There&#39;s no thresholding.</li>
-<li><p>Perceptron vs. Gradient descent</p>
-
-<ul>
-<li>Perceptron:
-$$
-\Delta w_i = \eta * (y - \hat y) x_i
-$$</li>
-<li>Gradient descent:
-$$
-\Delta w_i = \eta * (y - a) x_i
-$$</li>
-<li>Difference: activation with or without thresholding. Gradient descent is more robust, it needs a differentiable loss. The 1-0 loss of perceptron is not differentiable.</li>
-<li>To get a differentiable / softer thresholding function, we have sigmoid (literally means s-like).</li>
-</ul></li>
-<li><p>Sigmoid unit in NN is just a softer thresholding version of Perceptron.</p></li>
-<li><p>Back-propagation for error: computationally beneficial organization of the chain rule.</p></li>
-<li><p>Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.</p></li>
-<li><p>Learning = optimization</p></li>
-<li><p>Note that a 1-layer NN with sigmoid activation is equivalent to Logistic Regression!</p></li>
-<li><p>NN complexity</p>
-
-<ul>
-<li>More nodes</li>
-<li>More layers</li>
-<li>Larger weights</li>
-</ul></li>
-<li><p>Restriction bias: what it is that you are able to represent, the restriction on possible hypotheses functions</p>
-
-<ul>
-<li>Started out with Perceptron, linear</li>
-<li>Then more perceptrons for more complex functions</li>
-<li>Then use sigmoids instead of 1-0 hard thresholding</li>
-<li>So NN doesn&#39;t have much restriction. It can represent any boolean function (more units), any continuous function (one hidden layer), and any arbitrary function with discontinuities (more hidden layers).</li>
-<li>Danger of overfitting: use certain network structures, and cross validation.</li>
-</ul></li>
-<li><p>Preference bias: given two algorithm representations, why we prefer one over the other</p>
-
-<ul>
-<li>Initialize weights at small random values</li>
-<li>Always prefer simpler models when the error is similar: Occam&#39;s Razor</li>
-</ul></li>
-<li><p>Summary</p>
-
-<ul>
-<li>Perceptrons: thresholding unit</li>
-<li>Networks can produce any Boolean function.</li>
-<li>Perceptron rule: finite time for linearly separable data</li>
-<li>General differentiable rule - back propagation &amp; gradient descent</li>
-</ul></li>
+  <li>Perceptron: $ \mathbf{wx} = y $, threshold $ y $ to get $ \hat{y} $
+    <ul>
+      <li>If linearly separable, it <em>will</em> find a solution</li>
+      <li>If not, it won’t stop. But there’s no way to know when to stop and declare it’s not linearly separable.</li>
+    </ul>
+  </li>
+  <li>Gradient Descent: $ \mathbf{wx} = a $, activation. There’s no thresholding.</li>
+  <li>Perceptron vs. Gradient descent
+    <ul>
+      <li>
+        <p>Perceptron:
+<script type="math/tex">\Delta w_i = \eta * (y - \hat y) x_i</script></p>
+      </li>
+      <li>
+        <p>Gradient descent:
+<script type="math/tex">\Delta w_i = \eta * (y - a) x_i</script></p>
+      </li>
+      <li>Difference: activation with or without thresholding. Gradient descent is more robust, it needs a differentiable loss. The 1-0 loss of perceptron is not differentiable.</li>
+      <li>To get a differentiable / softer thresholding function, we have sigmoid (literally means s-like).</li>
+    </ul>
+  </li>
+  <li>Sigmoid unit in NN is just a softer thresholding version of Perceptron.</li>
+  <li>Back-propagation for error: computationally beneficial organization of the chain rule.</li>
+  <li>Local optima: For a single sigmoid unit, the error looks like a parabola because its quadratic. For many sigmoid units as in NN, there will be a lot of local optima.</li>
+  <li>Learning = optimization</li>
+  <li>Note that a 1-layer NN with sigmoid activation is equivalent to Logistic Regression!</li>
+  <li>NN complexity
+    <ul>
+      <li>More nodes</li>
+      <li>More layers</li>
+      <li>Larger weights</li>
+    </ul>
+  </li>
+  <li>Restriction bias: what it is that you are able to represent, the restriction on possible hypotheses functions
+    <ul>
+      <li>Started out with Perceptron, linear</li>
+      <li>Then more perceptrons for more complex functions</li>
+      <li>Then use sigmoids instead of 1-0 hard thresholding</li>
+      <li>So NN doesn’t have much restriction. It can represent any boolean function (more units), any continuous function (one hidden layer), and any arbitrary function with discontinuities (more hidden layers).</li>
+      <li>Danger of overfitting: use certain network structures, and cross validation.</li>
+    </ul>
+  </li>
+  <li>Preference bias: given two algorithm representations, why we prefer one over the other
+    <ul>
+      <li>Initialize weights at small random values</li>
+      <li>Always prefer simpler models when the error is similar: Occam’s Razor</li>
+    </ul>
+  </li>
+  <li>Summary
+    <ul>
+      <li>Perceptrons: thresholding unit</li>
+      <li>Networks can produce any Boolean function.</li>
+      <li>Perceptron rule: finite time for linearly separable data</li>
+      <li>General differentiable rule - back propagation &amp; gradient descent</li>
+    </ul>
+  </li>
 </ul>
+
 
 </article>
 

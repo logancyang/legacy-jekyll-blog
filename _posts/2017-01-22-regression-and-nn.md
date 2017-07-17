@@ -1,10 +1,8 @@
 ---
 layout: post
-title: "Regression, Neural Network Basics"
+title: "Notes on Regression and Neural Network"
 comments: True
 ---
-
-(This is my note for the Self-Driving Car Nanodegree on Udacity)
 
 ## Regression
 
@@ -22,10 +20,10 @@ actually means *using functional form to approximate a bunch of data points*.
 <br>
 ## Neural Networks
 
-- Perceptron: \\( \mathbf{wx} = y \\), threshold \\( y \\) to get \\( \hat y \\)
+- Perceptron: $ \mathbf{wx} = y $, threshold $ y $ to get $ \hat{y} $
 	- If linearly separable, it *will* find a solution
 	- If not, it won't stop. But there's no way to know when to stop and declare it's not linearly separable.
-- Gradient Descent: \\( \mathbf{wx} = a \\), activation. There's no thresholding.
+- Gradient Descent: $ \mathbf{wx} = a $, activation. There's no thresholding.
 - Perceptron vs. Gradient descent
 	- Perceptron:
 $$

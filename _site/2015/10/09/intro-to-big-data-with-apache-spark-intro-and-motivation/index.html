@@ -64,9 +64,9 @@ cheap data like web logs, GPS data, sensor data. So data science deals with Big 
 <p><strong>CAP theorem</strong> for data science: we can only have 2 of the 3 following properties, we can’t have all.</p>
 
 <ul>
-<li>Consistency</li>
-<li>Availability</li>
-<li>Partition tolerance</li>
+  <li>Consistency</li>
+  <li>Availability</li>
+  <li>Partition tolerance</li>
 </ul>
 
 <p>Databases use SQL, in data science we use NoSQL data stores. Much of the data in data science are 
@@ -94,43 +94,43 @@ queries than SQL.</p>
 <h4 id="doing-data-science">Doing data science</h4>
 
 <ol>
-<li>Identify the problem</li>
-<li>Collect data</li>
-<li>Clean the data</li>
-<li>Build models</li>
-<li>Evaluate models</li>
-<li>Communicate results</li>
+  <li>Identify the problem</li>
+  <li>Collect data</li>
+  <li>Clean the data</li>
+  <li>Build models</li>
+  <li>Evaluate models</li>
+  <li>Communicate results</li>
 </ol>
 
 <p>Cloud Computing enables Data Science: cheap clusters you can rent.</p>
 
-<h4 id="what-s-hard-about-data-science">What’s hard about data science</h4>
+<h4 id="whats-hard-about-data-science">What’s hard about data science</h4>
 
 <ul>
-<li>Overcoming assumptions</li>
-<li>Making ad-hoc explanations of data patterns</li>
-<li>Not checking enough (validate models, data pipeline integrity, etc.)</li>
-<li>Overgeneralizing</li>
-<li>Communication</li>
-<li>Using statistical tests correctly</li>
-<li>Prototype —&gt; Production</li>
-<li>Data pipeline complexity</li>
+  <li>Overcoming assumptions</li>
+  <li>Making ad-hoc explanations of data patterns</li>
+  <li>Not checking enough (validate models, data pipeline integrity, etc.)</li>
+  <li>Overgeneralizing</li>
+  <li>Communication</li>
+  <li>Using statistical tests correctly</li>
+  <li>Prototype —&gt; Production</li>
+  <li>Data pipeline complexity</li>
 </ul>
 
 <h4 id="etl-extract-transform-load"><strong>ETL</strong>: Extract, Transform, Load</h4>
 
 <ol>
-<li><strong>Extract</strong> data from the sources: file, database, event log, website, Hadoop Distributed File System (HDFS)</li>
-<li><strong>Load</strong> data into the sink: Python, R, SQLite, NoSQL store, files, HDFS, Relational Database Management System (RDBMS)</li>
-<li><strong>Transform</strong> data at the source or sink</li>
+  <li><strong>Extract</strong> data from the sources: file, database, event log, website, Hadoop Distributed File System (HDFS)</li>
+  <li><strong>Load</strong> data into the sink: Python, R, SQLite, NoSQL store, files, HDFS, Relational Database Management System (RDBMS)</li>
+  <li><strong>Transform</strong> data at the source or sink</li>
 </ol>
 
 <p>Plus:</p>
 
 <ul>
-<li>Data transfer, serialization/deserialization</li>
-<li>Transformation pipeline or workflow</li>
-<li>Recording the execution of a workflow is known as capturing lineage or provenance. 
+  <li>Data transfer, serialization/deserialization</li>
+  <li>Transformation pipeline or workflow</li>
+  <li>Recording the execution of a workflow is known as capturing lineage or provenance. 
 Spark’s Resilient Distributed Datasets do this automatically.</li>
 </ul>
 
@@ -139,16 +139,16 @@ Spark’s Resilient Distributed Datasets do this automatically.</li>
 <p><strong>2 kinds of individual: business person, programmer.</strong></p>
 
 <ul>
-<li>businessperson: excel functions/charts, VB</li>
-<li>programmer: 
-
-<ul>
-<li>Data sources: web scraping, web services API; excel sheets exported as Comma Separated Values (csv); 
+  <li>businessperson: excel functions/charts, VB</li>
+  <li>programmer:
+    <ul>
+      <li>Data sources: web scraping, web services API; excel sheets exported as Comma Separated Values (csv); 
 database queries</li>
-<li>ETL: wget, curl, Beautiful Soup, lxml</li>
-<li>Data Warehouse: flat files</li>
-<li>Business Intelligence and Analytics: Numpy, Matplotlib, R, Matlab, Octave</li>
-</ul></li>
+      <li>ETL: wget, curl, Beautiful Soup, lxml</li>
+      <li>Data Warehouse: flat files</li>
+      <li>Business Intelligence and Analytics: Numpy, Matplotlib, R, Matlab, Octave</li>
+    </ul>
+  </li>
 </ul>
 
 <p><strong>2 kinds of organizations: an enterprise and a web company.</strong></p>
@@ -156,9 +156,9 @@ database queries</li>
 <p>Other archetypes of individual:</p>
 
 <ul>
-<li>Hackers: efficient programmers who uses R/Matlab, Python, SQL/Pig</li>
-<li>Scripters: R/Matlab</li>
-<li>Application Users: SAS, SPSS</li>
+  <li>Hackers: efficient programmers who uses R/Matlab, Python, SQL/Pig</li>
+  <li>Scripters: R/Matlab</li>
+  <li>Application Users: SAS, SPSS</li>
 </ul>
 
 <h4 id="big-data-and-hardware-trends">Big Data and Hardware Trends</h4>
@@ -173,16 +173,16 @@ In the cluster, some machines only process/store a specific part of the result.<
 <p>Why is cluster computing difficult?</p>
 
 <ul>
-<li>Moving data is hard</li>
-<li>Node failure</li>
-<li>Node runs slow</li>
+  <li>Moving data is hard</li>
+  <li>Node failure</li>
+  <li>Node runs slow</li>
 </ul>
 
 <p>Solution 1: MapReduce</p>
 
 <ul>
-<li>MapReduce deals with failures and slow tasks by re-launching the tasks on other machines.</li>
-<li>MapReduce handles the execution of Map and Reduce functions on many machines including the <strong>shuffling 
+  <li>MapReduce deals with failures and slow tasks by re-launching the tasks on other machines.</li>
+  <li>MapReduce handles the execution of Map and Reduce functions on many machines including the <strong>shuffling 
 of data between Map and Reduce functions</strong>. It also automatically <strong>recovers from both machine failures 
 and slow machines.</strong></li>
 </ul>
@@ -190,15 +190,15 @@ and slow machines.</strong></li>
 <p>Solution 2: Spark</p>
 
 <ul>
-<li>Spark motivation: Disk I/O is very slow. Running MapReduce iteratively —&gt; speed of disk</li>
-<li>Memory is cheap now: process in-memory, do not write to disk</li>
-<li>Spark abstraction: Resilient Distributed Datasets (RDDs)</li>
+  <li>Spark motivation: Disk I/O is very slow. Running MapReduce iteratively —&gt; speed of disk</li>
+  <li>Memory is cheap now: process in-memory, do not write to disk</li>
+  <li>Spark abstraction: Resilient Distributed Datasets (RDDs)</li>
 </ul>
 
 <p>RDDs enable us to write programs in terms of operations on distributed datasets. They are partitioned
 collections of objects spread across a cluster, stored in memory or on disk. RDDs are built and manipulated
-through a diverse set of parallel <strong>transformations</strong>: <code>map</code>, <code>filter</code>, <code>join</code>; and <strong>actions</strong>: <code>count</code>, 
-<code>collect</code>, <code>save</code>. Also, RDDs are automatically rebuilt on machine failure.</p>
+through a diverse set of parallel <strong>transformations</strong>: <code class="highlighter-rouge">map</code>, <code class="highlighter-rouge">filter</code>, <code class="highlighter-rouge">join</code>; and <strong>actions</strong>: <code class="highlighter-rouge">count</code>, 
+<code class="highlighter-rouge">collect</code>, <code class="highlighter-rouge">save</code>. Also, RDDs are automatically rebuilt on machine failure.</p>
 
 <p>On top of Apache Spark, there are <strong>Spark SQL</strong>, <strong>Spark Streaming</strong>, <strong>MLlib</strong> (machine learning), 
 <strong>GraphX</strong> (graph).</p>
@@ -213,14 +213,17 @@ into a format that can be stored on disks</strong>. The process of converting a 
 called serialization and the process of converting a disk object to a memory object is called 
 deserialization. Serializing and deserializing objects is a very expensive and time consuming process. 
 Keeping intermediate results in memory avoids this significant overhead. Taken together, the faster 
-access times and avoidance of serialization/deserialization overhead make Spark much faster than Map Reduce 
-- up to 100 times faster!</p>
+access times and avoidance of serialization/deserialization overhead make Spark much faster than Map Reduce</p>
+<ul>
+  <li>up to 100 times faster!</li>
+</ul>
 
-<p><br></p>
+<p><br /></p>
 
 <h4 id="difference-between-spark-and-hadoop-mapreduce">Difference between Spark and Hadoop MapReduce</h4>
 
-<p><img src="/assets/images/sparkVsHadoop.png" alt="Drawing" style="width: 800px;"/></p>
+<p><img src="/assets/images/sparkVsHadoop.png" alt="Drawing" style="width: 800px;" /></p>
+
 
 </article>
 
@@ -232,7 +235,7 @@ access times and avoidance of serialization/deserialization overhead make Spark 
       <li>
         <h3>
           <a href="/2017/01/22/regression-and-nn/">
-            Regression, Neural Network Basics
+            Notes on Regression and Neural Network
             <small><time datetime="2017-01-22T00:00:00-08:00">22 Jan 2017</time></small>
           </a>
         </h3>
